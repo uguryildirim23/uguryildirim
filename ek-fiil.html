@@ -487,10 +487,10 @@ function renderLogin(){
 var OGRENCILER = null; // Firebase'den gelecek
 
 function ogrencileriYukle(callback){
-  firebase.database().ref('ogrenciler').once('value', function(snapshot){
+  get(ref(db,'ogrenciler')).then(function(snapshot){
     OGRENCILER = snapshot.val() || {};
     callback();
-  }, function(hata){
+  }).catch(function(){
     OGRENCILER = {};
     callback();
   });
