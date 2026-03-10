@@ -144,12 +144,41 @@ const ALL_EKFIIL=["-acaklarmış","-acakmış","-acaksa","-acaksan","-acaktı","
 var _E=["c2lr", "c2lrZQ==", "c2lraW0=", "b3Jvc3B1", "cGV6ZXZlbms=", "ZnVjaw==", "c2hpdA==", "Yml0Y2g=", "YXB0YWw=", "c2FsYWs="];
 var _BW=_E.map(function(e){return atob(e);});
 function hasBadWord(n){return _BW.some(function(w){return n.toLowerCase().includes(w);});}
-function getLB(){try{return JSON.parse(localStorage.getItem("ekfiil_v4")||"[]");}catch(e){return [];}}
-function saveLB(lb){try{localStorage.setItem("ekfiil_v4",JSON.stringify(lb));}catch(e){}}
+// ---- FIREBASE ----
+(function(){
+  var s=document.createElement('script');
+  s.type='module';
+  s.textContent=`
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    const app = initializeApp({
+      apiKey:"AIzaSyAf55kPCdIHvw04ZllGcI1KX8gvfllFJBM",
+      authDomain:"uguryildirim-8b3a6.firebaseapp.com",
+      databaseURL:"https://uguryildirim-8b3a6-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId:"uguryildirim-8b3a6",
+      storageBucket:"uguryildirim-8b3a6.firebasestorage.app",
+      messagingSenderId:"301851356922",
+      appId:"1:301851356922:web:cbfbc206ee1cdc05af6343"
+    });
+    const db = getDatabase(app);
+    window._fbDb=db; window._fbRef=ref; window._fbSet=set; window._fbGet=get; window._fbOnValue=onValue;
+    window._fbReady=true;
+    document.dispatchEvent(new Event('fbReady'));
+  `;
+  document.head.appendChild(s);
+})();
+
+function getLB(){return [];}
+function saveLB(lb){}
 function addToLB(name,score){
-  var lb=getLB(),i=lb.findIndex(function(x){return x.name.toLowerCase()===name.toLowerCase();});
-  if(i>=0){if(score>lb[i].score)lb[i].score=score;}else{lb.push({name:name,score:score});}
-  lb.sort(function(a,b){return b.score-a.score;});saveLB(lb.slice(0,20));
+  if(!window._fbReady){document.addEventListener('fbReady',function(){addToLB(name,score);},{once:true});return;}
+  var key='ekfiil_lb/'+name.replace(/[.#$\[\]\/]/g,'_');
+  window._fbGet(window._fbRef(window._fbDb,key)).then(function(snap){
+    var cur=snap.val();
+    if(!cur||score>cur.score){
+      window._fbSet(window._fbRef(window._fbDb,key),{name:name,score:score,time:Date.now()});
+    }
+  });
 }
 
 var playerName="";
@@ -345,36 +374,57 @@ function showRepList(){
 }
 
 function showLB(){
-  var lb=getLB(),ov=mkOv();
+  var ov=mkOv();
   var box=document.createElement("div");box.className="lb-box";
   var ttl=document.createElement("div");ttl.className="lb-ttl";ttl.textContent="🏆 Lider Tablosu";
   box.appendChild(ttl);
-  if(!lb.length){
-    var e=document.createElement("div");e.style.cssText="text-align:center;color:var(--tx2);padding:24px 0";
-    e.textContent="Henüz kayıt yok.";box.appendChild(e);
-  }else{
-    var medals=["🥇","🥈","🥉"];
-    lb.forEach(function(entry,i){
-      var row=document.createElement("div");row.className="lb-entry";
-      var num=document.createElement("span");num.className="lb-num";num.textContent=medals[i]||("#"+(i+1));
-      var name=document.createElement("span");
-      name.className=entry.name===playerName?"lb-name lb-me":"lb-name";
-      name.textContent=entry.name;
-      if(entry.name===playerName){
-        var badge=document.createElement("span");badge.className="lb-me-badge";badge.textContent="Sen";
-        name.appendChild(badge);
-      }
-      var pts=document.createElement("span");pts.className="lb-pts";pts.textContent=entry.score+" pt";
-      row.appendChild(num);row.appendChild(name);row.appendChild(pts);box.appendChild(row);
-    });
-  }
+  var loading=document.createElement("div");loading.style.cssText="text-align:center;color:var(--tx2);padding:24px 0";
+  loading.textContent="Yükleniyor...";box.appendChild(loading);
   var bClose=mkBtn("btn btn-s","Kapat",function(){ov.remove();});
   bClose.style.cssText="margin-top:14px;display:block;margin-left:auto;margin-right:auto";
   box.appendChild(bClose);ov.appendChild(box);document.body.appendChild(ov);
+
+  function renderEntries(lb){
+    box.removeChild(loading);
+    if(!lb.length){
+      var e=document.createElement("div");e.style.cssText="text-align:center;color:var(--tx2);padding:24px 0";
+      e.textContent="Henüz kayıt yok.";box.insertBefore(e,bClose);
+    }else{
+      var medals=["🥇","🥈","🥉"];
+      lb.forEach(function(entry,i){
+        var row=document.createElement("div");row.className="lb-entry";
+        var num=document.createElement("span");num.className="lb-num";num.textContent=medals[i]||("#"+(i+1));
+        var name=document.createElement("span");
+        name.className=entry.name===playerName?"lb-name lb-me":"lb-name";
+        name.textContent=entry.name;
+        if(entry.name===playerName){
+          var badge=document.createElement("span");badge.className="lb-me-badge";badge.textContent="Sen";
+          name.appendChild(badge);
+        }
+        var pts=document.createElement("span");pts.className="lb-pts";pts.textContent=entry.score+" pt";
+        row.appendChild(num);row.appendChild(name);row.appendChild(pts);box.insertBefore(row,bClose);
+      });
+    }
+  }
+
+  if(window._fbReady){
+    window._fbGet(window._fbRef(window._fbDb,'ekfiil_lb')).then(function(snap){
+      var data=snap.val()||{};
+      var lb=Object.values(data).sort(function(a,b){return b.score-a.score;}).slice(0,20);
+      renderEntries(lb);
+    }).catch(function(){loading.textContent="Bağlantı hatası.";});
+  } else {
+    document.addEventListener('fbReady',function(){
+      window._fbGet(window._fbRef(window._fbDb,'ekfiil_lb')).then(function(snap){
+        var data=snap.val()||{};
+        var lb=Object.values(data).sort(function(a,b){return b.score-a.score;}).slice(0,20);
+        renderEntries(lb);
+      });
+    },{once:true});
+  }
 }
 
 function renderLogin(){
-  var lb=getLB().slice(0,5);
   var root=document.getElementById("root");root.innerHTML="";
   var wrap=document.createElement("div");wrap.className="login-wrap";
   var box=document.createElement("div");box.className="login-box";
@@ -389,18 +439,35 @@ function renderLogin(){
   var lbT=document.createElement("div");lbT.className="lb-preview-title";lbT.textContent="🏆 En İyi Oyuncular";
   lbPrev.appendChild(lbT);
   var medals=["🥇","🥈","🥉"];
-  if(!lb.length){
-    var nd=document.createElement("div");nd.style.cssText="text-align:center;color:var(--tx2);font-size:.83rem;padding:8px 0";
-    nd.textContent="Henüz kayıt yok";lbPrev.appendChild(nd);
-  }else{
-    lb.forEach(function(entry,i){
-      var row=document.createElement("div");row.className="lb-row";
-      var rn=document.createElement("span");rn.className="lbr";rn.textContent=medals[i]||i+1;
-      var rname=document.createElement("span");rname.className="lbn";rname.textContent=entry.name;
-      var rp=document.createElement("span");rp.className="lbp";rp.textContent=entry.score+" pt";
-      row.appendChild(rn);row.appendChild(rname);row.appendChild(rp);lbPrev.appendChild(row);
-    });
+  var nd=document.createElement("div");nd.style.cssText="text-align:center;color:var(--tx2);font-size:.83rem;padding:8px 0";
+  nd.textContent="Yükleniyor...";lbPrev.appendChild(nd);
+
+  function fillPreview(lb){
+    lbPrev.removeChild(nd);
+    if(!lb.length){
+      var empty=document.createElement("div");empty.style.cssText="text-align:center;color:var(--tx2);font-size:.83rem;padding:8px 0";
+      empty.textContent="Henüz kayıt yok";lbPrev.appendChild(empty);
+    }else{
+      lb.forEach(function(entry,i){
+        var row=document.createElement("div");row.className="lb-row";
+        var rn=document.createElement("span");rn.className="lbr";rn.textContent=medals[i]||i+1;
+        var rname=document.createElement("span");rname.className="lbn";rname.textContent=entry.name;
+        var rp=document.createElement("span");rp.className="lbp";rp.textContent=entry.score+" pt";
+        row.appendChild(rn);row.appendChild(rname);row.appendChild(rp);lbPrev.appendChild(row);
+      });
+    }
   }
+
+  function fetchPreview(){
+    window._fbGet(window._fbRef(window._fbDb,'ekfiil_lb')).then(function(snap){
+      var data=snap.val()||{};
+      var lb=Object.values(data).sort(function(a,b){return b.score-a.score;}).slice(0,5);
+      fillPreview(lb);
+    }).catch(function(){nd.textContent="Bağlantı hatası.";});
+  }
+  if(window._fbReady){fetchPreview();}
+  else{document.addEventListener('fbReady',fetchPreview,{once:true});}
+
   var author=document.createElement("div");author.className="author-sig";
   var aName=document.createElement("span");aName.className="author-name";aName.textContent="Uğur Yıldırım";
   var aDot=document.createElement("span");aDot.className="author-dot";aDot.textContent=" · ";
