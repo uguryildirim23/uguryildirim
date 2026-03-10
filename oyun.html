@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sözcük Arenası | Uğur Yıldırım</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, set, get, onValue, update, push, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  // =============================================
+  // 🔧 BURAYA KENDİ FIREBASE BİLGİLERİNİZİ GİRİN
+  // =============================================
+  const firebaseConfig = {
+    apiKey: "BURAYA_API_KEY",
+    authDomain: "BURAYA_AUTH_DOMAIN",
+    databaseURL: "BURAYA_DATABASE_URL",
+    projectId: "BURAYA_PROJECT_ID",
+    storageBucket: "BURAYA_STORAGE_BUCKET",
+    messagingSenderId: "BURAYA_SENDER_ID",
+    appId: "BURAYA_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  window._db = db;
+  window._dbFns = { ref, set, get, onValue, update, push, serverTimestamp };
+  window._firebaseReady = true;
+  document.dispatchEvent(new Event('firebaseReady'));
+</script>
+
+<style>
+  :root {
+    --bg: #0d0b1e;
+    --panel: #161330;
+    --card: #1f1b40;
+    --a1: #f7c948;
+    --a2: #ff6b6b;
+    --a3: #4ecdc4;
+    --a4: #a78bfa;
+    --text: #f0eeff;
+    --muted: #9b93cc;
+    --correct: #2ecc71;
+    --wrong: #e74c3c;
+    --r: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 15% 15%, #2d1b6925 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 85%, #1b2d6925 0%, transparent 50%);
+  }
+
+  /* ---- SCREENS ---- */
+  .screen { display: none; }
+  .screen.active { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+
+  /* ---- JOIN ---- */
+  #join { gap: 20px; text-align: center; max-width: 400px; margin: 0 auto; }
+  .game-logo { font-family: 'Baloo 2', sans-serif; font-size: clamp(2rem,6vw,3.2rem); font-weight: 800;
+    background: linear-gradient(135deg,#fff 30%,var(--a1)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .game-sub { color: var(--muted); font-size: .95rem; font-weight: 600; }
+
+  .input-group { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+  .input-field {
+    width: 100%;
+    background: var(--card);
+    border: 1.5px solid #ffffff15;
+    border-radius: var(--r);
+    padding: 14px 18px;
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .input-field:focus { border-color: var(--a1)80; }
+  .input-field::placeholder { color: var(--muted); }
+
+  .btn-big {
+    width: 100%;
+    background: linear-gradient(135deg, var(--a1), #f7954a);
+    color: #1a0f00;
+    border: none;
+    padding: 16px;
+    border-radius: 50px;
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 6px 24px var(--a1)50;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-big:hover { transform: translateY(-2px); box-shadow: 0 10px 32px var(--a1)60; }
+  .btn-big:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+  /* ---- LOBBY ---- */
+  #lobby { gap: 18px; text-align: center; max-width: 560px; width: 100%; }
+  .lobby-title { font-family:'Baloo 2',sans-serif; font-size:1.6rem; font-weight:800; }
+  .player-count-badge {
+    background: var(--card);
+    border-radius: 50px;
+    padding: 8px 24px;
+    font-weight: 700;
+    color: var(--a1);
+    font-size: .95rem;
+    border: 1px solid #ffffff10;
+  }
+  .players-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    width: 100%;
+  }
+  .player-chip {
+    background: var(--card);
+    border-radius: var(--r);
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ffffff10;
+    transition: all .3s;
+  }
+  .player-chip.ready { border-color: var(--correct); background: #1a4731; }
+  .player-chip-avatar { font-size: 1.6rem; margin-bottom: 4px; }
+  .player-chip-name { font-size: .8rem; font-weight: 700; }
+  .player-chip-status { font-size: .7rem; color: var(--muted); margin-top: 2px; }
+  .player-chip.ready .player-chip-status { color: var(--correct); }
+
+  .waiting-msg { color: var(--muted); font-size: .9rem; font-weight: 600; }
+  .waiting-dots::after {
+    content: '...';
+    animation: dots 1.5s infinite;
+  }
+  @keyframes dots {
+    0%{content:'.'} 33%{content:'..'} 66%{content:'...'} 100%{content:'.'}
+  }
+
+  /* ---- TEXT SCREEN ---- */
+  #text-read { gap: 16px; max-width: 700px; width: 100%; }
+  .text-header { text-align: center; }
+  .countdown-ring {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: conic-gradient(var(--a1) var(--pct,100%), #ffffff15 0%);
+    display: flex; align-items: center; justify-content: center;
+    font-family:'Baloo 2',sans-serif; font-size:1.4rem; font-weight:800;
+    color: var(--a1);
+    margin: 0 auto;
+    transition: --pct .1s;
+  }
+  .text-box {
+    background: var(--card);
+    border-radius: var(--r);
+    padding: 28px 32px;
+    border: 1px solid #ffffff10;
+    line-height: 1.85;
+    font-size: 1rem;
+    color: #ddd8ff;
+    max-height: 55vh;
+    overflow-y: auto;
+  }
+  .text-box h3 { font-family:'Baloo 2',sans-serif; font-size:1.2rem; color:var(--a1); margin-bottom:14px; }
+  .text-box p { margin-bottom: 12px; }
+  .text-box::-webkit-scrollbar{width:5px}
+  .text-box::-webkit-scrollbar-thumb{background:var(--a1)40;border-radius:10px}
+
+  /* ---- QUESTION ---- */
+  #question-screen { gap: 16px; max-width: 680px; width: 100%; }
+  .q-header { display:flex; align-items:center; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px; }
+  .q-badge { background:var(--card); border-radius:50px; padding:6px 18px; font-size:.8rem; font-weight:700; color:var(--muted); }
+  .timer-circle {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family:'Baloo 2',sans-serif; font-size:1.2rem; font-weight:800;
+    color: var(--a1);
+    background: conic-gradient(var(--a1) var(--pct,100%), #ffffff15 0%);
+    transition: color .3s;
+    flex-shrink: 0;
+  }
+  .timer-circle.warn { color: var(--wrong); background: conic-gradient(var(--wrong) var(--pct,100%), #ffffff15 0%); }
+
+  .q-card {
+    background: var(--card);
+    border-radius: var(--r);
+    padding: 24px 28px;
+    border: 1px solid #ffffff10;
+    width: 100%;
+  }
+  .q-num { font-size:.75rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--a1); margin-bottom:8px; }
+  .q-text { font-family:'Baloo 2',sans-serif; font-size:clamp(1rem,2.5vw,1.3rem); font-weight:700; line-height:1.5; }
+
+  .opts { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; }
+  .opt {
+    background: var(--card);
+    border: 2px solid #ffffff12;
+    border-radius: var(--r);
+    padding: 16px 18px;
+    display: flex; align-items: center; gap: 12px;
+    cursor: pointer;
+    font-family:'Nunito',sans-serif; font-size:.95rem; font-weight:700; color:var(--text);
+    transition: all .18s;
+    text-align: left;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--a1)70; background: #2a2560; transform: translateY(-2px); }
+  .opt:disabled { cursor: default; }
+  .opt.selected { border-color: var(--a1); background: #2a2560; }
+  .opt.correct { background: #1a4731; border-color: var(--correct); color: #a8f5c8; }
+  .opt.wrong { background: #4a1a1a; border-color: var(--wrong); color: #f5a8a8; }
+  .opt.reveal { background: #1a4731; border-color: var(--correct); color: #a8f5c8; }
+  .opt-letter {
+    width:32px; height:32px; border-radius:8px; background:#ffffff12;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Baloo 2',sans-serif; font-weight:800; font-size:.9rem;
+    flex-shrink:0; transition:background .2s;
+  }
+  .opt.correct .opt-letter { background:var(--correct); color:#0a2e1a; }
+  .opt.wrong .opt-letter { background:var(--wrong); color:#2e0a0a; }
+  .opt.reveal .opt-letter { background:var(--correct); color:#0a2e1a; }
+
+  .answered-msg {
+    background: var(--card);
+    border-radius: 50px;
+    padding: 10px 24px;
+    font-size: .9rem;
+    font-weight: 700;
+    color: var(--a3);
+    border: 1px solid var(--a3)30;
+    text-align: center;
+  }
+
+  /* ---- LEADERBOARD ---- */
+  #leaderboard { gap: 20px; max-width: 500px; width: 100%; text-align: center; }
+  .lb-title { font-family:'Baloo 2',sans-serif; font-size:2rem; font-weight:800;
+    background:linear-gradient(135deg,var(--a1),var(--a2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .lb-list { width:100%; display:flex; flex-direction:column; gap:10px; }
+  .lb-row {
+    background: var(--card);
+    border-radius: var(--r);
+    padding: 16px 20px;
+    display: flex; align-items: center; gap: 16px;
+    border: 1px solid #ffffff10;
+    transition: all .3s;
+  }
+  .lb-row.gold { border-color: var(--a1); box-shadow: 0 0 20px var(--a1)30; }
+  .lb-row.silver { border-color: #c0c0c0; }
+  .lb-row.bronze { border-color: #cd7f32; }
+  .lb-rank { font-family:'Baloo 2',sans-serif; font-size:1.4rem; font-weight:800; width:36px; text-align:center; flex-shrink:0; }
+  .lb-info { flex:1; text-align:left; }
+  .lb-name { font-weight:700; font-size:.95rem; }
+  .lb-time { font-size:.75rem; color:var(--muted); margin-top:2px; }
+  .lb-pts { font-family:'Baloo 2',sans-serif; font-size:1.3rem; font-weight:800; color:var(--a1); }
+
+  /* Flash overlay */
+  .flash { position:fixed;inset:0;pointer-events:none;z-index:50;opacity:0;transition:opacity .1s; }
+  .flash.correct-f { background:var(--correct); }
+  .flash.wrong-f { background:var(--wrong); }
+  .flash.show { opacity:.18; }
+
+  /* Confetti */
+  .cp { position:fixed;width:10px;height:10px;top:-20px;animation:fall linear forwards;z-index:100;pointer-events:none;border-radius:2px; }
+  @keyframes fall { to{transform:translateY(110vh) rotate(720deg);opacity:0} }
+
+  @media(max-width:500px){ .opts{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<div class="flash" id="flash"></div>
+
+<!-- ========== JOIN ========== -->
+<div class="screen active" id="join">
+  <div class="game-logo">🏟️ Sözcük Arenası</div>
+  <div class="game-sub">Uğur Yıldırım · 7. Sınıf Türkçe</div>
+  <div class="input-group">
+    <input class="input-field" id="nameInput" placeholder="Adınızı girin..." maxlength="20" />
+    <button class="btn-big" id="joinBtn" onclick="joinGame()">Oyuna Katıl →</button>
+  </div>
+  <div id="joinMsg" style="color:var(--muted);font-size:.85rem;font-weight:600;min-height:20px;text-align:center;"></div>
+</div>
+
+<!-- ========== LOBBY ========== -->
+<div class="screen" id="lobby">
+  <div class="lobby-title">🎮 Oyun Lobisi</div>
+  <div class="player-count-badge" id="playerCountBadge">0 / 10 oyuncu</div>
+  <div class="players-grid" id="playersGrid"></div>
+  <div class="waiting-msg">Herkes hazır olduğunda oyun başlayacak <span class="waiting-dots"></span></div>
+  <button class="btn-big" id="readyBtn" style="max-width:300px;margin-top:6px;" onclick="setReady()">✅ Hazırım!</button>
+</div>
+
+<!-- ========== TEXT READ ========== -->
+<div class="screen" id="text-read">
+  <div class="text-header">
+    <div style="font-family:'Baloo 2',sans-serif;font-size:1rem;font-weight:700;color:var(--muted);margin-bottom:8px;letter-spacing:1px;">METNİ OKU · SÜRE</div>
+    <div class="countdown-ring" id="readCountdown" style="--pct:100%;">90</div>
+  </div>
+  <div class="text-box">
+    <h3>Anadolu'nun Saklı Hazinesi: Kitap</h3>
+    <p>Kitaplar, insanlığın binlerce yıllık birikimini sayfalarına işlemiş sessiz dostlardır. Bir kitap açtığınızda yalnızca kâğıt ve mürekkep değil; yaşanmış hayatlar, düşünceler ve duygular karşınıza çıkar. Okumanın en büyük armağanı, hiç gitmeden her yere gidebilmek, hiç yaşamadan binlerce hayat yaşayabilmektir.</p>
+    <p>Orta Çağ'da kitaplar el yazmasıyla üretilir ve son derece değerli tutulurdu. Bir kitabı çoğaltmak aylarca sürerdi; bu yüzden yalnızca zenginler ve din adamları kitaplara sahip olabilirdi. Gutenberg'in matbaayı icat etmesiyle birlikte bilgi demokratikleşti ve kitaplar halkın eline geçmeye başladı.</p>
+    <p>Günümüzde fiziksel kitapların yanı sıra elektronik kitaplar da giderek yaygınlaşmaktadır. Ancak araştırmalar, kâğıt kitap okumanın beyin üzerinde daha derin ve kalıcı izler bıraktığını ortaya koymaktadır. Sayfayı çevirmenin dokunsallığı, kitabın kokusu ve ağırlığı okuma deneyimini bambaşka bir boyuta taşır.</p>
+    <p>Düzenli okuma alışkanlığı kazanan çocuklar, hem dil becerilerini hem de empati yeteneklerini güçlendirmektedir. Farklı karakterlerin gözünden dünyayı görmek, bireylerin anlayış ve hoşgörüsünü artırır. Bu nedenle pek çok eğitimci, kitap okumayı yalnızca bir bilgi edinme aracı değil, aynı zamanda bir karakter gelişimi yolu olarak görmektedir.</p>
+  </div>
+  <div style="color:var(--muted);font-size:.85rem;font-weight:600;text-align:center;">Süre bitince sorular başlayacak</div>
+</div>
+
+<!-- ========== QUESTION ========== -->
+<div class="screen" id="question-screen">
+  <div class="q-header" style="width:100%;max-width:680px;">
+    <div class="q-badge" id="qBadge">SORU 1/10</div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="font-size:.8rem;color:var(--muted);font-weight:600;" id="myScore">Puan: 0</div>
+      <div class="timer-circle" id="qTimer" style="--pct:100%;">20</div>
+    </div>
+  </div>
+  <div class="q-card">
+    <div class="q-num" id="qNum">SORU 1</div>
+    <div class="q-text" id="qText"></div>
+  </div>
+  <div class="opts" id="optsGrid"></div>
+  <div class="answered-msg" id="answeredMsg" style="display:none;">✅ Cevabın alındı! Sonraki soru bekleniyor...</div>
+</div>
+
+<!-- ========== LEADERBOARD ========== -->
+<div class="screen" id="leaderboard">
+  <div style="font-size:3rem;">🏆</div>
+  <div class="lb-title">Sonuçlar!</div>
+  <div class="lb-list" id="lbList"></div>
+  <a href="index.html" style="color:var(--muted);font-size:.9rem;font-weight:600;margin-top:8px;">← Ana Sayfaya Dön</a>
+</div>
+
+<script>
+// ============ DATA ============
+const SORULAR = [
+  { soru:"Metne göre Gutenberg'in matbaayı icat etmesinin en önemli sonucu nedir?", s:["Kitapların fiyatlarının artması","Bilginin halka yayılması ve demokratikleşmesi","El yazması kitapların değer kazanması","Din adamlarının kitap okumasının artması"], d:1 },
+  { soru:"Metinde 'sessiz dostlar' ifadesiyle kitaplar nasıl nitelendirilmektedir?", s:["Pahalı ve ulaşılmaz nesneler","İnsanlığın birikimini taşıyan değerli varlıklar","Yalnızca zenginlere ait eşyalar","Elektronik araçların rakipleri"], d:1 },
+  { soru:"Araştırmalara göre kâğıt kitap okumanın elektronik kitaba göre farkı nedir?", s:["Daha hızlı okunabilmesi","Daha ucuz olması","Beyin üzerinde daha derin ve kalıcı izler bırakması","Daha fazla bilgi içermesi"], d:2 },
+  { soru:"Orta Çağ'da kitapların değerli olmasının temel nedeni neydi?", s:["Rengarenk resimler içermeleri","El yazmasıyla üretilip çoğaltılmalarının çok zaman alması","Yalnızca Latince yazılmış olmaları","Taştan yapılmış olmaları"], d:1 },
+  { soru:"'Hiç gitmeden her yere gidebilmek' ifadesi hangi anlama gelmektedir?", s:["Hızlı ulaşım araçlarıyla seyahat etmek","Hayalinde farklı yerler canlandırmak","Kitaplar sayesinde zihinsel olarak farklı dünyalara girmek","İnternette sanal gezi yapmak"], d:2 },
+  { soru:"Metne göre kitap okumanın çocuklara kazandırdığı beceriler arasında hangisi yoktur?", s:["Dil becerisi","Empati yeteneği","Anlayış ve hoşgörü","Matematik başarısı"], d:3 },
+  { soru:"Eğitimciler kitap okumayı ne olarak görmektedir?", s:["Yalnızca bir eğlence aracı","Sadece bilgi edinme yöntemi","Hem bilgi edinme hem de karakter gelişimi yolu","Yalnızca sınav hazırlık aracı"], d:2 },
+  { soru:"Metnin ana fikri aşağıdakilerden hangisidir?", s:["Elektronik kitaplar kâğıt kitaplardan üstündür","Kitaplar insanlığa bilgi, deneyim ve karakter kazandıran değerli bir araçtır","Orta Çağ'da kitaplara yalnızca zenginler ulaşabilirdi","Matbaanın icadı Orta Çağ'da gerçekleşmiştir"], d:1 },
+  { soru:"Paragrafların sırasına göre metnin yapısı nasıldır?", s:["Sorun–Çözüm–Örnek–Sonuç","Giriş–Tarihî arka plan–Günümüz–Sonuç","Karşılaştırma–Tanım–Örnek–Öneri","Neden–Sonuç–Karşılaştırma–Özet"], d:1 },
+  { soru:"'Bilginin demokratikleşmesi' ifadesindeki 'demokratikleşme' sözcüğü burada ne anlama gelmektedir?", s:["Bilginin seçimlerde kullanılması","Bilgiye yalnızca aydınların ulaşması","Bilginin herkese açık ve ulaşılabilir hale gelmesi","Bilginin devlet tarafından denetlenmesi"], d:2 }
+];
+
+const EMOJIS = ['🦁','🐯','🦊','🐺','🦅','🐉','🦄','🐸','🦋','🐙','🦈','🦚'];
+const TOTAL_PLAYERS = 10;
+const READ_TIME = 90;
+const Q_TIME = 20;
+
+// ============ STATE ============
+let myName = '';
+let myId = '';
+let myScore = 0;
+let currentQ = 0;
+let timerInterval = null;
+let gameStartTime = 0;
+let answered = false;
+let db, dbFns;
+
+// ============ FIREBASE WAIT ============
+function waitFirebase(cb) {
+  if (window._firebaseReady) { db = window._db; dbFns = window._dbFns; cb(); }
+  else document.addEventListener('firebaseReady', () => { db = window._db; dbFns = window._dbFns; cb(); });
+}
+
+// ============ JOIN ============
+function joinGame() {
+  const name = document.getElementById('nameInput').value.trim();
+  if (!name) { setMsg('Lütfen adınızı girin!'); return; }
+  myName = name;
+  myId = 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2,6);
+
+  document.getElementById('joinBtn').disabled = true;
+  setMsg('Bağlanıyor...');
+
+  waitFirebase(() => {
+    const { ref, set, onValue } = dbFns;
+    // Write player to lobby
+    set(ref(db, `lobby/players/${myId}`), {
+      name: myName,
+      emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
+      ready: false,
+      joinedAt: Date.now()
+    }).then(() => {
+      showScreen('lobby');
+      listenLobby();
+    }).catch(e => {
+      setMsg('Bağlantı hatası. Firebase ayarlarını kontrol edin.');
+      document.getElementById('joinBtn').disabled = false;
+    });
+  });
+}
+
+// ============ LOBBY ============
+function listenLobby() {
+  const { ref, onValue } = dbFns;
+  onValue(ref(db, 'lobby'), (snap) => {
+    const data = snap.val() || {};
+    const players = data.players || {};
+    updateLobbyUI(players);
+
+    // Check if game started
+    if (data.gameState === 'reading') startReadingPhase(data.readStartTime);
+    if (data.gameState === 'questions') startQuestionsPhase(data.currentQ || 0);
+    if (data.gameState === 'done') showLeaderboard();
+  });
+}
+
+function updateLobbyUI(players) {
+  const keys = Object.keys(players);
+  document.getElementById('playerCountBadge').textContent = `${keys.length} / ${TOTAL_PLAYERS} oyuncu`;
+  const grid = document.getElementById('playersGrid');
+  grid.innerHTML = keys.map(k => {
+    const p = players[k];
+    return `<div class="player-chip ${p.ready ? 'ready' : ''}">
+      <div class="player-chip-avatar">${p.emoji}</div>
+      <div class="player-chip-name">${p.name}</div>
+      <div class="player-chip-status">${p.ready ? '✅ Hazır' : 'Bekliyor'}</div>
+    </div>`;
+  }).join('');
+
+  // Auto-start if all ready & >= 2 players (for demo; change to TOTAL_PLAYERS for production)
+  const readyCount = keys.filter(k => players[k].ready).length;
+  if (keys.length >= 2 && readyCount === keys.length && keys.includes(myId)) {
+    // First player triggers start
+    if (keys[0] === myId) triggerGameStart();
+  }
+}
+
+function setReady() {
+  const { ref, update } = dbFns;
+  update(ref(db, `lobby/players/${myId}`), { ready: true });
+  document.getElementById('readyBtn').disabled = true;
+  document.getElementById('readyBtn').textContent = '✅ Hazır!';
+}
+
+function triggerGameStart() {
+  const { ref, update } = dbFns;
+  update(ref(db, 'lobby'), {
+    gameState: 'reading',
+    readStartTime: Date.now()
+  });
+}
+
+// ============ READING PHASE ============
+let readingStarted = false;
+function startReadingPhase(startTime) {
+  if (readingStarted) return;
+  readingStarted = true;
+  showScreen('text-read');
+  gameStartTime = startTime;
+
+  const ring = document.getElementById('readCountdown');
+  const tick = () => {
+    const elapsed = (Date.now() - startTime) / 1000;
+    const left = Math.max(0, READ_TIME - elapsed);
+    const pct = (left / READ_TIME) * 100;
+    ring.style.setProperty('--pct', pct + '%');
+    ring.textContent = Math.ceil(left);
+    if (left <= 0) {
+      clearInterval(timerInterval);
+      if (myId === Object.keys({}).sort()[0]) { /* controlled by host */ }
+      // Transition to questions (host triggers)
+      const { ref, update, get } = dbFns;
+      get(ref(db, 'lobby/players')).then(snap => {
+        const players = snap.val() || {};
+        const keys = Object.keys(players).sort();
+        if (keys[0] === myId) {
+          update(ref(db, 'lobby'), { gameState: 'questions', currentQ: 0, qStartTime: Date.now() });
+        }
+      });
+    }
+  };
+  tick();
+  timerInterval = setInterval(tick, 200);
+}
+
+// ============ QUESTIONS PHASE ============
+let questionStarted = -1;
+let qTimerInt = null;
+function startQuestionsPhase(qIndex) {
+  if (questionStarted === qIndex) return;
+  questionStarted = qIndex;
+  currentQ = qIndex;
+  answered = false;
+  showScreen('question-screen');
+  document.getElementById('answeredMsg').style.display = 'none';
+  loadQuestion(qIndex);
+}
+
+function loadQuestion(idx) {
+  clearInterval(qTimerInt);
+  answered = false;
+  const q = SORULAR[idx];
+  const letters = ['A','B','C','D'];
+  document.getElementById('qBadge').textContent = `SORU ${idx+1}/${SORULAR.length}`;
+  document.getElementById('qNum').textContent = `SORU ${idx+1}`;
+  document.getElementById('qText').textContent = q.soru;
+  document.getElementById('myScore').textContent = `Puan: ${myScore}`;
+  document.getElementById('answeredMsg').style.display = 'none';
+
+  document.getElementById('optsGrid').innerHTML = q.s.map((s, i) =>
+    `<button class="opt" id="opt${i}" onclick="selectOpt(${i})">
+      <span class="opt-letter">${letters[i]}</span>${s}
+    </button>`
+  ).join('');
+
+  // Timer
+  let left = Q_TIME;
+  const circ = document.getElementById('qTimer');
+  const updateCirc = () => {
+    const pct = (left / Q_TIME) * 100;
+    circ.style.setProperty('--pct', pct + '%');
+    circ.textContent = left;
+    circ.className = 'timer-circle' + (left <= 5 ? ' warn' : '');
+  };
+  updateCirc();
+  qTimerInt = setInterval(() => {
+    left--;
+    updateCirc();
+    if (left <= 0) {
+      clearInterval(qTimerInt);
+      if (!answered) timeUpQ();
+    }
+  }, 1000);
+}
+
+function selectOpt(idx) {
+  if (answered) return;
+  answered = true;
+  clearInterval(qTimerInt);
+
+  const q = SORULAR[currentQ];
+  const correct = q.d;
+  const btns = document.querySelectorAll('.opt');
+  btns.forEach(b => b.disabled = true);
+
+  if (idx === correct) {
+    btns[idx].classList.add('correct');
+    myScore++;
+    flashScreen('correct-f');
+  } else {
+    btns[idx].classList.add('wrong');
+    btns[correct].classList.add('reveal');
+    flashScreen('wrong-f');
+  }
+
+  document.getElementById('myScore').textContent = `Puan: ${myScore}`;
+  document.getElementById('answeredMsg').style.display = 'block';
+
+  // Save score to firebase
+  const { ref, update } = dbFns;
+  update(ref(db, `lobby/scores/${myId}`), {
+    name: myName,
+    score: myScore,
+    finishTime: Date.now() - gameStartTime
+  });
+
+  // Host advances question
+  setTimeout(() => {
+    const { ref: r, get, update: u } = dbFns;
+    get(r(db, 'lobby/players')).then(snap => {
+      const keys = Object.keys(snap.val() || {}).sort();
+      if (keys[0] === myId) {
+        const nextQ = currentQ + 1;
+        if (nextQ >= SORULAR.length) {
+          u(r(db, 'lobby'), { gameState: 'done' });
+        } else {
+          u(r(db, 'lobby'), { currentQ: nextQ, qStartTime: Date.now() });
+        }
+      }
+    });
+  }, 3000);
+}
+
+function timeUpQ() {
+  answered = true;
+  const q = SORULAR[currentQ];
+  const btns = document.querySelectorAll('.opt');
+  btns.forEach(b => b.disabled = true);
+  btns[q.d].classList.add('reveal');
+  document.getElementById('answeredMsg').style.display = 'block';
+}
+
+// ============ LEADERBOARD ============
+let lbShown = false;
+function showLeaderboard() {
+  if (lbShown) return;
+  lbShown = true;
+  clearInterval(qTimerInt);
+  clearInterval(timerInterval);
+
+  const { ref, get } = dbFns;
+  get(ref(db, 'lobby/scores')).then(snap => {
+    const scores = snap.val() || {};
+    const sorted = Object.values(scores).sort((a,b) => b.score - a.score || a.finishTime - b.finishTime);
+    const medals = ['🥇','🥈','🥉'];
+    const classes = ['gold','silver','bronze'];
+    const list = document.getElementById('lbList');
+    list.innerHTML = sorted.map((p,i) => `
+      <div class="lb-row ${classes[i]||''}">
+        <div class="lb-rank">${medals[i] || (i+1)}</div>
+        <div class="lb-info">
+          <div class="lb-name">${p.name}</div>
+          <div class="lb-time">Süre: ${(p.finishTime/1000).toFixed(1)}s</div>
+        </div>
+        <div class="lb-pts">${p.score} puan</div>
+      </div>
+    `).join('');
+    showScreen('leaderboard');
+    if (sorted[0]?.name === myName) launchConfetti();
+  });
+}
+
+// ============ UTILS ============
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function setMsg(m) { document.getElementById('joinMsg').textContent = m; }
+function flashScreen(cls) {
+  const f = document.getElementById('flash');
+  f.className = 'flash ' + cls + ' show';
+  setTimeout(() => f.classList.remove('show'), 400);
+}
+function launchConfetti() {
+  const cols = ['#f7c948','#ff6b6b','#4ecdc4','#ff6b9d','#a8f5c8'];
+  for (let i = 0; i < 70; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'cp';
+      el.style.left = Math.random()*100+'vw';
+      el.style.background = cols[Math.floor(Math.random()*cols.length)];
+      el.style.borderRadius = Math.random()>.5?'50%':'2px';
+      el.style.animationDuration = (1.5+Math.random()*2)+'s';
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(),4000);
+    }, i*30);
+  }
+}
+
+// Enter key support
+document.getElementById('nameInput').addEventListener('keydown', e => { if(e.key==='Enter') joinGame(); });
+</script>
+</body>
+</html>

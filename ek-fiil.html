@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Türkçede Ek Fiiller 🌟</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0c29;--card:#1e1b4b;--card2:#252060;--a1:#f59e0b;--a2:#ec4899;--a3:#06b6d4;--a4:#10b981;--tx:#f0e6ff;--tx2:#c4b5fd;--ok:#10b981;--no:#ef4444;--br:rgba(167,139,250,.22);--sh:0 8px 32px rgba(0,0,0,.5)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden;background-image:radial-gradient(ellipse at 20% 50%,rgba(139,92,246,.14) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(236,72,153,.09) 0%,transparent 50%)}
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.1;transform:scale(1)}to{opacity:.7;transform:scale(1.3)}}
+.app{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:20px}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;position:relative;z-index:1}
+.login-box{background:var(--card);border:1px solid var(--br);border-radius:28px;padding:38px 34px;max-width:420px;width:100%;box-shadow:var(--sh);position:relative;overflow:hidden}
+.login-box::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--a1),var(--a2),var(--a3))}
+.game-logo{font-family:'Baloo 2',cursive;font-size:1.9rem;font-weight:800;text-align:center;background:linear-gradient(135deg,#f59e0b,#ec4899,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px}
+.login-sub{text-align:center;color:var(--tx2);font-size:.88rem;margin-bottom:26px}
+.author-sig{text-align:center;margin-top:20px;padding-top:15px;border-top:1px solid rgba(167,139,250,.2)}
+.author-name{font-size:.84rem;font-weight:800;color:rgba(196,181,253,.72);letter-spacing:.04em}
+.author-dot{font-size:.84rem;color:rgba(196,181,253,.4);margin:0 3px}
+.author-title{font-size:.8rem;font-weight:600;color:rgba(196,181,253,.55);letter-spacing:.03em}
+.footer-author{text-align:center;padding:16px 0 10px;font-size:.75rem;color:rgba(196,181,253,.45);letter-spacing:.06em;font-weight:700;position:relative;z-index:1}
+label{font-size:.87rem;font-weight:700;color:var(--tx2);display:block;margin-bottom:7px}
+.inp{width:100%;background:rgba(255,255,255,.07);border:2px solid var(--br);border-radius:14px;padding:13px 17px;font-family:'Nunito',sans-serif;font-size:1.1rem;font-weight:700;color:var(--tx);outline:none;transition:border-color .3s}
+.inp:focus{border-color:var(--a3)}
+.inp.err{border-color:var(--no)}
+.err-msg{color:#fca5a5;font-size:.82rem;font-weight:700;margin-top:6px;min-height:18px}
+.login-btn{width:100%;margin-top:16px;font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;padding:13px;border-radius:14px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--a1),#f97316);color:#fff;transition:all .25s}
+.login-btn:hover{transform:translateY(-2px)}
+.lb-preview{margin-top:22px}
+.lb-preview-title{font-size:.82rem;font-weight:800;color:var(--tx2);text-align:center;margin-bottom:9px;text-transform:uppercase;letter-spacing:.05em}
+.lb-row{display:flex;align-items:center;gap:10px;padding:7px 12px;border-radius:10px;background:var(--card2);margin-bottom:5px;font-size:.87rem;font-weight:700}
+.lb-row .lbr{width:22px;text-align:center}.lb-row .lbn{flex:1}.lb-row .lbp{color:var(--a1)}
+.hdr{text-align:center;padding:24px 20px 14px}
+.hdr h1{font-family:'Baloo 2',cursive;font-size:clamp(1.5rem,5vw,2.3rem);font-weight:800;background:linear-gradient(135deg,#f59e0b,#ec4899,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:4px}
+.hdr .sub{color:var(--tx2);font-size:.88rem;font-weight:600}
+.player-chip{display:inline-flex;align-items:center;gap:7px;margin-top:7px;background:var(--card2);border:1px solid var(--br);border-radius:50px;padding:5px 14px;font-size:.87rem;font-weight:700;color:var(--a3)}
+.score-bar{display:flex;justify-content:center;gap:10px;margin:8px 0 14px;flex-wrap:wrap}
+.chip{background:var(--card2);border:1px solid var(--br);border-radius:50px;padding:5px 14px;font-size:.85rem;font-weight:700;display:flex;align-items:center;gap:5px}
+.chip.c{border-color:var(--ok);color:var(--ok)}.chip.w{border-color:var(--no);color:var(--no)}.chip.p{border-color:var(--a1);color:var(--a1)}
+.nav{display:flex;gap:7px;justify-content:center;margin-bottom:22px;flex-wrap:wrap}
+.nav-btn{font-family:'Baloo 2',cursive;font-size:.83rem;font-weight:700;padding:7px 15px;border-radius:50px;border:2px solid var(--br);background:var(--card);color:var(--tx2);cursor:pointer;transition:all .3s;position:relative}
+.nav-btn:hover:not(.locked){border-color:var(--a1);color:var(--a1);transform:translateY(-2px)}
+.nav-btn.active{background:linear-gradient(135deg,var(--a1),var(--a2));border-color:transparent;color:#fff;box-shadow:0 4px 18px rgba(245,158,11,.4);transform:translateY(-2px)}
+.nav-btn.locked{opacity:.3;cursor:not-allowed}
+.nav-btn.done{border-color:var(--ok);color:var(--ok)}
+.nav-btn.done::after{content:'✓';position:absolute;top:-6px;right:-6px;background:var(--ok);color:#fff;border-radius:50%;width:17px;height:17px;font-size:.68rem;display:flex;align-items:center;justify-content:center;font-weight:900}
+.card{background:var(--card);border:1px solid var(--br);border-radius:22px;padding:26px;box-shadow:var(--sh);animation:fadeUp .45s ease;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--a1),var(--a2),var(--a3))}
+.sec-title{font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:700;margin-bottom:5px;color:var(--a1)}
+.sec-desc{font-size:.87rem;color:var(--tx2);margin-bottom:18px;line-height:1.5}
+.prog-wrap{background:rgba(255,255,255,.1);border-radius:50px;height:7px;margin-bottom:10px;overflow:hidden}
+.prog-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--a1),var(--a2));transition:width .5s ease}
+.prog-lbl{font-size:.8rem;color:var(--tx2);text-align:right;margin:3px 0 14px;font-weight:700}
+.qbox{background:var(--card2);border-radius:14px;padding:18px 22px;margin-bottom:14px;border:1px solid var(--br);position:relative}
+.qnum{font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--a2);margin-bottom:7px}
+.qtxt{font-size:.98rem;font-weight:600;line-height:1.7}
+.qhi{color:var(--a1);font-weight:800}
+.qtag{display:inline-block;background:rgba(6,182,212,.13);border:1px solid rgba(6,182,212,.38);color:var(--a3);border-radius:7px;padding:2px 9px;font-size:.8rem;font-weight:700;margin:4px 2px}
+.pt-badge{position:absolute;top:11px;right:13px;background:rgba(245,158,11,.13);border:1px solid rgba(245,158,11,.38);border-radius:7px;padding:2px 9px;font-size:.76rem;font-weight:800;color:var(--a1)}
+.ans-row{display:flex;gap:9px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.ans-inp{flex:1;min-width:180px;background:rgba(255,255,255,.06);border:2px solid var(--br);border-radius:11px;padding:11px 15px;font-family:'Nunito',sans-serif;font-size:1.03rem;font-weight:700;color:var(--tx);transition:border-color .3s;outline:none}
+.ans-inp:focus{border-color:var(--a3)}
+.ans-inp.ok{border-color:var(--ok);background:rgba(16,185,129,.1)}
+.ans-inp.no{border-color:var(--no);background:rgba(239,68,68,.08)}
+.btn{font-family:'Baloo 2',cursive;font-size:.95rem;font-weight:700;padding:11px 22px;border-radius:11px;border:none;cursor:pointer;transition:all .25s;display:inline-flex;align-items:center;gap:7px}
+.btn-p{background:linear-gradient(135deg,var(--a1),#f97316);color:#fff;box-shadow:0 4px 14px rgba(245,158,11,.32)}
+.btn-p:hover{transform:translateY(-2px)}
+.btn-s{background:var(--card2);color:var(--tx2);border:1px solid var(--br)}
+.btn-s:hover{border-color:var(--a3);color:var(--a3)}
+.nxt-row{display:flex;justify-content:flex-end;margin-top:14px;gap:9px}
+.fb{border-radius:12px;padding:12px 16px;margin-top:9px;font-weight:700;font-size:.92rem;display:none;align-items:flex-start;gap:9px;line-height:1.5}
+.fb.show{display:flex}
+.fb.ok{background:rgba(16,185,129,.13);border:2px solid var(--ok);color:#34d399}
+.fb.no{background:rgba(239,68,68,.09);border:2px solid var(--no);color:#fca5a5}
+.choices-2{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:14px 0}
+.ch{font-family:'Nunito',sans-serif;font-size:.92rem;font-weight:700;padding:13px 15px;border-radius:13px;border:2px solid var(--br);background:var(--card2);color:var(--tx);cursor:pointer;transition:all .25s;text-align:center;line-height:1.4}
+.ch:hover:not(:disabled){border-color:var(--a3);color:var(--a3);transform:translateY(-2px)}
+.ch.ok{border-color:var(--ok)!important;background:rgba(16,185,129,.18)!important;color:#34d399!important}
+.ch.no{border-color:var(--no)!important;background:rgba(239,68,68,.13)!important;color:#fca5a5!important}
+.ch:disabled{cursor:default}
+.txtdisplay{line-height:3;font-size:1rem;font-weight:600;background:var(--card2);border-radius:14px;padding:20px 22px;border:1px solid var(--br)}
+.wc{cursor:pointer;border-radius:6px;padding:2px 4px;transition:background .15s,color .15s;display:inline}
+.wc:hover{background:rgba(167,139,250,.22);color:#c4b5fd}
+.wc.found{background:linear-gradient(135deg,var(--a4),#059669)!important;color:#fff!important;border-radius:7px;padding:2px 8px;animation:correctWord .4s cubic-bezier(.175,.885,.32,1.275)}
+.wc.wrong-flash{background:rgba(239,68,68,.22)!important;color:var(--no)!important;animation:shake .35s ease}
+@keyframes correctWord{0%{transform:scale(1)}50%{transform:scale(1.22)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.found-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(16,185,129,.18);border:1px solid var(--ok);border-radius:50px;padding:3px 11px;font-size:.8rem;color:#34d399;font-weight:700}
+.complete{text-align:center;padding:32px 16px}
+.cmpl-ico{font-size:3.6rem;margin-bottom:14px;animation:bounce 1s ease infinite alternate}
+.cmpl-ttl{font-family:'Baloo 2',cursive;font-size:1.75rem;font-weight:800;background:linear-gradient(135deg,var(--a1),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:9px}
+.final-score{font-size:3rem;font-weight:900;color:var(--a1);text-shadow:0 0 28px rgba(245,158,11,.55);margin:14px 0}
+.brkdwn{background:var(--card2);border-radius:14px;padding:16px;margin:14px 0;text-align:left;border:1px solid var(--br)}
+.brow{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.88rem;font-weight:700}
+.brow:last-child{border-bottom:none}
+.brow span:first-child{color:var(--tx2)}.brow span:last-child{color:var(--a1)}
+.mega{position:fixed;inset:0;pointer-events:none;z-index:500;display:flex;align-items:center;justify-content:center;animation:megaFlash .7s ease forwards}
+@keyframes megaFlash{0%{background:rgba(16,185,129,0)}35%{background:rgba(16,185,129,.18)}100%{background:rgba(16,185,129,0)}}
+.mega-txt{font-family:'Baloo 2',cursive;font-size:3.8rem;font-weight:900;color:#10b981;text-shadow:0 0 40px rgba(16,185,129,.85);animation:megaTxt .7s cubic-bezier(.175,.885,.32,1.275) forwards}
+@keyframes megaTxt{0%{opacity:0;transform:scale(.5)}55%{opacity:1;transform:scale(1.22)}100%{opacity:0;transform:scale(1.55)}}
+.starburst{position:fixed;pointer-events:none;font-size:1.5rem;animation:starFloat 1.2s ease-out forwards;z-index:600}
+@keyframes starFloat{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-90px) scale(1.6)}}
+.conf{position:fixed;width:10px;height:10px;border-radius:2px;pointer-events:none;animation:confFall var(--cd,2s) ease-in forwards;z-index:9999}
+@keyframes confFall{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}
+.lb-box{background:var(--card);border:1px solid var(--br);border-radius:22px;padding:28px;max-width:480px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.65);max-height:80vh;overflow-y:auto}
+.lb-ttl{font-family:'Baloo 2',cursive;font-size:1.45rem;font-weight:800;color:var(--a1);text-align:center;margin-bottom:18px}
+.lb-entry{display:flex;align-items:center;gap:11px;padding:9px 13px;border-radius:11px;margin-bottom:7px;font-weight:700;border:1px solid var(--br);background:var(--card2)}
+.lb-entry:first-child{background:linear-gradient(135deg,rgba(245,158,11,.28),rgba(245,158,11,.08));border-color:rgba(245,158,11,.4)}
+.lb-num{width:30px;text-align:center}.lb-name{flex:1}.lb-pts{color:var(--a1)}
+.lb-me{color:var(--a3)!important}.lb-me-badge{font-size:.68rem;background:var(--a3);color:#0f172a;border-radius:4px;padding:1px 5px;margin-left:5px}
+.modal-box{background:var(--card);border:1px solid var(--br);border-radius:19px;padding:26px;max-width:460px;width:100%;box-shadow:0 20px 58px rgba(0,0,0,.65)}
+.modal-ttl{font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;color:var(--a1);margin-bottom:10px}
+.modal-body{font-size:.88rem;color:var(--tx2);line-height:1.75;margin-bottom:18px}
+.rep-btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);border-radius:7px;color:var(--tx2);font-size:.76rem;font-weight:700;padding:3px 8px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:4px}
+.rep-btn:hover{background:rgba(239,68,68,.13);border-color:var(--no);color:#fca5a5}
+.fix-btn{position:fixed;width:46px;height:46px;border-radius:50%;border:none;color:#fff;font-size:1.2rem;cursor:pointer;z-index:10;transition:transform .25s;display:flex;align-items:center;justify-content:center}
+.fix-btn:hover{transform:scale(1.12)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-11px)}}
+@media(max-width:520px){.choices-2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<button class="fix-btn" style="bottom:20px;right:20px;background:linear-gradient(135deg,#ec4899,#f59e0b)" onclick="showHelp()">❓</button>
+<button class="fix-btn" style="bottom:74px;right:20px;background:linear-gradient(135deg,#f59e0b,#f97316)" onclick="showLB()">🏆</button>
+<button class="fix-btn" id="repFab" style="bottom:128px;right:20px;background:linear-gradient(135deg,#ef4444,#b91c1c);display:none" onclick="showRepList()">🚩<span id="repBadge" style="position:absolute;top:-4px;right:-4px;background:var(--a1);color:#0f0c29;border-radius:50%;width:17px;height:17px;font-size:.65rem;font-weight:900;display:flex;align-items:center;justify-content:center">0</span></button>
+<div id="root"></div>
+<div class="footer-author">Uğur Yıldırım &nbsp;·&nbsp; Türkçe Öğretmeni</div>
+<script>
+const DB_1A=[{"word":"öğrenci","inst":"Geniş zaman + 3. çoğul","tur":"İsme gelen","ans":"öğrencilerdir"},{"word":"hasta","inst":"Geniş zaman + 1. tekil","tur":"İsme gelen","ans":"hastayım"},{"word":"doktor","inst":"Geniş zaman + 2. tekil","tur":"İsme gelen","ans":"doktorsun"},{"word":"genç","inst":"Geniş zaman + 2. çoğul","tur":"İsme gelen","ans":"gençsiniz"},{"word":"zengin","inst":"Geniş zaman + 1. çoğul","tur":"İsme gelen","ans":"zenginiz"},{"word":"zeki","inst":"Geniş zaman + 3. tekil","tur":"İsme gelen","ans":"zekidir"},{"word":"pilot","inst":"Geniş zaman + 1. tekil","tur":"İsme gelen","ans":"pilotum"},{"word":"neşeli","inst":"Geniş zaman + 3. çoğul","tur":"İsme gelen","ans":"neşelidirler"},{"word":"cömert","inst":"Geniş zaman + 1. tekil","tur":"İsme gelen","ans":"cömertim"},{"word":"meraklı","inst":"Geniş zaman + 2. tekil","tur":"İsme gelen","ans":"meraklısın"},{"word":"mutlu","inst":"Ek fiilin hikayesi + 1. tekil","tur":"İsme gelen","ans":"mutluydum"},{"word":"küçük","inst":"Ek fiilin hikayesi + 2. tekil","tur":"İsme gelen","ans":"küçüktün"},{"word":"kuvvetli","inst":"Ek fiilin hikayesi + 3. çoğul","tur":"İsme gelen","ans":"kuvvetliydiler"},{"word":"güzel","inst":"Ek fiilin hikayesi + 3. tekil","tur":"İsme gelen","ans":"güzeldi"},{"word":"fakir","inst":"Ek fiilin hikayesi + 1. tekil","tur":"İsme gelen","ans":"fakirdim"},{"word":"tatlı","inst":"Ek fiilin hikayesi + 2. çoğul","tur":"İsme gelen","ans":"tatlıydınız"},{"word":"çalışkan","inst":"Ek fiilin hikayesi + 1. çoğul","tur":"İsme gelen","ans":"çalışkandık"},{"word":"hızlı","inst":"Ek fiilin hikayesi + 2. tekil","tur":"İsme gelen","ans":"hızlıydın"},{"word":"heyecanlı","inst":"Ek fiilin hikayesi + 1. çoğul","tur":"İsme gelen","ans":"heyecanlıydık"},{"word":"üzgün","inst":"Ek fiilin hikayesi + 1. çoğul","tur":"İsme gelen","ans":"üzgündük"},{"word":"cesur","inst":"Ek fiilin hikayesi + 3. tekil","tur":"İsme gelen","ans":"cesurdu"},{"word":"bencil","inst":"Ek fiilin hikayesi + 2. çoğul","tur":"İsme gelen","ans":"bencildiniz"},{"word":"eğlenceli","inst":"Ek fiilin hikayesi + 3. tekil","tur":"İsme gelen","ans":"eğlenceliydi"},{"word":"ressam","inst":"Ek fiilin hikayesi + 3. çoğul","tur":"İsme gelen","ans":"ressamdılar"},{"word":"çiftçi","inst":"Ek fiilin hikayesi + 2. tekil","tur":"İsme gelen","ans":"çiftçiydin"},{"word":"yorgun","inst":"Ek fiilin rivayeti + 3. tekil","tur":"İsme gelen","ans":"yorgunmuş"},{"word":"akıllı","inst":"Ek fiilin rivayeti + 1. tekil","tur":"İsme gelen","ans":"akıllıymışım"},{"word":"tembel","inst":"Ek fiilin rivayeti + 2. tekil","tur":"İsme gelen","ans":"tembelmişsin"},{"word":"büyük","inst":"Ek fiilin rivayeti + 3. çoğul","tur":"İsme gelen","ans":"büyüklermiş"},{"word":"şair","inst":"Ek fiilin rivayeti + 3. tekil","tur":"İsme gelen","ans":"şairmiş"},{"word":"zeki","inst":"Ek fiilin rivayeti + 1. çoğul","tur":"İsme gelen","ans":"zekiymişiz"},{"word":"avukat","inst":"Ek fiilin rivayeti + 2. tekil","tur":"İsme gelen","ans":"avukatmışsın"},{"word":"asker","inst":"Ek fiilin rivayeti + 3. çoğul","tur":"İsme gelen","ans":"askermişler"},{"word":"yavaş","inst":"Ek fiilin rivayeti + 1. çoğul","tur":"İsme gelen","ans":"yavaşmışız"},{"word":"korkak","inst":"Ek fiilin rivayeti + 3. tekil","tur":"İsme gelen","ans":"korkakmış"},{"word":"tehlikeli","inst":"Ek fiilin rivayeti + 2. çoğul","tur":"İsme gelen","ans":"tehlikeliymişsiniz"},{"word":"nazik","inst":"Ek fiilin rivayeti + 1. tekil","tur":"İsme gelen","ans":"nazikmişim"},{"word":"hemşire","inst":"Ek fiilin rivayeti + 3. tekil","tur":"İsme gelen","ans":"hemşireymiş"},{"word":"güzel","inst":"Ek fiilin şartı + 2. tekil","tur":"İsme gelen","ans":"güzelsen"},{"word":"öğretmen","inst":"Ek fiilin şartı + 1. çoğul","tur":"İsme gelen","ans":"öğretmensek"},{"word":"cesur","inst":"Ek fiilin şartı + 1. tekil","tur":"İsme gelen","ans":"cesursam"},{"word":"güç","inst":"Ek fiilin şartı + 3. tekil","tur":"İsme gelen","ans":"güçse"},{"word":"faydalı","inst":"Ek fiilin şartı + 1. çoğul","tur":"İsme gelen","ans":"faydalıysak"},{"word":"meraklı","inst":"Ek fiilin şartı + 2. tekil","tur":"İsme gelen","ans":"meraklıysan"},{"word":"sevimli","inst":"Ek fiilin şartı + 3. tekil","tur":"İsme gelen","ans":"sevimliyse"},{"word":"dürüst","inst":"Ek fiilin şartı + 2. çoğul","tur":"İsme gelen","ans":"dürüstseniz"},{"word":"hazır","inst":"Ek fiilin şartı + 1. tekil","tur":"İsme gelen","ans":"hazırsam"},{"word":"zararlı","inst":"Ek fiilin şartı + 3. tekil","tur":"İsme gelen","ans":"zararlıysa"},{"word":"mühendis","inst":"Ek fiilin şartı + 2. çoğul","tur":"İsme gelen","ans":"mühendisseniz"},{"word":"yalnız","inst":"Ek fiilin şartı + 1. çoğul","tur":"İsme gelen","ans":"yalnızsak"},{"word":"gel-","inst":"Şimdiki zaman + ek fiilin hikayesi + 3. tekil","tur":"Fiile gelen","ans":"geliyordu"},{"word":"yaz-","inst":"Şimdiki zaman + ek fiilin hikayesi + 1. tekil","tur":"Fiile gelen","ans":"yazıyordum"},{"word":"koş-","inst":"Şimdiki zaman + ek fiilin hikayesi + 2. tekil","tur":"Fiile gelen","ans":"koşuyordun"},{"word":"git-","inst":"Şimdiki zaman + ek fiilin rivayeti + 3. tekil","tur":"Fiile gelen","ans":"gidiyormuş"},{"word":"oku-","inst":"Şimdiki zaman + ek fiilin rivayeti + 3. çoğul","tur":"Fiile gelen","ans":"okuyorlarmış"},{"word":"bekle-","inst":"Şimdiki zaman + ek fiilin rivayeti + 1. tekil","tur":"Fiile gelen","ans":"bekliyormuşum"},{"word":"çalış-","inst":"Şimdiki zaman + ek fiilin şartı + 3. tekil","tur":"Fiile gelen","ans":"çalışıyorsa"},{"word":"dinle-","inst":"Şimdiki zaman + ek fiilin şartı + 2. tekil","tur":"Fiile gelen","ans":"dinliyorsan"},{"word":"git-","inst":"Geniş zaman + ek fiilin hikayesi + 3. tekil","tur":"Fiile gelen","ans":"giderdi"},{"word":"yap-","inst":"Geniş zaman + ek fiilin hikayesi + 1. tekil","tur":"Fiile gelen","ans":"yapardım"},{"word":"bil-","inst":"Geniş zaman + ek fiilin hikayesi + 2. tekil","tur":"Fiile gelen","ans":"bilirdin"},{"word":"sor-","inst":"Geniş zaman + ek fiilin rivayeti + 3. tekil","tur":"Fiile gelen","ans":"sorarmış"},{"word":"sev-","inst":"Geniş zaman + ek fiilin rivayeti + 3. çoğul","tur":"Fiile gelen","ans":"severlermiş"},{"word":"gel-","inst":"Geniş zaman + ek fiilin şartı + 3. tekil","tur":"Fiile gelen","ans":"gelirse"},{"word":"çık-","inst":"Geniş zaman + ek fiilin şartı + 1. tekil","tur":"Fiile gelen","ans":"çıkarsam"},{"word":"git-","inst":"Gelecek zaman + ek fiilin hikayesi + 3. tekil","tur":"Fiile gelen","ans":"gidecekti"},{"word":"yap-","inst":"Gelecek zaman + ek fiilin hikayesi + 1. tekil","tur":"Fiile gelen","ans":"yapacaktım"},{"word":"oku-","inst":"Gelecek zaman + ek fiilin hikayesi + 2. tekil","tur":"Fiile gelen","ans":"okuyacaktın"},{"word":"koş-","inst":"Gelecek zaman + ek fiilin rivayeti + 3. tekil","tur":"Fiile gelen","ans":"koşacakmış"},{"word":"söyle-","inst":"Gelecek zaman + ek fiilin rivayeti + 3. çoğul","tur":"Fiile gelen","ans":"söyleyeceklermiş"},{"word":"gör-","inst":"Gelecek zaman + ek fiilin şartı + 3. tekil","tur":"Fiile gelen","ans":"görecekse"},{"word":"al-","inst":"Gelecek zaman + ek fiilin şartı + 2. tekil","tur":"Fiile gelen","ans":"alacaksan"},{"word":"git-","inst":"Duyulan geçmiş + ek fiilin hikayesi + 3. tekil","tur":"Fiile gelen","ans":"gitmişti"},{"word":"yaz-","inst":"Duyulan geçmiş + ek fiilin hikayesi + 1. tekil","tur":"Fiile gelen","ans":"yazmıştım"},{"word":"oku-","inst":"Duyulan geçmiş + ek fiilin hikayesi + 2. tekil","tur":"Fiile gelen","ans":"okumuştun"},{"word":"gel-","inst":"Duyulan geçmiş + ek fiilin şartı + 3. tekil","tur":"Fiile gelen","ans":"gelmişse"},{"word":"gör-","inst":"Duyulan geçmiş + ek fiilin şartı + 1. tekil","tur":"Fiile gelen","ans":"görmüşsem"},{"word":"git-","inst":"Şart (dilek-şart) kipi + ek fiilin hikayesi + 3. tekil","tur":"Fiile gelen","ans":"gitseydi"},{"word":"yap-","inst":"Şart (dilek-şart) kipi + ek fiilin hikayesi + 1. tekil","tur":"Fiile gelen","ans":"yapsaydım"},{"word":"bil-","inst":"Şart (dilek-şart) kipi + ek fiilin hikayesi + 2. tekil","tur":"Fiile gelen","ans":"bilseydin"},{"word":"oku-","inst":"Şart (dilek-şart) kipi + ek fiilin hikayesi + 1. çoğul","tur":"Fiile gelen","ans":"okusaydık"},{"word":"gel-","inst":"Gereklilik kipi + ek fiilin hikayesi + 1. çoğul","tur":"Fiile gelen","ans":"gelmeliydik"},{"word":"yaz-","inst":"Gereklilik kipi + ek fiilin hikayesi + 2. tekil","tur":"Fiile gelen","ans":"yazmalıydın"},{"word":"uyu-","inst":"Gereklilik kipi + ek fiilin hikayesi + 1. tekil","tur":"Fiile gelen","ans":"uyumalıydım"},{"word":"konuş-","inst":"Gereklilik kipi + ek fiilin rivayeti + 3. tekil","tur":"Fiile gelen","ans":"konuşmalıymış"},{"word":"dinle-","inst":"Gereklilik kipi + ek fiilin rivayeti + 2. çoğul","tur":"Fiile gelen","ans":"dinlemeliymişsiniz"},{"word":"gül-","inst":"Gereklilik kipi + ek fiilin şartı + 3. tekil","tur":"Fiile gelen","ans":"gülmeliyse"},{"word":"ver-","inst":"Gereklilik kipi + ek fiilin şartı + 2. çoğul","tur":"Fiile gelen","ans":"vermeliyseniz"},{"word":"gör-","inst":"İstek kipi + ek fiilin hikayesi + 1. tekil","tur":"Fiile gelen","ans":"göreydim"},{"word":"bil-","inst":"İstek kipi + ek fiilin hikayesi + 1. tekil","tur":"Fiile gelen","ans":"bileydim"},{"word":"kazan-","inst":"İstek kipi + ek fiilin hikayesi + 2. çoğul","tur":"Fiile gelen","ans":"kazanaydınız"},{"word":"yaz-","inst":"İstek kipi + ek fiilin rivayeti + 3. tekil","tur":"Fiile gelen","ans":"yazaymış"},{"word":"sür-","inst":"İstek kipi + ek fiilin rivayeti + 2. tekil","tur":"Fiile gelen","ans":"süreymişsin"},{"word":"al-","inst":"İstek kipi + ek fiilin rivayeti + 1. tekil","tur":"Fiile gelen","ans":"alaymışım"},{"word":"tut-","inst":"Gereklilik kipi + ek fiilin şartı + 3. tekil","tur":"Fiile gelen","ans":"tutmalıysa"},{"word":"çiz-","inst":"Şimdiki zaman + ek fiilin şartı + 2. tekil","tur":"Fiile gelen","ans":"çiziyorsan"},{"word":"gel-","inst":"Görülen geçmiş + ek fiilin şartı + 3. tekil","tur":"Fiile gelen","ans":"geldiyse"},{"word":"yaz-","inst":"Görülen geçmiş + ek fiilin şartı + 1. tekil","tur":"Fiile gelen","ans":"yazdıysam"},{"word":"git-","inst":"Duyulan geçmiş + ek fiilin rivayeti + 3. tekil","tur":"Fiile gelen","ans":"gitmişmiş"},{"word":"oku-","inst":"Görülen geçmiş + ek fiilin hikayesi + 3. tekil","tur":"Fiile gelen","ans":"okuduydu"}];
+const DB_1B=[{"ifade":"geliyordu","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Şimdiki zaman kipi (-yor) + ek fiilin hikayesi (-du)"},{"ifade":"öğrenciydi","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'öğrenci' ismi + ek fiilin hikayesi (-ydi)"},{"ifade":"mutluymuş","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'mutlu' sıfatı + ek fiilin rivayeti (-ymuş)"},{"ifade":"gidiyormuş","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Şimdiki zaman kipi (-yor) + ek fiilin rivayeti (-muş)"},{"ifade":"doktorsam","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'doktor' ismi + ek fiilin şartı (-sam)"},{"ifade":"yapacaktı","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Gelecek zaman kipi (-acak) + ek fiilin hikayesi (-tı)"},{"ifade":"güzeldim","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'güzel' sıfatı + ek fiilin hikayesi (-dim)"},{"ifade":"giderdi","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Geniş zaman kipi (-er) + ek fiilin hikayesi (-di)"},{"ifade":"öğretmensek","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'öğretmen' ismi + ek fiilin şartı (-sek)"},{"ifade":"gitmişti","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Öğrenilen geçmiş (-miş) + ek fiilin hikayesi (-ti)"},{"ifade":"zekiymiş","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'zeki' sıfatı + ek fiilin rivayeti (-ymiş)"},{"ifade":"çalışıyorsa","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Şimdiki zaman kipi (-yor) + ek fiilin şartı (-sa)"},{"ifade":"hazırsa","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'hazır' sıfatı + ek fiilin şartı (-sa)"},{"ifade":"koşacakmış","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Gelecek zaman kipi (-acak) + ek fiilin rivayeti (-mış)"},{"ifade":"tembeldiler","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'tembel' sıfatı + ek fiilin hikayesi (-diler, 3. çoğul)"},{"ifade":"sorarmış","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Geniş zaman kipi (-ar) + ek fiilin rivayeti (-mış)"},{"ifade":"ressammış","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'ressam' ismi + ek fiilin rivayeti (-mış)"},{"ifade":"gidecekse","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Gelecek zaman kipi (-ecek) + ek fiilin şartı (-se)"},{"ifade":"kuvvetliydik","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'kuvvetli' sıfatı + ek fiilin hikayesi (-ydik, 1. çoğul)"},{"ifade":"gitseydi","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Şart (dilek-şart) kipi (-se) + ek fiilin hikayesi (-ydi)"},{"ifade":"yalnızmışım","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'yalnız' sıfatı + ek fiilin rivayeti (-mışım, 1. tekil)"},{"ifade":"gelmeliydi","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Gereklilik kipi (-meli) + ek fiilin hikayesi (-ydi)"},{"ifade":"cesurdum","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'cesur' sıfatı + ek fiilin hikayesi (-dum)"},{"ifade":"yazıyormuş","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Şimdiki zaman kipi (-yor) + ek fiilin rivayeti (-muş)"},{"ifade":"sporcuydu","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'sporcu' ismi + ek fiilin hikayesi (-ydu)"},{"ifade":"okurdu","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Geniş zaman kipi (-ur) + ek fiilin hikayesi (-du)"},{"ifade":"avukattı","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'avukat' ismi + ek fiilin hikayesi (-tı)"},{"ifade":"yapacaktım","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Gelecek zaman kipi (-acak) + ek fiilin hikayesi (-tım, 1. tekil)"},{"ifade":"nazikseniz","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'nazik' sıfatı + ek fiilin şartı (-seniz, 2. çoğul)"},{"ifade":"gelmişse","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Öğrenilen geçmiş (-miş) + ek fiilin şartı (-se)"},{"ifade":"hemşireymiş","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'hemşire' ismi + ek fiilin rivayeti (-ymiş)"},{"ifade":"yapsaydım","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Şart (dilek-şart) kipi (-sa) + ek fiilin hikayesi (-ydım)"},{"ifade":"zengindiniz","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'zengin' sıfatı + ek fiilin hikayesi (-diniz, 2. çoğul)"},{"ifade":"görecekse","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Gelecek zaman kipi (-ecek) + ek fiilin şartı (-se)"},{"ifade":"pilotmuş","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'pilot' ismi + ek fiilin rivayeti (-muş)"},{"ifade":"bekliyormuş","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Şimdiki zaman kipi (-yor) + ek fiilin rivayeti (-muş)"},{"ifade":"hızlıydım","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'hızlı' sıfatı + ek fiilin hikayesi (-ydım, 1. tekil)"},{"ifade":"gelirse","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Geniş zaman kipi (-ir) + ek fiilin şartı (-se)"},{"ifade":"cömertsek","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'cömert' sıfatı + ek fiilin şartı (-sek, 1. çoğul)"},{"ifade":"okumuştu","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Öğrenilen geçmiş (-muş) + ek fiilin hikayesi (-tu)"},{"ifade":"korkakmış","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'korkak' sıfatı + ek fiilin rivayeti (-mış)"},{"ifade":"göreydim","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"İstek kipi (-e) + ek fiilin hikayesi (-ydim)"},{"ifade":"çalışkandık","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'çalışkan' sıfatı + ek fiilin hikayesi (-dık, 1. çoğul)"},{"ifade":"yazaymış","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"İstek kipi (-a) + ek fiilin rivayeti (-ymış)"},{"ifade":"şairmişsiniz","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'şair' ismi + ek fiilin rivayeti (-mişsiniz, 2. çoğul)"},{"ifade":"geldiyse","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Görülen geçmiş (-di) + ek fiilin şartı (-yse)"},{"ifade":"tehlikeliymiş","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'tehlikeli' sıfatı + ek fiilin rivayeti (-ymiş)"},{"ifade":"konuşmalıymış","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Gereklilik kipi (-malı) + ek fiilin rivayeti (-ymış)"},{"ifade":"güçse","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'güç' sıfatı + ek fiilin şartı (-se, 3. tekil)"},{"ifade":"dinlemeliymişsiniz","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Gereklilik kipi (-meli) + ek fiilin rivayeti (-ymiş) + 2. çoğul"},{"ifade":"fakirmişim","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'fakir' sıfatı + ek fiilin rivayeti (-mişim, 1. tekil)"},{"ifade":"okusaydık","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Şart kipi (-sa) + ek fiilin hikayesi (-ydık, 1. çoğul)"},{"ifade":"yorgunmuş","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'yorgun' sıfatı + ek fiilin rivayeti (-muş)"},{"ifade":"söyleyeceklermiş","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Gelecek zaman (-ecek) + 3. çoğul + ek fiilin rivayeti (-miş)"},{"ifade":"meraklıysan","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'meraklı' sıfatı + ek fiilin şartı (-ysan, 2. tekil)"},{"ifade":"bilseydin","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Şart kipi (-se) + ek fiilin hikayesi (-ydin, 2. tekil)"},{"ifade":"eğlenceliydi","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'eğlenceli' sıfatı + ek fiilin hikayesi (-ydi)"},{"ifade":"yazmalıydın","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Gereklilik kipi (-malı) + ek fiilin hikayesi (-ydın)"},{"ifade":"hemşireysek","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'hemşire' ismi + ek fiilin şartı (-sek, 1. çoğul)"},{"ifade":"alacaksan","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Gelecek zaman (-acak) + ek fiilin şartı (-san, 2. tekil)"},{"ifade":"ressamdılar","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'ressam' ismi + ek fiilin hikayesi (-dılar, 3. çoğul)"},{"ifade":"alaymışım","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"İstek kipi (-a) + ek fiilin rivayeti (-ymışım, 1. tekil)"},{"ifade":"zararlıysa","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'zararlı' sıfatı + ek fiilin şartı (-ysa, 3. tekil)"},{"ifade":"gelmeliyse","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Gereklilik kipi (-meli) + ek fiilin şartı (-yse, 3. tekil)"},{"ifade":"büyüklermiş","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'büyük' sıfatı + 3. çoğul + ek fiilin rivayeti (-miş)"},{"ifade":"tutmalıysa","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Gereklilik kipi (-malı) + ek fiilin şartı (-ysa, 3. tekil)"},{"ifade":"faydalıysak","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'faydalı' sıfatı + ek fiilin şartı (-ysak, 1. çoğul)"},{"ifade":"yazıyordun","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Şimdiki zaman (-yor) + ek fiilin hikayesi (-dun, 2. tekil)"},{"ifade":"sevimliyse","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'sevimli' sıfatı + ek fiilin şartı (-yse, 3. tekil)"},{"ifade":"görürdü","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Geniş zaman (-ür) + ek fiilin hikayesi (-dü, 3. tekil)"},{"ifade":"tatlıydınız","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'tatlı' sıfatı + ek fiilin hikayesi (-ydınız, 2. çoğul)"},{"ifade":"yazmıştım","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Öğrenilen geçmiş (-mış) + ek fiilin hikayesi (-tım, 1. tekil)"},{"ifade":"nazikmiş","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'nazik' sıfatı + ek fiilin rivayeti (-miş)"},{"ifade":"bekliyorsa","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Şimdiki zaman (-yor) + ek fiilin şartı (-sa, 3. tekil)"},{"ifade":"çalışkansak","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'çalışkan' sıfatı + ek fiilin şartı (-sak, 1. çoğul)"},{"ifade":"yapardım","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Geniş zaman (-ar) + ek fiilin hikayesi (-dım, 1. tekil)"},{"ifade":"önemliyim","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'önemli' sıfatı + geniş zaman ek fiili (-yim, 1. tekil)"},{"ifade":"çıkarsam","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Geniş zaman (-ar) + ek fiilin şartı (-sam, 1. tekil)"},{"ifade":"heyecanlıydık","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'heyecanlı' sıfatı + ek fiilin hikayesi (-ydık, 1. çoğul)"},{"ifade":"koşuyordun","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Şimdiki zaman (-yor) + ek fiilin hikayesi (-dun, 2. tekil)"},{"ifade":"zenginiz","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'zengin' sıfatı + geniş zaman ek fiili (-iz, 1. çoğul)"},{"ifade":"okuyacaktın","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Gelecek zaman (-acak) + ek fiilin hikayesi (-tın, 2. tekil)"},{"ifade":"dürüstseniz","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'dürüst' sıfatı + ek fiilin şartı (-seniz, 2. çoğul)"},{"ifade":"severlermiş","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Geniş zaman (-er) + 3. çoğul + ek fiilin rivayeti (-miş)"},{"ifade":"üzgündük","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'üzgün' sıfatı + ek fiilin hikayesi (-dük, 1. çoğul)"},{"ifade":"görmüşse","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Öğrenilen geçmiş (-müş) + ek fiilin şartı (-se, 3. tekil)"},{"ifade":"cömerttiniz","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'cömert' sıfatı + ek fiilin hikayesi (-tiniz, 2. çoğul)"},{"ifade":"gülmeliyse","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Gereklilik kipi (-meli) + ek fiilin şartı (-yse)"},{"ifade":"neşeliydiler","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'neşeli' sıfatı + ek fiilin hikayesi (-ydiler, 3. çoğul)"},{"ifade":"süreymişsin","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"İstek kipi (-e) + ek fiilin rivayeti (-ymişsin, 2. tekil)"},{"ifade":"hazırım","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'hazır' sıfatı + geniş zaman ek fiili (-ım, 1. tekil)"},{"ifade":"bileydim","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"İstek kipi (-e) + ek fiilin hikayesi (-ydim, 1. tekil)"},{"ifade":"meraklıydılar","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'meraklı' sıfatı + ek fiilin hikayesi (-ydılar, 3. çoğul)"},{"ifade":"çiziyorsan","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Şimdiki zaman (-yor) + ek fiilin şartı (-ysen, 2. tekil)"},{"ifade":"şairdim","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'şair' ismi + ek fiilin hikayesi (-dim, 1. tekil)"},{"ifade":"vermeliyseniz","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Gereklilik kipi (-meli) + ek fiilin şartı (-yseniz, 2. çoğul)"},{"ifade":"tehlikeliymiş","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'tehlikeli' sıfatı + ek fiilin rivayeti (-ymiş)"},{"ifade":"yazdıysam","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Görülen geçmiş (-dı) + ek fiilin şartı (-ysa) + 1. tekil (-m)"},{"ifade":"nazikseniz","dogru":"İsme gelen ek fiil","yanlis":"Fiile gelen ek fiil","aciklama":"'nazik' sıfatı + ek fiilin şartı (-seniz, 2. çoğul)"},{"ifade":"okumuştun","dogru":"Fiile gelen ek fiil","yanlis":"İsme gelen ek fiil","aciklama":"Öğrenilen geçmiş (-muş) + ek fiilin hikayesi (-tun, 2. tekil)"}];
+const DB_2A=[{"sentence":"Araba hiç durmadan ilerliyordu.","ekFiil":"-yordu","aciklama":"Şimdiki zaman (-yor) + ek fiilin hikayesi (-du)"},{"sentence":"Çocuklar parkta oynuyordu.","ekFiil":"-yordu","aciklama":"Şimdiki zaman (-yor) + ek fiilin hikayesi (-du)"},{"sentence":"Öğretmen tahtada yazıyordu.","ekFiil":"-yordu","aciklama":"Şimdiki zaman (-yor) + ek fiilin hikayesi (-du)"},{"sentence":"Kardeşler birlikte ders çalışıyordu.","ekFiil":"-yordu","aciklama":"Şimdiki zaman (-yor) + ek fiilin hikayesi (-du)"},{"sentence":"Müzik çalıyordu uzaktan.","ekFiil":"-yordu","aciklama":"Şimdiki zaman (-yor) + ek fiilin hikayesi (-du)"},{"sentence":"Komşumuz her gün koşuyormuş.","ekFiil":"-yormuş","aciklama":"Şimdiki zaman (-yor) + ek fiilin rivayeti (-muş)"},{"sentence":"Küçük kız çok güzel şarkı söylüyormuş.","ekFiil":"-yormuş","aciklama":"Şimdiki zaman (-yor) + ek fiilin rivayeti (-muş)"},{"sentence":"Herkes onu tanıyormuş.","ekFiil":"-yormuş","aciklama":"Şimdiki zaman (-yor) + ek fiilin rivayeti (-muş)"},{"sentence":"Fabrikada çok kişi çalışıyormuş.","ekFiil":"-yormuş","aciklama":"Şimdiki zaman (-yor) + ek fiilin rivayeti (-muş)"},{"sentence":"Arabayı kullanıyorsan dikkatli ol.","ekFiil":"-yorsa","aciklama":"Şimdiki zaman (-yor) + ek fiilin şartı (-sa)"},{"sentence":"Dinliyorsan anlat.","ekFiil":"-yorsa","aciklama":"Şimdiki zaman (-yor) + ek fiilin şartı (-sa)"},{"sentence":"Ağlıyorsa yanına git.","ekFiil":"-yorsa","aciklama":"Şimdiki zaman (-yor) + ek fiilin şartı (-sa)"},{"sentence":"O günlerde her sabah erken kalkardı.","ekFiil":"-ardı","aciklama":"Geniş zaman (-ar) + ek fiilin hikayesi (-dı)"},{"sentence":"Dedem akşamları çay içerdi.","ekFiil":"-erdi","aciklama":"Geniş zaman (-er) + ek fiilin hikayesi (-di)"},{"sentence":"Kışın ateş yakarlardı.","ekFiil":"-arlardı","aciklama":"Geniş zaman (-ar) + 3. çoğul + ek fiilin hikayesi (-dı)"},{"sentence":"Küçükken çok kitap okurdum.","ekFiil":"-urdum","aciklama":"Geniş zaman (-ur) + ek fiilin hikayesi (-dum, 1. tekil)"},{"sentence":"Tatillerde hep oraya giderdi.","ekFiil":"-erdi","aciklama":"Geniş zaman (-er) + ek fiilin hikayesi (-di)"},{"sentence":"Söylenene göre çok iyi pişirirmiş.","ekFiil":"-irmiş","aciklama":"Geniş zaman (-ir) + ek fiilin rivayeti (-miş)"},{"sentence":"Eskiden bu köyde herkes birbirini tanırmış.","ekFiil":"-ırmış","aciklama":"Geniş zaman (-ır) + ek fiilin rivayeti (-mış)"},{"sentence":"Yıllarca her gün yürürmüş.","ekFiil":"-ürmüş","aciklama":"Geniş zaman (-ür) + ek fiilin rivayeti (-müş)"},{"sentence":"Yardım edersen çok memnun olurum.","ekFiil":"-ersen","aciklama":"Geniş zaman (-er) + ek fiilin şartı (-se, 2. tekil)"},{"sentence":"Erken gelirsen bizi bekle.","ekFiil":"-ersen","aciklama":"Geniş zaman (-er) + ek fiilin şartı (-se)"},{"sentence":"İstersen beraber gidebiliriz.","ekFiil":"-ersen","aciklama":"Geniş zaman (-er) + ek fiilin şartı (-se)"},{"sentence":"Yarın seyahate çıkacaktı ama hasta oldu.","ekFiil":"-acaktı","aciklama":"Gelecek zaman (-acak) + ek fiilin hikayesi (-tı)"},{"sentence":"Kitabı bugün bitirecekti.","ekFiil":"-ecekti","aciklama":"Gelecek zaman (-ecek) + ek fiilin hikayesi (-ti)"},{"sentence":"Onları havalimanında karşılayacaktım.","ekFiil":"-acaktım","aciklama":"Gelecek zaman (-acak) + ek fiilin hikayesi (-tım, 1. tekil)"},{"sentence":"Sınavı kazanacaktın, neden bıraktın?","ekFiil":"-acaktın","aciklama":"Gelecek zaman (-acak) + ek fiilin hikayesi (-tın, 2. tekil)"},{"sentence":"Mektubu o gün postalanacaktı.","ekFiil":"-acaktı","aciklama":"Gelecek zaman (-acak) + ek fiilin hikayesi (-tı)"},{"sentence":"Söylendiğine göre yarın gelecekmiş.","ekFiil":"-ecekmiş","aciklama":"Gelecek zaman (-ecek) + ek fiilin rivayeti (-miş)"},{"sentence":"Duyduğuma göre şirketi satacakmış.","ekFiil":"-acakmış","aciklama":"Gelecek zaman (-acak) + ek fiilin rivayeti (-mış)"},{"sentence":"Taşınacaklarmış yeni eve.","ekFiil":"-acaklarmış","aciklama":"Gelecek zaman + 3. çoğul + ek fiilin rivayeti (-mış)"},{"sentence":"Yarın gelecekse haber versin.","ekFiil":"-ecekse","aciklama":"Gelecek zaman (-ecek) + ek fiilin şartı (-se)"},{"sentence":"Alacaksan çabuk karar ver.","ekFiil":"-acaksan","aciklama":"Gelecek zaman (-acak) + ek fiilin şartı (-san, 2. tekil)"},{"sentence":"O yazıyı daha önce okumuştum.","ekFiil":"-muştum","aciklama":"Öğrenilen geçmiş (-muş) + ek fiilin hikayesi (-tum, 1. tekil)"},{"sentence":"Saat dörtte çoktan gitmişti.","ekFiil":"-mişti","aciklama":"Öğrenilen geçmiş (-miş) + ek fiilin hikayesi (-ti)"},{"sentence":"Soruyu daha önce çözmüştün.","ekFiil":"-müştün","aciklama":"Öğrenilen geçmiş (-müş) + ek fiilin hikayesi (-tün, 2. tekil)"},{"sentence":"Kapıyı kapatmıştı ama anahtarı içerde kalmıştı.","ekFiil":"-mıştı","aciklama":"-mıştı — Öğrenilen geçmiş (-mış) + hikaye (-tı)"},{"sentence":"Onları daha önce tanımıştık.","ekFiil":"-mıştık","aciklama":"Öğrenilen geçmiş (-mış) + ek fiilin hikayesi (-tık, 1. çoğul)"},{"sentence":"Haberi duymuşsa neden gelmedi?","ekFiil":"-muşsa","aciklama":"Öğrenilen geçmiş (-muş) + ek fiilin şartı (-sa)"},{"sentence":"Yazmışsan paylaş bizimle.","ekFiil":"-mışsan","aciklama":"Öğrenilen geçmiş (-mış) + ek fiilin şartı (-san, 2. tekil)"},{"sentence":"Biraz daha çalışsaydın kazanırdın.","ekFiil":"-saydın","aciklama":"Şart kipi (-sa) + ek fiilin hikayesi (-ydın)"},{"sentence":"Oraya gitseydi çok mutlu olurdu.","ekFiil":"-seydi","aciklama":"Şart kipi (-se) + ek fiilin hikayesi (-ydi)"},{"sentence":"Erken uyusaydık yorgun olmazdık.","ekFiil":"-saydık","aciklama":"Şart kipi (-sa) + ek fiilin hikayesi (-ydık)"},{"sentence":"Bu fırsatı kaçırsaydım çok üzülürdüm.","ekFiil":"-saydım","aciklama":"Şart kipi (-sa) + ek fiilin hikayesi (-ydım)"},{"sentence":"Erken gelmeliydi ama geç kaldı.","ekFiil":"-meliydi","aciklama":"Gereklilik kipi (-meli) + ek fiilin hikayesi (-ydi)"},{"sentence":"Bunu bilmeliydiniz.","ekFiil":"-meliydiniz","aciklama":"Gereklilik kipi (-meli) + hikaye (-ydi) + 2. çoğul"},{"sentence":"Söylendiğine göre erken gitmeli­ymiş.","ekFiil":"-meliymış","aciklama":"Gereklilik kipi (-meli) + ek fiilin rivayeti (-ymış)"},{"sentence":"Ödevini bitirmeli­ymişsin.","ekFiil":"-meliymişsin","aciklama":"Gereklilik + rivayetin 2. tekili"},{"sentence":"Gitmeliyse gitsin.","ekFiil":"-meliyse","aciklama":"Gereklilik kipi (-meli) + ek fiilin şartı (-yse)"},{"sentence":"Bu işi yapmalıysan başla.","ekFiil":"-malıysan","aciklama":"Gereklilik kipi (-malı) + şart (-ysa) + 2. tekil"},{"sentence":"Keşke o gün oraya gitseydim... Gideydim yanına.","ekFiil":"-eydim","aciklama":"İstek kipi (-e) + ek fiilin hikayesi (-ydim)"},{"sentence":"Bileydim şimdiden ne güzel olurdu.","ekFiil":"-eydim","aciklama":"İstek kipi (-e) + ek fiilin hikayesi (-ydim)"},{"sentence":"Vay be, bu soruyu çözeymişsin!","ekFiil":"-eymişsin","aciklama":"İstek kipi (-e) + ek fiilin rivayeti (-ymişsin)"},{"sentence":"Duyduğuma göre gideymişmiş — gerçekten istemişmiş demek.","ekFiil":"-eymişmiş","aciklama":"İstek kipi (-e) + ek fiilin rivayeti (pekiştirilmiş)"},{"sentence":"Alaysa alsın, dur etme.","ekFiil":"-aysa","aciklama":"İstek kipi (-a) + ek fiilin şartı (-ysa)"},{"sentence":"Bahçedeki çiçekler çok renklidir.","ekFiil":"-dir","aciklama":"Geniş zaman ek fiili (-dir), isme gelen"},{"sentence":"Ben şu an çok meraklıyım.","ekFiil":"-yım","aciklama":"Geniş zaman ek fiili (-yım), isme gelen"},{"sentence":"Siz gerçekten çok yeteneklisiniz.","ekFiil":"-siniz","aciklama":"Geniş zaman ek fiili (-siniz), isme gelen"},{"sentence":"O her zaman çok güler yüzlüdür.","ekFiil":"-dür","aciklama":"Geniş zaman ek fiili (-dür), isme gelen"},{"sentence":"Onlar çok başarılı öğrencilerdir.","ekFiil":"-dir","aciklama":"Geniş zaman ek fiili, 3. çoğul"},{"sentence":"O günlerde çok mutluydum.","ekFiil":"-dum","aciklama":"Hikaye ek fiili (-dum), isme gelen"},{"sentence":"Masal kahramanı çok zekiydi.","ekFiil":"-ydi","aciklama":"Hikaye ek fiili (-ydi), isme gelen"},{"sentence":"Onlar zamanında çok zenginlerdi.","ekFiil":"-lerdi","aciklama":"Hikaye ek fiili (-lerdi), isme gelen, 3. çoğul"},{"sentence":"Senin o zamanlar çok çalışkandın.","ekFiil":"-dın","aciklama":"Hikaye ek fiili (-dın), isme gelen"},{"sentence":"Geçen yıl çok heyecanlıydık.","ekFiil":"-ydık","aciklama":"Hikaye ek fiili (-ydık), isme gelen"},{"sentence":"Hava bugün çok soğukmuş.","ekFiil":"-muş","aciklama":"Rivayet ek fiili (-muş), isme gelen"},{"sentence":"Bu yemek gerçekten lezzetliymiş.","ekFiil":"-ymiş","aciklama":"Rivayet ek fiili (-ymiş), isme gelen"},{"sentence":"Masal kahramanı kurnaz bir tilkiymiş.","ekFiil":"-ymiş","aciklama":"Rivayet ek fiili (-ymiş), isme gelen"},{"sentence":"Duyduğuma göre o çok cesurmuş.","ekFiil":"-muş","aciklama":"Rivayet ek fiili (-muş), isme gelen"},{"sentence":"Bu şehir bir zamanlar çok canlıymış.","ekFiil":"-ymış","aciklama":"Rivayet ek fiili (-ymış), isme gelen"},{"sentence":"Bu ders gerçekten zorsa yardım isteyebilirsin.","ekFiil":"-sa","aciklama":"Şart ek fiili (-sa), isme gelen"},{"sentence":"Eğer cesursan ileri çık.","ekFiil":"-san","aciklama":"Şart ek fiili (-san), isme gelen"},{"sentence":"Haberler doğruysa çok üzücü.","ekFiil":"-ysa","aciklama":"Şart ek fiili (-ysa), isme gelen"},{"sentence":"Eğer hasta isem eve gitmeliyim.","ekFiil":"-sem","aciklama":"Şart ek fiili (-sem), isme gelen"},{"sentence":"Biz bu problemde haklıysak kabul edelim.","ekFiil":"-sak","aciklama":"Şart ek fiili (-sak), isme gelen"},{"sentence":"Geçen ay çok yorgundum.","ekFiil":"-dum","aciklama":"Hikaye ek fiili, isme gelen"},{"sentence":"Saat başında rapor verirdi.","ekFiil":"-irdi","aciklama":"Geniş zaman + ek fiilin hikayesi, fiile gelen"},{"sentence":"Orman gerçekten çok güzelmiş.","ekFiil":"-miş","aciklama":"Rivayet ek fiili, isme gelen"},{"sentence":"Sabahları spor yapacaktı ama uyuyakaldı.","ekFiil":"-acaktı","aciklama":"Gelecek zaman + ek fiilin hikayesi, fiile gelen"},{"sentence":"Biz şimdi çok mutluyuz.","ekFiil":"-yuz","aciklama":"Geniş zaman ek fiili, isme gelen"},{"sentence":"Yıllar önce bu yolları yürüyerek geçermiş.","ekFiil":"-ermiş","aciklama":"Geniş zaman + ek fiilin rivayeti, fiile gelen"},{"sentence":"Eğer hazırsan başlayalım.","ekFiil":"-san","aciklama":"Şart ek fiili, isme gelen"},{"sentence":"Yarışmaya katılacaktım ama formumu kaybettim.","ekFiil":"-acaktım","aciklama":"Gelecek zaman + ek fiilin hikayesi, fiile gelen"},{"sentence":"Bu soru gerçekten zormuş.","ekFiil":"-muş","aciklama":"Rivayet ek fiili, isme gelen"},{"sentence":"Tüm gece boyunca kitap okurmuş.","ekFiil":"-urmuş","aciklama":"Geniş zaman + ek fiilin rivayeti, fiile gelen"},{"sentence":"Eğer doğruysan söyle.","ekFiil":"-san","aciklama":"Şart ek fiili, isme gelen"},{"sentence":"O yıllarda çok sorumluydu.","ekFiil":"-ydu","aciklama":"Hikaye ek fiili, isme gelen"},{"sentence":"Maçı izliyorsa bize haber versin.","ekFiil":"-yorsa","aciklama":"Şimdiki zaman + ek fiilin şartı, fiile gelen"},{"sentence":"Çiçekler çok renklidir.","ekFiil":"-dir","aciklama":"Geniş zaman ek fiili, isme gelen"},{"sentence":"İki yıldır bu köyde yaşıyormuş.","ekFiil":"-yormuş","aciklama":"Şimdiki zaman + ek fiilin rivayeti, fiile gelen"},{"sentence":"O zamanlar çok gençtik.","ekFiil":"-tik","aciklama":"Hikaye ek fiili, isme gelen"},{"sentence":"Kazansaydın ne yapardın?","ekFiil":"-saydın","aciklama":"Şart kipi + ek fiilin hikayesi, fiile gelen"},{"sentence":"Bu kitap çok faydalıymış.","ekFiil":"-ymış","aciklama":"Rivayet ek fiili, isme gelen"},{"sentence":"Mektubu okuyacaksa dışarı çıksın.","ekFiil":"-acaksa","aciklama":"Gelecek zaman + ek fiilin şartı, fiile gelen"},{"sentence":"Ben bu konu hakkında çok meraklıyım.","ekFiil":"-yım","aciklama":"Geniş zaman ek fiili, isme gelen"},{"sentence":"Sabah erken kalkarmış, hiç yorulmazmış.","ekFiil":"-armış","aciklama":"-ırmış — Geniş zaman + ek fiilin rivayeti, fiile gelen"},{"sentence":"Haberler doğruysa çok sevinçli bir gün.","ekFiil":"-ysa","aciklama":"Şart ek fiili, isme gelen"},{"sentence":"Kitabı bitirmişti ama raporu yazmamıştı.","ekFiil":"-mişti / -mamıştı","aciklama":"Öğrenilen geçmiş + ek fiilin hikayesi, fiile gelen"},{"sentence":"Keşke biraz daha uyusaydım.","ekFiil":"-saydım","aciklama":"Şart kipi + ek fiilin hikayesi, fiile gelen"},{"sentence":"Bu çocuk gerçekten çok zekidir.","ekFiil":"-dir","aciklama":"Geniş zaman ek fiili, isme gelen"}];
+const DB_2B=[{"sentence":"Araba hiç durmadan ilerliyordu.","highlighted":"ilerliyordu","correct":"Şimdiki zaman + ek fiilin hikayesi","wrong":"Gereklilik + ek fiilin rivayeti","explanation":"'-yor' şimdiki zaman kipi; '-du' ek fiilin hikayesidir."},{"sentence":"Çocuklar bahçede koşuyordu.","highlighted":"koşuyordu","correct":"Şimdiki zaman + ek fiilin hikayesi","wrong":"Gelecek zaman + ek fiilin hikayesi","explanation":"'-yor' şimdiki zaman; '-du' ek fiilin hikayesi (3. tekil)."},{"sentence":"Kitap okuyordum o saatlerde.","highlighted":"okuyordum","correct":"Şimdiki zaman + ek fiilin hikayesi","wrong":"Geniş zaman + ek fiilin hikayesi","explanation":"'-yor' şimdiki zaman; '-dum' ek fiilin hikayesi (1. tekil)."},{"sentence":"Komşumuz her gün koşuyormuş.","highlighted":"koşuyormuş","correct":"Şimdiki zaman + ek fiilin rivayeti","wrong":"Şimdiki zaman + ek fiilin hikayesi","explanation":"'-yor' şimdiki zaman; '-muş' ek fiilin rivayetidir."},{"sentence":"Herkes onu tanıyormuş.","highlighted":"tanıyormuş","correct":"Şimdiki zaman + ek fiilin rivayeti","wrong":"Gelecek zaman + ek fiilin rivayeti","explanation":"'-yor' şimdiki zaman; '-muş' ek fiilin rivayeti."},{"sentence":"Arabayı kullanıyorsan dikkatli ol.","highlighted":"kullanıyorsan","correct":"Şimdiki zaman + ek fiilin şartı","wrong":"Geniş zaman + ek fiilin şartı","explanation":"'-yor' şimdiki zaman; '-sa' ek fiilin şartı (2. tekil: '-san')."},{"sentence":"Ağlıyorsa yanına git.","highlighted":"ağlıyorsa","correct":"Şimdiki zaman + ek fiilin şartı","wrong":"Öğrenilen geçmiş + ek fiilin şartı","explanation":"'-yor' şimdiki zaman; '-sa' ek fiilin şartı (3. tekil)."},{"sentence":"Dedem akşamları çay içerdi.","highlighted":"içerdi","correct":"Geniş zaman + ek fiilin hikayesi","wrong":"Şimdiki zaman + ek fiilin hikayesi","explanation":"'-er' geniş zaman; '-di' ek fiilin hikayesidir."},{"sentence":"Küçükken çok kitap okurdum.","highlighted":"okurdum","correct":"Geniş zaman + ek fiilin hikayesi","wrong":"Gelecek zaman + ek fiilin hikayesi","explanation":"'-ur' geniş zaman; '-dum' ek fiilin hikayesi (1. tekil)."},{"sentence":"Tatillerde hep oraya giderdi.","highlighted":"giderdi","correct":"Geniş zaman + ek fiilin hikayesi","wrong":"Gereklilik + ek fiilin hikayesi","explanation":"'-er' geniş zaman; '-di' ek fiilin hikayesi (3. tekil)."},{"sentence":"Eskiden bu köyde herkes birbirini tanırmış.","highlighted":"tanırmış","correct":"Geniş zaman + ek fiilin rivayeti","wrong":"Geniş zaman + ek fiilin hikayesi","explanation":"'-ır' geniş zaman; '-mış' ek fiilin rivayetidir."},{"sentence":"Yıllarca her gün yürürmüş.","highlighted":"yürürmüş","correct":"Geniş zaman + ek fiilin rivayeti","wrong":"Şimdiki zaman + ek fiilin rivayeti","explanation":"'-ür' geniş zaman; '-müş' ek fiilin rivayeti."},{"sentence":"Yardım edersen çok memnun olurum.","highlighted":"edersen","correct":"Geniş zaman + ek fiilin şartı","wrong":"Şimdiki zaman + ek fiilin şartı","explanation":"'-er' geniş zaman; '-se' ek fiilin şartı (2. tekil: '-sen')."},{"sentence":"Erken gelirsen bizi bekle.","highlighted":"gelirsen","correct":"Geniş zaman + ek fiilin şartı","wrong":"Gelecek zaman + ek fiilin şartı","explanation":"'-ir' geniş zaman; '-se' ek fiilin şartı (2. tekil: '-sen')."},{"sentence":"Yarın seyahate çıkacaktı ama hasta oldu.","highlighted":"çıkacaktı","correct":"Gelecek zaman + ek fiilin hikayesi","wrong":"Şimdiki zaman + ek fiilin hikayesi","explanation":"'-acak' gelecek zaman; '-tı' ek fiilin hikayesidir."},{"sentence":"Mektubu o gün postalanacaktı.","highlighted":"postalanacaktı","correct":"Gelecek zaman + ek fiilin hikayesi","wrong":"Geniş zaman + ek fiilin hikayesi","explanation":"'-acak' gelecek zaman; '-tı' ek fiilin hikayesi."},{"sentence":"Onları havalimanında karşılayacaktım.","highlighted":"karşılayacaktım","correct":"Gelecek zaman + ek fiilin hikayesi","wrong":"Öğrenilen geçmiş + ek fiilin hikayesi","explanation":"'-acak' gelecek zaman; '-tım' ek fiilin hikayesi (1. tekil)."},{"sentence":"Söylendiğine göre yarın gelecekmiş.","highlighted":"gelecekmiş","correct":"Gelecek zaman + ek fiilin rivayeti","wrong":"Gelecek zaman + ek fiilin hikayesi","explanation":"'-ecek' gelecek zaman; '-miş' ek fiilin rivayetidir."},{"sentence":"Taşınacaklarmış yeni eve.","highlighted":"taşınacaklarmış","correct":"Gelecek zaman + ek fiilin rivayeti","wrong":"Şimdiki zaman + ek fiilin rivayeti","explanation":"'-acak' + 3. çoğul (-lar) + '-mış' ek fiilin rivayeti."},{"sentence":"Yarın gelecekse haber versin.","highlighted":"gelecekse","correct":"Gelecek zaman + ek fiilin şartı","wrong":"Geniş zaman + ek fiilin şartı","explanation":"'-ecek' gelecek zaman; '-se' ek fiilin şartıdır."},{"sentence":"Alacaksan çabuk karar ver.","highlighted":"alacaksan","correct":"Gelecek zaman + ek fiilin şartı","wrong":"Şimdiki zaman + ek fiilin şartı","explanation":"'-acak' gelecek zaman; '-sa' şart + '-n' (2. tekil)."},{"sentence":"Saat dörtte çoktan gitmişti.","highlighted":"gitmişti","correct":"Öğrenilen geçmiş + ek fiilin hikayesi","wrong":"Şimdiki zaman + ek fiilin hikayesi","explanation":"'-miş' öğrenilen geçmiş; '-ti' ek fiilin hikayesidir."},{"sentence":"O yazıyı daha önce okumuştum.","highlighted":"okumuştum","correct":"Öğrenilen geçmiş + ek fiilin hikayesi","wrong":"Gelecek zaman + ek fiilin hikayesi","explanation":"'-muş' öğrenilen geçmiş; '-tum' ek fiilin hikayesi (1. tekil)."},{"sentence":"Kapıyı kapatmıştı ama anahtar içerdeydi.","highlighted":"kapatmıştı","correct":"Öğrenilen geçmiş + ek fiilin hikayesi","wrong":"Geniş zaman + ek fiilin hikayesi","explanation":"'-mış' + '-tı' ek fiilin hikayesi: geçmişte öğrenilen eylem."},{"sentence":"Haberi duymuşsa neden gelmedi?","highlighted":"duymuşsa","correct":"Öğrenilen geçmiş + ek fiilin şartı","wrong":"Öğrenilen geçmiş + ek fiilin rivayeti","explanation":"'-muş' öğrenilen geçmiş; '-sa' ek fiilin şartıdır."},{"sentence":"Yazmışsan paylaş bizimle.","highlighted":"yazmışsan","correct":"Öğrenilen geçmiş + ek fiilin şartı","wrong":"Geniş zaman + ek fiilin şartı","explanation":"'-mış' + '-san' (2. tekil şart ek fiili)."},{"sentence":"Biraz daha çalışsaydın kazanırdın.","highlighted":"çalışsaydın","correct":"Şart (dilek) kipi + ek fiilin hikayesi","wrong":"Gereklilik + ek fiilin hikayesi","explanation":"'-sa' dilek-şart kipi; '-ydın' ek fiilin hikayesi (2. tekil)."},{"sentence":"Oraya gitseydi çok mutlu olurdu.","highlighted":"gitseydi","correct":"Şart (dilek) kipi + ek fiilin hikayesi","wrong":"Şimdiki zaman + ek fiilin şartı","explanation":"'-se' dilek-şart kipi; '-ydi' ek fiilin hikayesi (3. tekil)."},{"sentence":"Bu fırsatı kaçırsaydım çok üzülürdüm.","highlighted":"kaçırsaydım","correct":"Şart (dilek) kipi + ek fiilin hikayesi","wrong":"Gelecek zaman + ek fiilin hikayesi","explanation":"'-sa' dilek-şart; '-ydım' ek fiilin hikayesi (1. tekil)."},{"sentence":"Erken uyusaydık yorgun olmazdık.","highlighted":"uyusaydık","correct":"Şart (dilek) kipi + ek fiilin hikayesi","wrong":"Öğrenilen geçmiş + ek fiilin hikayesi","explanation":"'-sa' dilek-şart; '-ydık' ek fiilin hikayesi (1. çoğul)."},{"sentence":"Erken gelmeliydi ama geç kaldı.","highlighted":"gelmeliydi","correct":"Gereklilik kipi + ek fiilin hikayesi","wrong":"Şimdiki zaman + ek fiilin hikayesi","explanation":"'-meli' gereklilik; '-ydi' ek fiilin hikayesidir."},{"sentence":"Bunu bilmeliydiniz.","highlighted":"bilmeliydiniz","correct":"Gereklilik kipi + ek fiilin hikayesi","wrong":"Gereklilik kipi + ek fiilin rivayeti","explanation":"'-meli' + '-ydi' hikaye + '-niz' (2. çoğul)."},{"sentence":"Söylendiğine göre erken gitmeliymiş.","highlighted":"gitmeliymiş","correct":"Gereklilik kipi + ek fiilin rivayeti","wrong":"Gereklilik kipi + ek fiilin hikayesi","explanation":"'-meli' gereklilik; '-ymış' ek fiilin rivayetidir."},{"sentence":"Ödevini bitirmeliymişsin.","highlighted":"bitirmeliymişsin","correct":"Gereklilik kipi + ek fiilin rivayeti","wrong":"Gereklilik kipi + ek fiilin şartı","explanation":"'-meli' + '-ymış' rivayet + '-sin' (2. tekil)."},{"sentence":"Gitmeliymişler o toplantıya.","highlighted":"gitmeliymişler","correct":"Gereklilik kipi + ek fiilin rivayeti","wrong":"Şimdiki zaman + ek fiilin rivayeti","explanation":"'-meli' + '-ymiş' rivayet + '-ler' (3. çoğul)."},{"sentence":"Gitmeliyse gitsin.","highlighted":"gitmeliyse","correct":"Gereklilik kipi + ek fiilin şartı","wrong":"Gereklilik kipi + ek fiilin rivayeti","explanation":"'-meli' gereklilik; '-yse' ek fiilin şartıdır."},{"sentence":"Bu işi yapmalıysan başla.","highlighted":"yapmalıysan","correct":"Gereklilik kipi + ek fiilin şartı","wrong":"Geniş zaman + ek fiilin şartı","explanation":"'-malı' gereklilik; '-ysa' şart + '-n' (2. tekil)."},{"sentence":"Keşke bileydim şimdiden.","highlighted":"bileydim","correct":"İstek kipi + ek fiilin hikayesi","wrong":"Gereklilik + ek fiilin hikayesi","explanation":"'-e' istek kipi; '-ydim' ek fiilin hikayesidir."},{"sentence":"Göreydim onu bir kez daha.","highlighted":"göreydim","correct":"İstek kipi + ek fiilin hikayesi","wrong":"Şart kipi + ek fiilin hikayesi","explanation":"'-e' istek kipi; '-ydim' ek fiilin hikayesi (1. tekil)."},{"sentence":"Kazanaydınız o maçı.","highlighted":"kazanaydınız","correct":"İstek kipi + ek fiilin hikayesi","wrong":"Gereklilik + ek fiilin hikayesi","explanation":"'-a' istek kipi; '-ydi' hikaye + '-niz' (2. çoğul)."},{"sentence":"Vay be, bunu çözeymişsin!","highlighted":"çözeymişsin","correct":"İstek kipi + ek fiilin rivayeti","wrong":"İstek kipi + ek fiilin hikayesi","explanation":"'-e' istek kipi; '-ymiş' rivayet + '-sin' (2. tekil)."},{"sentence":"Alaymışım o fırsatı.","highlighted":"alaymışım","correct":"İstek kipi + ek fiilin rivayeti","wrong":"Gelecek zaman + ek fiilin rivayeti","explanation":"'-a' istek kipi; '-ymış' rivayet + '-ım' (1. tekil)."},{"sentence":"Tutmalıysa tutsun, dert etme.","highlighted":"tutmalıysa","correct":"Gereklilik kipi + ek fiilin şartı","wrong":"Gereklilik + ek fiilin şartı","explanation":"'-malı' gereklilik kipi; '-ysa' ek fiilin şartıdır."},{"sentence":"Çiziyorsan çiz, zaman var.","highlighted":"çiziyorsan","correct":"Şimdiki zaman + ek fiilin şartı","wrong":"Gelecek zaman + ek fiilin şartı","explanation":"'-yor' şimdiki zaman kipi; '-yse' şart + '-n' (2. tekil)."},{"sentence":"Mektubu okuduysa bize söylesin.","highlighted":"okuduysa","correct":"Görülen geçmiş + ek fiilin şartı","wrong":"Öğrenilen geçmiş + ek fiilin şartı","explanation":"'-du' görülen geçmiş; '-ysa' ek fiilin şartıdır."},{"sentence":"Yazdıysam bir kopyasını saklarım.","highlighted":"yazdıysam","correct":"Görülen geçmiş + ek fiilin şartı","wrong":"Geniş zaman + ek fiilin şartı","explanation":"'-dı' görülen geçmiş; '-ysa' şart + '-m' (1. tekil)."},{"sentence":"Hava bugün çok soğukmuş.","highlighted":"soğukmuş","correct":"Rivayet ek fiili (isme gelen)","wrong":"Hikaye ek fiili (isme gelen)","explanation":"'-muş' ek fiilin rivayeti; isme gelen."},{"sentence":"O günlerde çok mutluydum.","highlighted":"mutluydum","correct":"Hikaye ek fiili (isme gelen)","wrong":"Şimdiki zaman + ek fiilin hikayesi","explanation":"'-dum' ek fiilin hikayesi; isme gelen."},{"sentence":"Eğer cesursan ileri çık.","highlighted":"cesursan","correct":"Şart ek fiili (isme gelen)","wrong":"Geniş zaman + ek fiilin şartı","explanation":"'-san' ek fiilin şartı; isme gelen sıfat üzerine."},{"sentence":"Sen çok yeteneklisin.","highlighted":"yeteneklisin","correct":"Geniş zaman ek fiili (isme gelen)","wrong":"Şimdiki zaman + ek fiilin hikayesi","explanation":"'-sin' geniş zaman ek fiili; isme gelen."},{"sentence":"Çiçekler bahçede açmalıymış.","highlighted":"açmalıymış","correct":"Gereklilik kipi + ek fiilin rivayeti","wrong":"Şimdiki zaman + ek fiilin hikayesi","explanation":"'-malı' gereklilik; '-ymış' ek fiilin rivayetidir."},{"sentence":"Öğrenciler ders çalışıyordu.","highlighted":"çalışıyordu","correct":"Şimdiki zaman + ek fiilin hikayesi","wrong":"Geçmiş zaman + ek fiilin rivayeti","explanation":"'-yor' şimdiki zaman; '-du' ek fiilin hikayesidir."},{"sentence":"Gitmeliymişler.","highlighted":"gitmeliymişler","correct":"Gereklilik kipi + ek fiilin rivayeti","wrong":"İstek kipi + ek fiilin hikayesi","explanation":"'-meli' gereklilik; '-ymiş' rivayet + '-ler' 3. çoğul."},{"sentence":"Çalışmalıydınız.","highlighted":"çalışmalıydınız","correct":"Gereklilik kipi + ek fiilin hikayesi","wrong":"Geniş zaman kipi + ek fiilin rivayeti","explanation":"'-malı' gereklilik; '-ydı' hikaye + '-nız' 2. çoğul."},{"sentence":"Bileydim ne güzel olurdu.","highlighted":"bileydim","correct":"İstek kipi + ek fiilin hikayesi","wrong":"Gereklilik + ek fiilin şartı","explanation":"'-e' istek kipi; '-ydim' ek fiilin hikayesi."},{"sentence":"Haberi duymuşsa neden gelmiyor?","highlighted":"duymuşsa","correct":"Öğrenilen geçmiş + ek fiilin şartı","wrong":"Geniş zaman + ek fiilin şartı","explanation":"'-muş' öğrenilen geçmiş; '-sa' ek fiilin şartı."},{"sentence":"Her sabah koşarlarmış.","highlighted":"koşarlarmış","correct":"Geniş zaman + ek fiilin rivayeti","wrong":"Şimdiki zaman + ek fiilin rivayeti","explanation":"'-ar' geniş zaman + '-lar' 3. çoğul + '-mış' ek fiilin rivayeti."},{"sentence":"Kitabı bugün bitirecekti.","highlighted":"bitirecekti","correct":"Gelecek zaman + ek fiilin hikayesi","wrong":"Şimdiki zaman + ek fiilin hikayesi","explanation":"'-ecek' gelecek zaman; '-ti' ek fiilin hikayesidir."},{"sentence":"Bu fırsatı kaçırsaydım çok üzülürdüm.","highlighted":"kaçırsaydım","correct":"Şart (dilek) kipi + ek fiilin hikayesi","wrong":"Gereklilik + ek fiilin hikayesi","explanation":"'-sa' dilek-şart; '-ydım' ek fiilin hikayesi (1. tekil)."},{"sentence":"Masal kahramanı çok zekiydi.","highlighted":"zekiydi","correct":"Hikaye ek fiili (isme gelen)","wrong":"Rivayet ek fiili (isme gelen)","explanation":"'-ydi' ek fiilin hikayesi; 'zeki' sıfatına gelen ek fiil."},{"sentence":"Yarışmaya katılacaktım ama sakatlandım.","highlighted":"katılacaktım","correct":"Gelecek zaman + ek fiilin hikayesi","wrong":"Şimdiki zaman + ek fiilin hikayesi","explanation":"'-acak' gelecek zaman; '-tım' ek fiilin hikayesi (1. tekil)."},{"sentence":"Duyduğuma göre yeni okul açılacakmış.","highlighted":"açılacakmış","correct":"Gelecek zaman + ek fiilin rivayeti","wrong":"Gelecek zaman + ek fiilin hikayesi","explanation":"'-acak' gelecek zaman; '-mış' ek fiilin rivayetidir."},{"sentence":"Yardım istersen buradayım.","highlighted":"istersen","correct":"Geniş zaman + ek fiilin şartı","wrong":"Şimdiki zaman + ek fiilin şartı","explanation":"'-er' geniş zaman; '-se' şart + '-n' (2. tekil)."},{"sentence":"O sıralar her gece yıldızları izlerdi.","highlighted":"izlerdi","correct":"Geniş zaman + ek fiilin hikayesi","wrong":"Şimdiki zaman + ek fiilin hikayesi","explanation":"'-er' geniş zaman; '-di' ek fiilin hikayesi (3. tekil)."},{"sentence":"Keşke o gün gitseydik.","highlighted":"gitseydik","correct":"Şart (dilek) kipi + ek fiilin hikayesi","wrong":"Gereklilik + ek fiilin hikayesi","explanation":"'-se' dilek-şart; '-ydik' ek fiilin hikayesi (1. çoğul)."},{"sentence":"Söylendiğine göre çok iyi pişirirmiş.","highlighted":"pişirirmiş","correct":"Geniş zaman + ek fiilin rivayeti","wrong":"Şimdiki zaman + ek fiilin rivayeti","explanation":"'-ir' geniş zaman; '-miş' ek fiilin rivayetidir."},{"sentence":"Ekmeği daha önce almıştım.","highlighted":"almıştım","correct":"Öğrenilen geçmiş + ek fiilin hikayesi","wrong":"Görülen geçmiş + ek fiilin hikayesi","explanation":"'-mış' öğrenilen geçmiş; '-tım' ek fiilin hikayesi (1. tekil)."},{"sentence":"Yarın teklifi kabul edecekse söylesin.","highlighted":"edecekse","correct":"Gelecek zaman + ek fiilin şartı","wrong":"Öğrenilen geçmiş + ek fiilin şartı","explanation":"'-ecek' gelecek zaman; '-se' ek fiilin şartıdır."},{"sentence":"Bu ders gerçekten zorsa yardım iste.","highlighted":"zorsa","correct":"Şart ek fiili (isme gelen)","wrong":"Geniş zaman + ek fiilin şartı","explanation":"'-sa' ek fiilin şartı; 'zor' sıfatına gelen ek fiil."},{"sentence":"Onları daha önce tanımıştık.","highlighted":"tanımıştık","correct":"Öğrenilen geçmiş + ek fiilin hikayesi","wrong":"Geniş zaman + ek fiilin hikayesi","explanation":"'-mış' + '-tık' ek fiilin hikayesi (1. çoğul)."},{"sentence":"Yazıyorsa bekleyelim.","highlighted":"yazıyorsa","correct":"Şimdiki zaman + ek fiilin şartı","wrong":"Öğrenilen geçmiş + ek fiilin şartı","explanation":"'-yor' şimdiki zaman; '-sa' ek fiilin şartıdır."},{"sentence":"Herkes onun sevinçli olduğunu söylüyordu.","highlighted":"söylüyordu","correct":"Şimdiki zaman + ek fiilin hikayesi","wrong":"Geniş zaman + ek fiilin hikayesi","explanation":"'-yor' şimdiki zaman; '-du' ek fiilin hikayesi (3. tekil)."},{"sentence":"Alaymışım o fırsatı.","highlighted":"alaymışım","correct":"İstek kipi + ek fiilin rivayeti","wrong":"İstek kipi + ek fiilin hikayesi","explanation":"'-a' istek kipi; '-ymış' rivayet + '-ım' (1. tekil)."},{"sentence":"Geçen yıl çok heyecanlıydık.","highlighted":"heyecanlıydık","correct":"Hikaye ek fiili (isme gelen)","wrong":"Rivayet ek fiili (isme gelen)","explanation":"'-ydık' ek fiilin hikayesi; 'heyecanlı' sıfatına gelen."},{"sentence":"Söylenene göre çok iyi bir öğretmenmiş.","highlighted":"öğretmenmiş","correct":"Rivayet ek fiili (isme gelen)","wrong":"Hikaye ek fiili (isme gelen)","explanation":"'-miş' ek fiilin rivayeti; 'öğretmen' ismine gelen."},{"sentence":"Bu soruyu çözmeliydiniz.","highlighted":"çözmeliydiniz","correct":"Gereklilik kipi + ek fiilin hikayesi","wrong":"Gereklilik kipi + ek fiilin rivayeti","explanation":"'-meli' + '-ydi' hikaye + '-niz' (2. çoğul)."},{"sentence":"Bekliyorsa biraz bekleyebiliriz.","highlighted":"bekliyorsa","correct":"Şimdiki zaman + ek fiilin şartı","wrong":"Geniş zaman + ek fiilin şartı","explanation":"'-yor' şimdiki zaman; '-sa' ek fiilin şartı (3. tekil)."},{"sentence":"Çok iyi koşarlardı gençken.","highlighted":"koşarlardı","correct":"Geniş zaman + ek fiilin hikayesi","wrong":"Şimdiki zaman + ek fiilin hikayesi","explanation":"'-ar' geniş zaman + '-lar' 3. çoğul + '-dı' ek fiilin hikayesi."},{"sentence":"Keşke sevinseydim onlarla.","highlighted":"sevinseydim","correct":"Şart (dilek) kipi + ek fiilin hikayesi","wrong":"İstek kipi + ek fiilin hikayesi","explanation":"'-se' dilek-şart; '-ydim' ek fiilin hikayesi (1. tekil)."},{"sentence":"Bu habere göre yarın taşınacaklarmış.","highlighted":"taşınacaklarmış","correct":"Gelecek zaman + ek fiilin rivayeti","wrong":"Geniş zaman + ek fiilin rivayeti","explanation":"'-acak' + '-lar' + '-mış' ek fiilin rivayeti (3. çoğul)."},{"sentence":"Eğer hazırsanız başlayalım.","highlighted":"hazırsanız","correct":"Şart ek fiili (isme gelen)","wrong":"Geniş zaman ek fiili (isme gelen)","explanation":"'-sanız' ek fiilin şartı; 'hazır' sıfatına gelen (2. çoğul)."},{"sentence":"Bu yolu yıllarca yürürmüş.","highlighted":"yürürmüş","correct":"Geniş zaman + ek fiilin rivayeti","wrong":"Şimdiki zaman + ek fiilin rivayeti","explanation":"'-ür' geniş zaman; '-müş' ek fiilin rivayetidir."},{"sentence":"Sınavı kazanacaktın, neden vazgeçtin?","highlighted":"kazanacaktın","correct":"Gelecek zaman + ek fiilin hikayesi","wrong":"Gereklilik + ek fiilin hikayesi","explanation":"'-acak' gelecek zaman; '-tın' ek fiilin hikayesi (2. tekil)."},{"sentence":"Tutmalıysa tutsun.","highlighted":"tutmalıysa","correct":"Gereklilik kipi + ek fiilin şartı","wrong":"Şimdiki zaman + ek fiilin şartı","explanation":"'-malı' gereklilik kipi; '-ysa' ek fiilin şartıdır."},{"sentence":"Onlar zamanında çok zenginlerdi.","highlighted":"zenginlerdi","correct":"Hikaye ek fiili (isme gelen)","wrong":"Geniş zaman ek fiili (isme gelen)","explanation":"'-lerdi' ek fiilin hikayesi; 'zengin' sıfatı, 3. çoğul."},{"sentence":"Görmüşse anlasın bize.","highlighted":"görmüşse","correct":"Öğrenilen geçmiş + ek fiilin şartı","wrong":"Görülen geçmiş + ek fiilin şartı","explanation":"'-müş' öğrenilen geçmiş; '-se' ek fiilin şartıdır."},{"sentence":"Erken kalkarmış hep.","highlighted":"kalkarmış","correct":"Geniş zaman + ek fiilin rivayeti","wrong":"Gelecek zaman + ek fiilin rivayeti","explanation":"'-ar' geniş zaman; '-mış' ek fiilin rivayetidir."},{"sentence":"Ben bu işte çok meraklıyım.","highlighted":"meraklıyım","correct":"Geniş zaman ek fiili (isme gelen)","wrong":"Şimdiki zaman + ek fiilin hikayesi","explanation":"'-yım' geniş zaman ek fiili; 'meraklı' sıfatına gelen."},{"sentence":"Mektubu okuduysa bize söylesin.","highlighted":"okuduysa","correct":"Görülen geçmiş + ek fiilin şartı","wrong":"Öğrenilen geçmiş + ek fiilin şartı","explanation":"'-du' görülen geçmiş; '-ysa' ek fiilin şartıdır."},{"sentence":"Konuşmalıymış bu konuyu.","highlighted":"konuşmalıymış","correct":"Gereklilik kipi + ek fiilin rivayeti","wrong":"Şimdiki zaman + ek fiilin rivayeti","explanation":"'-malı' gereklilik; '-ymış' ek fiilin rivayetidir."},{"sentence":"Biz bu problemde haklıysak söylemeliyiz.","highlighted":"haklıysak","correct":"Şart ek fiili (isme gelen)","wrong":"Şimdiki zaman + ek fiilin şartı","explanation":"'-ysak' ek fiilin şartı; 'haklı' sıfatına gelen (1. çoğul)."},{"sentence":"Söylendiğine göre duyduğuma göre şirketi devredecekmiş.","highlighted":"devredecekmiş","correct":"Gelecek zaman + ek fiilin rivayeti","wrong":"Gelecek zaman + ek fiilin hikayesi","explanation":"'-ecek' gelecek zaman; '-miş' ek fiilin rivayeti."},{"sentence":"Uzun süre çalışsaydın başarırdın.","highlighted":"çalışsaydın","correct":"Şart (dilek) kipi + ek fiilin hikayesi","wrong":"Gereklilik + ek fiilin hikayesi","explanation":"'-sa' dilek-şart; '-ydın' ek fiilin hikayesi (2. tekil)."},{"sentence":"Siz gerçekten çok bilgilisiniz.","highlighted":"bilgilisiniz","correct":"Geniş zaman ek fiili (isme gelen)","wrong":"Gereklilik + ek fiilin şartı","explanation":"'-siniz' geniş zaman ek fiili; 'bilgili' sıfatına gelen (2. çoğul)."},{"sentence":"Keşke gitseydik o geziye.","highlighted":"gitseydik","correct":"Şart (dilek) kipi + ek fiilin hikayesi","wrong":"İstek kipi + ek fiilin hikayesi","explanation":"'-se' dilek-şart; '-ydik' ek fiilin hikayesi (1. çoğul)."},{"sentence":"Bu tablo çok değerliymiş.","highlighted":"değerliymiş","correct":"Rivayet ek fiili (isme gelen)","wrong":"Hikaye ek fiili (isme gelen)","explanation":"'-ymiş' ek fiilin rivayeti; 'değerli' sıfatına gelen."},{"sentence":"Tüm gece boyunca kitap okurmuş.","highlighted":"okurmuş","correct":"Geniş zaman + ek fiilin rivayeti","wrong":"Öğrenilen geçmiş + ek fiilin hikayesi","explanation":"'-ur' geniş zaman; '-muş' ek fiilin rivayetidir."},{"sentence":"Maçı izliyorsa bize haber versin.","highlighted":"izliyorsa","correct":"Şimdiki zaman + ek fiilin şartı","wrong":"Geniş zaman + ek fiilin şartı","explanation":"'-yor' şimdiki zaman; '-sa' ek fiilin şartıdır."},{"sentence":"Ekmeği almıştı ama eve gitmeyi unutmuştu.","highlighted":"almıştı","correct":"Öğrenilen geçmiş + ek fiilin hikayesi","wrong":"Şimdiki zaman + ek fiilin hikayesi","explanation":"'-mış' öğrenilen geçmiş; '-tı' ek fiilin hikayesidir."},{"sentence":"Dinlemeliyse dinlesin.","highlighted":"dinlemeliyse","correct":"Gereklilik kipi + ek fiilin şartı","wrong":"Gereklilik kipi + ek fiilin rivayeti","explanation":"'-meli' gereklilik; '-yse' ek fiilin şartıdır."}];
+const DB_3=[{"title": "Ormandaki Macera", "text": "Küçük Mert, annesinin anlattığı ormana gitmek istiyordu. O zamanlar bu orman çok sık ve gizemliydi. Mert'in kuzeni Ali ise çok cesurdu. Su çok soğukmuş. Ali yüzmeyi biliyordu; Mert ise suya girmekten korkardı. Akşam evlerine döndüklerinde anne çok meraklıydı. Orman gerçekten çok güzelmiş demişti. Mert artık ayrılmak istemiyordu.", "words": ["gizemliydi", "cesurdu", "soğukmuş", "biliyordu", "korkardı", "meraklıydı", "güzelmiş", "demişti", "istemiyordu"]}, {"title": "Eski Şehir", "text": "Bu şehir bir zamanlar çok kalabalıktı. Caddelerde insanlar koşturmaktaydı. Pazarlar çok renkliydi. Esnaftı onların hepsi — dürüst ve sıradan insanlar. Bugün ise şehir pek sessizdir. Tarihçiler bu şehrin çok önemliymiş olduğunu yazıyor. Ziyaretçiler 'Burası gerçekten tarihiymiş' diyor. Rehber 'Bu duvarlar yüzyıllarca buradaymış' diye anlatıyor.", "words": ["kalabalıktı", "koşturmaktaydı", "renkliydi", "Esnaftı", "sessizdir", "önemliymiş", "tarihiymiş", "buradaymış"]}, {"title": "Küçük Bilim İnsanı", "text": "Zeynep küçükken çok meraklıydı. Her şeyi sormaktaydı. Öğretmeni 'Sen çok zekisin' dedi. Annesi 'Kızım iyi bir bilim insanıymış' demişti. Kitaplar Zeynep için çok değerliydi. Deneylerde başarılıydı. Yıllar sonra ünlü bir bilim insanıydı. Herkes ona 'Siz gerçekten olağanüstüsünüz' diyordu.", "words": ["meraklıydı", "sormaktaydı", "zekisin", "insanıymış", "demişti", "değerliydi", "başarılıydı", "insanıydı", "diyordu"]}, {"title": "Dağ Yolculuğu", "text": "Ahmet ve kardeşi dağa tırmanmaya karar verdiler. Hava çok bulutluydu. Rehberleri tecrübeliymiş; bunu köylüler söylemişti. Zirveye ulaştıklarında manzara muhteşemdi. 'Ben çok yorgunum' dedi Mina. Ahmet çok heyecanlıydı. Gece çadırda çok soğuktu. Sabah yol buz gibiydi. 'Siz gerçekten cesursunuz' dedi rehber.", "words": ["bulutluydu", "tecrübeliymiş", "söylemişti", "muhteşemdi", "yorgunum", "heyecanlıydı", "soğuktu", "cesursunuz"]}, {"title": "Kütüphanedeki Sır", "text": "Eski kütüphane çok karanlıktı. Kütüphaneci çok bilgiliymiş; herkese danışılırdı. Raftaki kitaplar çok eskiydi. Zehra 'Bu kitap çok ilginçmiş' diye fısıldadı. Yanındaki arkadaşı 'Sen hep meraklısın' dedi. Kitabın içindeki harita çok önemliydi. Onlar bu keşiften çok heyecanlıydılar.", "words": ["karanlıktı", "bilgiliymiş", "danışılırdı", "eskiydi", "ilginçmiş", "meraklısın", "önemliydi", "heyecanlıydılar"]}, {"title": "Deniz Kenarında", "text": "Sahil köyü çok sakinmiş; oraya gelenler hep hayran kalırmış. Balıkçı dedenin ağları ağırdı. 'Ben yorgunum' dedi torun. Deniz o gün çok dalgalıydı. Gökyüzü pembe ve maviydi. Akşam eve dönüşte yol uzundu. 'Siz çok çalışkansınız' dedi komşu.", "words": ["sakinmiş", "kalırmış", "ağırdı", "yorgunum", "dalgalıydı", "maviydi", "uzundu", "çalışkansınız"]}, {"title": "Okul Gezisi", "text": "Sınıf müzeye gitmeliydik ama hava yağmurluydu. Öğretmen 'Yağmursa da gideceğiz' dedi. Müze çok büyükmüş; hepsi şaşırdı. Rehber 'Burası çok tarihidir' diye anlattı. Sergilenen eserler çok değerliydi. Selin 'Ben çok heyecanlıyım' dedi. Dönüşte otobüste herkes neşeliydi.", "words": ["gitmeliydik", "yağmurluydu", "yağmursa", "büyükmüş", "tarihidir", "değerliydi", "heyecanlıyım", "neşeliydi"]}, {"title": "Yaşlı Çınar", "text": "Köyün ortasındaki çınar ağacı çok yaşlıymış. Dedeler altında otururdu. Gölgesi çok serinmiş; yolcular dinlenirmiş. 'Kutsal ve köklüdür bu ağaç' derdi büyükler. Bugün de sağlamdır. Çocuklar 'Biz çok şanslıyız' dedi. Yaprakları çok yeşildi.", "words": ["yaşlıymış", "otururdu", "serinmiş", "dinlenirmiş", "köklüdür", "sağlamdır", "şanslıyız", "yeşildi"]}, {"title": "Fırında Bir Sabah", "text": "Fırıncı Hasan usta çok deneyimliymiş. Her sabah erken kalkardı. Ekmekler çok lezzetliydi. Müşteriler 'Bu ekmek nefis' derdi. Dükkân her zaman doluydu. Hasan usta 'Ben çok mutluyum' diyordu. Çıraklar ise 'Biz de mutluyuz' derdi. Fırın mahallenin en önemli yeriydi.", "words": ["deneyimliymiş", "kalkardı", "lezzetliydi", "doluydu", "mutluyum", "mutluyuz", "yeriydi", "diyordu"]}, {"title": "Yağmurlu Öğleden Sonra", "text": "Hava çok kasvetliydi. Pencere camları ıslaktı. Leyla 'Bu hava üzücüdür' dedi. Kardeşi 'Sen hep karamsarsın' diye güldü. Odalar karanlıktı. Ama birlikte oynamak çok eğlenceliydi. Akşam çorba içtiklerinde herkes memnundu.", "words": ["kasvetliydi", "ıslaktı", "üzücüdür", "karamsarsın", "karanlıktı", "eğlenceliydi", "memnundu"]}, {"title": "Kış Gecesi", "text": "Dışarısı çok soğuktu. 'Kar çok güzelmiş' diyordu büyükanne. Ateş yakmaktaydılar. Ev çok sıcaktı. Çocuklar çok neşeliydi. 'Biz çok şanslıyız' dedi baba. Büyükannenin masalları güzeldi. O gece herkes çok mutluydu.", "words": ["soğuktu", "güzelmiş", "diyordu", "yakmaktaydılar", "sıcaktı", "neşeliydi", "şanslıyız", "güzeldi", "mutluydu"]}, {"title": "Mahalle Arkadaşları", "text": "Eski mahallede herkes birbirine yakındı. Komşular çok cömertti. Bakkalın amcası çok iyimsermiş; herkese güler yüz gösterirmiş. 'Güvenli bir mahalleydi burası' derdi büyükler. Çocuklar için sokak özgürdü. Şimdi o günler uzak görünmektedir. 'Biz çok şanslıydık' der büyükler.", "words": ["yakındı", "cömertti", "iyimsermiş", "gösterirmiş", "mahalleydi", "özgürdü", "görünmektedir", "şanslıydık"]}, {"title": "Çiftçinin Oğlu", "text": "Tarla çok verimliymiş. Babası çok çalışkandı. Oğlu 'Ben çok güçlüyüm' diyordu. Hasat zamanı çok hareketliydi. Komşular 'Siz çok başarılısınız' dedi. Ürünler bu yıl çok iyiydi. Çiftçi ailesi bu toprakla gurur duyuyordu.", "words": ["verimliymiş", "çalışkandı", "güçlüyüm", "diyordu", "hareketliydi", "başarılısınız", "iyiydi", "duyuyordu"]}, {"title": "Şehirden Köye", "text": "Şehir çok kalabalıktı. Köy ise sakin ve huzurluydu. Büyükanne 'Bu hava çok temizdir' dedi. Torunu 'Sen çok mutlusun' dedi ona. Bahçe büyüktü ve sebzeler çok tazeydi. 'Akşamlar çok güzelmiş' derdi dedem. Köyde yaşamak gerçekten anlamlıydı.", "words": ["kalabalıktı", "huzurluydu", "temizdir", "mutlusun", "tazeydi", "güzelmiş", "anlamlıydı"]}, {"title": "Tiyatro Gecesi", "text": "Sahne çok görkemliymiş. Oyuncular çok yetenekliydi. Seyirciler çok heyecanlıydı. Başrol oyuncusu 'Ben çok hazırım' dedi sahneye çıkarken. Kostümler çok renkliydi. Perde kapandığında herkes çok memnundu. 'Siz harikasınız!' diye bağırdılar.", "words": ["görkemliymiş", "yetenekliydi", "heyecanlıydı", "hazırım", "renkliydi", "memnundu", "harikasınız"]}, {"title": "Köy Pazarı", "text": "Pazar yeri çok kalabalıkmış. Esnaf çok samimi ve güler yüzlüydü. Meyveler çok tazeymiş diyordu yaşlı kadın. Narlar çok kırmızıydı. Satıcı 'Bu fiyatlar çok uygundur' dedi. Alıcılar 'Siz çok dürüstsünüz' dedi. Akşama kadar pazar çok neşeliydi.", "words": ["kalabalıkmış", "yüzlüydü", "tazeymiş", "kırmızıydı", "uygundur", "dürüstsünüz", "neşeliydi"]}, {"title": "Genç Ressam", "text": "Atölyesi küçüktü ama sıcaktı. Duvarlar renkli tablolarla doluydu. Ressam 'Ben mutlu ve özgürüm' diyordu. Fırçaları çok renkli ve kullanışlıydı. Öğretmeni 'Sen çok yeteneklisin' demişti. O da sabahtan akşama çalışıyordu. Tabloları çok değerliydi.", "words": ["küçüktü", "sıcaktı", "doluydu", "özgürüm", "kullanışlıydı", "yeteneklisin", "demişti", "çalışıyordu", "değerliydi"]}, {"title": "Hastanede Bir Gün", "text": "Koridorlar çok uzundu. Doktorlar çok çalışkandı. Hemşire 'Siz çok sabırlısınız' dedi hastaya. Hasta çok iyimserdi ve gülümsüyordu. 'Ben iyileşeceğim' diyordu. Doktor 'Bu ilaçlar çok faydalıdır' dedi. Akşama kadar koğuş çok sessizdi.", "words": ["uzundu", "çalışkandı", "sabırlısınız", "iyimserdi", "gülümsüyordu", "diyordu", "faydalıdır", "sessizdi"]}, {"title": "Futbol Maçı", "text": "Stadyum çok kalabalıktı. Taraftarlar çok heyecanlıydı. Takım çok güçlüydü. Kaleci 'Ben çok hazırım' dedi. Maç çok zordu ama eğlenceliydi. Skoru duyanlar çok gerginmiş görünüyordu. Hakem 'Kural çok açıktır' dedi. Maç sonrası herkes yorgundu ama mutluydu.", "words": ["kalabalıktı", "heyecanlıydı", "güçlüydü", "hazırım", "zordu", "eğlenceliydi", "gerginmiş", "görünüyordu", "açıktır", "yorgundu", "mutluydu"]}, {"title": "Bayram Sabahı", "text": "Sabah havası serinmiş ve temizdi. Sokaklar çok neşeliydi. Çocuklar çok heyecanlıydı; hediyelerini bekliyorlardı. Büyükanne 'Sizler çok tatlısınız' dedi. Masa çok doluydu. Baba 'Ben çok mutluyum' dedi. O gün gerçekten değerliydi. 'Bu gün çok güzeldi' dediler hep bir ağızdan.", "words": ["serinmiş", "temizdi", "neşeliydi", "heyecanlıydı", "bekliyorlardı", "tatlısınız", "doluydu", "mutluyum", "değerliydi", "güzeldi"]}];
+const ALL_EKFIIL=["-acaklarmış","-acakmış","-acaksa","-acaksan","-acaktı","-acaktım","-acaktın","-ardı","-arlardı","-armış","-aysa","-dir","-dum","-dür","-dın","-ecekmiş","-ecekse","-ecekti","-erdi","-ermiş","-ersen","-eydim","-eymişmiş","-eymişsin","-irdi","-irmiş","-lerdi","-malıysan","-meliydi","-meliydiniz","-meliymişsin","-meliymış","-meliyse","-miş","-mişti","-mişti / -mamıştı","-muş","-muşsa","-muştum","-müştün","-mışsan","-mıştı","-mıştık","-sa","-sak","-san","-saydık","-saydım","-saydın","-sem","-seydi","-siniz","-tik","-urdum","-urmuş","-ydi","-ydu","-ydık","-ymiş","-ymış","-yordu","-yormuş","-yorsa","-ysa","-yuz","-yım","-ürmüş","-ırmış"];
+
+var _E=["c2lr", "c2lrZQ==", "c2lraW0=", "b3Jvc3B1", "cGV6ZXZlbms=", "ZnVjaw==", "c2hpdA==", "Yml0Y2g=", "YXB0YWw=", "c2FsYWs="];
+var _BW=_E.map(function(e){return atob(e);});
+function hasBadWord(n){return _BW.some(function(w){return n.toLowerCase().includes(w);});}
+function getLB(){try{return JSON.parse(localStorage.getItem("ekfiil_v4")||"[]");}catch(e){return [];}}
+function saveLB(lb){try{localStorage.setItem("ekfiil_v4",JSON.stringify(lb));}catch(e){}}
+function addToLB(name,score){
+  var lb=getLB(),i=lb.findIndex(function(x){return x.name.toLowerCase()===name.toLowerCase();});
+  if(i>=0){if(score>lb[i].score)lb[i].score=score;}else{lb.push({name:name,score:score});}
+  lb.sort(function(a,b){return b.score-a.score;});saveLB(lb.slice(0,20));
+}
+
+var playerName="";
+var G={cur:"1A",unlocked:["1A"],completed:[],totalC:0,totalW:0,totalPts:0,
+  breakdown:{"1A":0,"1B":0,"2A":0,"2B":0,"3":0},
+  s1A:{qi:0,qs:[]},s1B:{qi:0,qs:[]},s2A:{qi:0,qs:[]},s2B:{qi:0,qs:[]}};
+var cur3=null,found3=[],wrong3=0,reports=[];
+var PTS={"1A":1,"1B":2,"2A":4,"2B":4,"3":5};
+var NEXT={"1A":"1B","1B":"2A","2A":"2B","2B":"3","3":null};
+var ORDER=["1A","1B","2A","2B","3"];
+
+function shuffle(a){var r=a.slice();for(var i=r.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=r[i];r[i]=r[j];r[j]=t;}return r;}
+function pick(a,n){return shuffle(a).slice(0,n);}
+function norm(s){
+  return (s||"").trim().toLowerCase()
+    .replace(/İ/g,"i").replace(/I/g,"ı").replace(/Ş/g,"ş")
+    .replace(/Ğ/g,"ğ").replace(/Ü/g,"ü").replace(/Ö/g,"ö").replace(/Ç/g,"ç");
+}
+function addPts(sec,n){G.totalPts+=PTS[sec]*n;G.breakdown[sec]=(G.breakdown[sec]||0)+PTS[sec]*n;updateScore();}
+function updateScore(){
+  var eC=document.getElementById("sC"),eW=document.getElementById("sW"),eP=document.getElementById("sP");
+  if(eC)eC.textContent=G.totalC;if(eW)eW.textContent=G.totalW;if(eP)eP.textContent=G.totalPts;
+}
+function confetti(n){
+  n=n||45;
+  var cols=["#f59e0b","#ec4899","#06b6d4","#10b981","#8b5cf6","#f97316"];
+  for(var i=0;i<n;i++){
+    var d=document.createElement("div");d.className="conf";
+    d.style.left=Math.random()*100+"%";
+    d.style.top="-10px";
+    d.style.background=cols[i%cols.length];
+    d.style.setProperty("--cd",(Math.random()*2+0.7)+"s");
+    d.style.animationDelay=(Math.random()*0.4)+"s";
+    d.style.borderRadius=Math.random()>0.5?"50%":"2px";
+    document.body.appendChild(d);
+    setTimeout(function(x){return function(){x.remove();};}(d),3200);
+  }
+}
+function megaFlash(){
+  var d=document.createElement("div");d.className="mega";
+  var t=document.createElement("div");t.className="mega-txt";t.textContent="⭐ DOĞRU! ⭐";
+  d.appendChild(t);document.body.appendChild(d);setTimeout(function(){d.remove();},800);
+}
+function burst(refEl){
+  var em=["⭐","🌟","✨","💫","🎉"];
+  var rx=refEl?refEl.getBoundingClientRect():{left:window.innerWidth/2,top:window.innerHeight/2,width:0,height:0};
+  for(var i=0;i<7;i++){
+    var s=document.createElement("div");s.className="starburst";
+    s.textContent=em[i%em.length];
+    s.style.left=(rx.left+rx.width/2+(Math.random()-0.5)*120)+"px";
+    s.style.top=(rx.top+window.scrollY+rx.height/2)+"px";
+    s.style.animationDelay=(i*0.07)+"s";
+    document.body.appendChild(s);
+    setTimeout(function(x){return function(){x.remove();};}(s),1600);
+  }
+}
+function beep(ok){
+  try{
+    var ctx=new(window.AudioContext||window.webkitAudioContext)();
+    var o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    if(ok){
+      o.frequency.setValueAtTime(523,ctx.currentTime);o.frequency.setValueAtTime(659,ctx.currentTime+0.08);
+      o.frequency.setValueAtTime(784,ctx.currentTime+0.16);o.frequency.setValueAtTime(1047,ctx.currentTime+0.24);
+      g.gain.setValueAtTime(0.28,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.55);
+      o.start();o.stop(ctx.currentTime+0.55);
+    }else{
+      o.frequency.setValueAtTime(300,ctx.currentTime);o.frequency.setValueAtTime(190,ctx.currentTime+0.15);
+      g.gain.setValueAtTime(0.35,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.38);
+      o.start();o.stop(ctx.currentTime+0.38);
+    }
+  }catch(e){}
+}
+function toast(msg,ok){
+  if(ok===undefined)ok=true;
+  var d=document.createElement("div");
+  d.style.position="fixed";d.style.bottom="24px";d.style.left="50%";
+  d.style.transform="translateX(-50%)";
+  d.style.background=ok?"linear-gradient(135deg,#10b981,#059669)":"linear-gradient(135deg,#ef4444,#b91c1c)";
+  d.style.color="#fff";d.style.padding="8px 20px";d.style.borderRadius="50px";
+  d.style.fontWeight="800";d.style.fontSize="0.92rem";d.style.zIndex="9999";
+  d.style.boxShadow="0 4px 18px rgba(0,0,0,0.4)";d.style.whiteSpace="nowrap";
+  d.textContent=msg;document.body.appendChild(d);
+  setTimeout(function(){d.remove();},2000);
+}
+function mkOv(){
+  var ov=document.createElement("div");ov.className="overlay";
+  ov.addEventListener("click",function(e){if(e.target===ov)ov.remove();});
+  return ov;
+}
+function mkBtn(cls,text,fn){
+  var b=document.createElement("button");b.className=cls;b.textContent=text;
+  if(fn)b.onclick=fn;return b;
+}
+function mkRepBtn(ctx){
+  return mkBtn("rep-btn","🚩 Hata bildir",function(){showRep(ctx);});
+}
+function mkNextBtn(fn){
+  return mkBtn("btn btn-p","Sonraki ➜",fn);
+}
+function mkChoiceBtn(label,isOk,correctLabel,exp,onDone){
+  var b=document.createElement("button");b.className="ch";b.textContent=label;
+  b.addEventListener("click",function(){
+    var container=b.closest(".choices-2")||b.closest(".choices-4");
+    if(container)container.querySelectorAll(".ch").forEach(function(x){
+      x.disabled=true;
+      if(x.textContent===correctLabel)x.classList.add("ok");
+    });
+    if(!isOk)b.classList.add("no");
+    onDone(isOk,exp);
+  });
+  return b;
+}
+
+function unlockNext(sec){
+  var nx=NEXT[sec];
+  if(nx&&G.unlocked.indexOf(nx)<0)G.unlocked.push(nx);
+  if(G.completed.indexOf(sec)<0)G.completed.push(sec);
+  updateNav();
+}
+function updateNav(){
+  ORDER.forEach(function(s){
+    var b=document.getElementById("nav"+s);if(!b)return;
+    b.className="nav-btn";
+    if(s===G.cur)b.classList.add("active");
+    else if(G.completed.indexOf(s)>=0)b.classList.add("done");
+    else if(G.unlocked.indexOf(s)<0)b.classList.add("locked");
+  });
+}
+function goTo(s){
+  if(G.unlocked.indexOf(s)<0){toast("🔒 Önce önceki bölümü tamamla!",false);return;}
+  if(s!=="3")clearTimer3();
+  G.cur=s;updateNav();renderGame();
+}
+
+function showRep(ctx){
+  var ov=mkOv();
+  var box=document.createElement("div");box.className="modal-box";box.style.maxWidth="440px";
+  var ttl=document.createElement("div");ttl.className="modal-ttl";ttl.style.color="#f87171";ttl.textContent="🚩 Hata Bildir";
+  var ctxDiv=document.createElement("div");
+  ctxDiv.style.cssText="background:var(--card2);border-radius:9px;padding:9px 13px;margin-bottom:11px;font-size:.82rem;color:var(--tx2);border:1px solid var(--br)";
+  ctxDiv.textContent=ctx;
+  var lbl=document.createElement("label");lbl.textContent="Hatanı açıkla:";lbl.style.marginBottom="5px";
+  var ta=document.createElement("textarea");ta.id="repNote";ta.rows=3;
+  ta.placeholder="Örn: Cevap yanlış, doğrusu şu olmalı...";
+  ta.style.cssText="width:100%;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid var(--br);color:var(--tx);font-size:.9rem;padding:9px 11px;outline:none;resize:vertical;margin-top:5px";
+  var row=document.createElement("div");row.style.cssText="display:flex;gap:9px;margin-top:13px;justify-content:flex-end";
+  var bCancel=mkBtn("btn btn-s","İptal",function(){ov.remove();});
+  var bSend=document.createElement("button");bSend.className="btn";
+  bSend.style.cssText="background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff;padding:9px 18px";
+  bSend.textContent="📬 Gönder";
+  bSend.onclick=function(){
+    var note=ta.value.trim();
+    if(!note){ta.style.borderColor="var(--no)";return;}
+    reports.push({s:G.cur,ctx:ctx,note:note,t:new Date().toLocaleTimeString("tr-TR")});
+    ov.remove();
+    document.getElementById("repFab").style.display="flex";
+    document.getElementById("repBadge").textContent=reports.length;
+    toast("🚩 Hata bildirimi kaydedildi!",false);
+  };
+  row.appendChild(bCancel);row.appendChild(bSend);
+  box.appendChild(ttl);box.appendChild(ctxDiv);box.appendChild(lbl);box.appendChild(ta);box.appendChild(row);
+  ov.appendChild(box);document.body.appendChild(ov);
+  setTimeout(function(){ta.focus();},80);
+}
+function showRepList(){
+  var ov=mkOv();
+  var box=document.createElement("div");box.className="lb-box";
+  var ttl=document.createElement("div");ttl.className="lb-ttl";ttl.style.color="#f87171";
+  ttl.textContent="🚩 Hata Bildirimleri ("+reports.length+")";
+  box.appendChild(ttl);
+  if(!reports.length){
+    var e=document.createElement("div");e.style.cssText="text-align:center;color:var(--tx2);padding:20px 0";
+    e.textContent="Henüz kayıt yok.";box.appendChild(e);
+  }else{
+    reports.forEach(function(r){
+      var d=document.createElement("div");
+      d.style.cssText="background:var(--card2);border:1px solid var(--br);border-radius:10px;padding:10px 13px;margin-bottom:7px;font-size:.83rem";
+      var d1=document.createElement("div");d1.style.cssText="font-size:.72rem;color:var(--a3);font-weight:800;margin-bottom:3px";
+      d1.textContent=r.s+" - "+r.t;
+      var d2=document.createElement("div");d2.style.color="var(--tx2)";d2.style.marginBottom="3px";d2.textContent=r.ctx;
+      var d3=document.createElement("div");d3.style.cssText="color:#fcd34d;font-weight:700";d3.textContent="📝 "+r.note;
+      d.appendChild(d1);d.appendChild(d2);d.appendChild(d3);box.appendChild(d);
+    });
+  }
+  var row=document.createElement("div");row.style.cssText="display:flex;gap:9px;margin-top:13px;justify-content:flex-end";
+  if(reports.length){
+    var bClr=mkBtn("btn btn-s","🗑 Temizle",function(){reports=[];document.getElementById("repFab").style.display="none";ov.remove();});
+    row.appendChild(bClr);
+  }
+  row.appendChild(mkBtn("btn btn-s","Kapat",function(){ov.remove();}));
+  box.appendChild(row);ov.appendChild(box);document.body.appendChild(ov);
+}
+
+function showLB(){
+  var lb=getLB(),ov=mkOv();
+  var box=document.createElement("div");box.className="lb-box";
+  var ttl=document.createElement("div");ttl.className="lb-ttl";ttl.textContent="🏆 Lider Tablosu";
+  box.appendChild(ttl);
+  if(!lb.length){
+    var e=document.createElement("div");e.style.cssText="text-align:center;color:var(--tx2);padding:24px 0";
+    e.textContent="Henüz kayıt yok.";box.appendChild(e);
+  }else{
+    var medals=["🥇","🥈","🥉"];
+    lb.forEach(function(entry,i){
+      var row=document.createElement("div");row.className="lb-entry";
+      var num=document.createElement("span");num.className="lb-num";num.textContent=medals[i]||("#"+(i+1));
+      var name=document.createElement("span");
+      name.className=entry.name===playerName?"lb-name lb-me":"lb-name";
+      name.textContent=entry.name;
+      if(entry.name===playerName){
+        var badge=document.createElement("span");badge.className="lb-me-badge";badge.textContent="Sen";
+        name.appendChild(badge);
+      }
+      var pts=document.createElement("span");pts.className="lb-pts";pts.textContent=entry.score+" pt";
+      row.appendChild(num);row.appendChild(name);row.appendChild(pts);box.appendChild(row);
+    });
+  }
+  var bClose=mkBtn("btn btn-s","Kapat",function(){ov.remove();});
+  bClose.style.cssText="margin-top:14px;display:block;margin-left:auto;margin-right:auto";
+  box.appendChild(bClose);ov.appendChild(box);document.body.appendChild(ov);
+}
+
+function renderLogin(){
+  var lb=getLB().slice(0,5);
+  var root=document.getElementById("root");root.innerHTML="";
+  var wrap=document.createElement("div");wrap.className="login-wrap";
+  var box=document.createElement("div");box.className="login-box";
+  var logo=document.createElement("div");logo.className="game-logo";logo.textContent="✨ Türkçede Ek Fiiller ✨";
+  var sub=document.createElement("div");sub.className="login-sub";sub.textContent="Ortaokul Türkçe Dersi - Ek Fiil Macerası";
+  var lbl=document.createElement("label");lbl.textContent="👤 Adın:";
+  var inp=document.createElement("input");inp.className="inp";inp.id="nameInp";
+  inp.placeholder="Adını buraya yaz...";inp.maxLength=20;inp.autocomplete="off";
+  var err=document.createElement("div");err.className="err-msg";err.id="nameErr";
+  var startBtn=mkBtn("login-btn","Oyuna Başla 🚀",startGame);
+  var lbPrev=document.createElement("div");lbPrev.className="lb-preview";
+  var lbT=document.createElement("div");lbT.className="lb-preview-title";lbT.textContent="🏆 En İyi Oyuncular";
+  lbPrev.appendChild(lbT);
+  var medals=["🥇","🥈","🥉"];
+  if(!lb.length){
+    var nd=document.createElement("div");nd.style.cssText="text-align:center;color:var(--tx2);font-size:.83rem;padding:8px 0";
+    nd.textContent="Henüz kayıt yok";lbPrev.appendChild(nd);
+  }else{
+    lb.forEach(function(entry,i){
+      var row=document.createElement("div");row.className="lb-row";
+      var rn=document.createElement("span");rn.className="lbr";rn.textContent=medals[i]||i+1;
+      var rname=document.createElement("span");rname.className="lbn";rname.textContent=entry.name;
+      var rp=document.createElement("span");rp.className="lbp";rp.textContent=entry.score+" pt";
+      row.appendChild(rn);row.appendChild(rname);row.appendChild(rp);lbPrev.appendChild(row);
+    });
+  }
+  var author=document.createElement("div");author.className="author-sig";
+  var aName=document.createElement("span");aName.className="author-name";aName.textContent="Uğur Yıldırım";
+  var aDot=document.createElement("span");aDot.className="author-dot";aDot.textContent=" · ";
+  var aTitle=document.createElement("span");aTitle.className="author-title";aTitle.textContent="Türkçe Öğretmeni";
+  author.appendChild(aName);author.appendChild(aDot);author.appendChild(aTitle);
+  box.appendChild(logo);box.appendChild(sub);box.appendChild(lbl);box.appendChild(inp);
+  box.appendChild(err);box.appendChild(startBtn);box.appendChild(lbPrev);box.appendChild(author);
+  wrap.appendChild(box);root.appendChild(wrap);
+  inp.focus();
+  inp.addEventListener("keydown",function(e){if(e.key==="Enter")startGame();});
+}
+function startGame(){
+  var inp=document.getElementById("nameInp"),err=document.getElementById("nameErr");
+  var name=inp.value.trim();
+  if(!name||name.length<2){err.textContent="En az 2 karakter gir!";inp.classList.add("err");return;}
+  if(hasBadWord(name)){err.textContent="Bu ad kullanılamaz.";inp.classList.add("err");return;}
+  playerName=name;renderGameScreen();
+}
+
+function renderGameScreen(){
+  var root=document.getElementById("root");root.innerHTML="";
+  var app=document.createElement("div");app.className="app";
+  var hdr=document.createElement("div");hdr.className="hdr";
+  var h1=document.createElement("h1");h1.textContent="✨ Türkçede Ek Fiiller ✨";
+  var hsub=document.createElement("div");hsub.className="sub";hsub.textContent="Ortaokul Türkçe Dersi";
+  var pchip=document.createElement("div");pchip.className="player-chip";pchip.textContent="👤 "+playerName;
+  var sbar=document.createElement("div");sbar.className="score-bar";
+  var chipC=document.createElement("div");chipC.className="chip c";chipC.innerHTML="✅ <span id=\"sC\">0</span>";
+  var chipW=document.createElement("div");chipW.className="chip w";chipW.innerHTML="❌ <span id=\"sW\">0</span>";
+  var chipP=document.createElement("div");chipP.className="chip p";chipP.innerHTML="⭐ <span id=\"sP\">0</span> puan";
+  sbar.appendChild(chipC);sbar.appendChild(chipW);sbar.appendChild(chipP);
+  hdr.appendChild(h1);hdr.appendChild(hsub);hdr.appendChild(pchip);hdr.appendChild(sbar);
+  var nav=document.createElement("div");nav.className="nav";
+  var navItems=[["1A","⚡ 1A"],["1B","🔍 1B"],["2A","🎯 2A"],["2B","🎨 2B"],["3","🌟 3"]];
+  navItems.forEach(function(nd){
+    var b=document.createElement("button");
+    b.className="nav-btn"+(nd[0]==="1A"?" active":" locked");
+    b.id="nav"+nd[0];b.textContent=nd[1];
+    b.addEventListener("click",(function(s){return function(){goTo(s);};})(nd[0]));
+    nav.appendChild(b);
+  });
+  var ga=document.createElement("div");ga.id="ga";
+  app.appendChild(hdr);app.appendChild(nav);app.appendChild(ga);
+  root.appendChild(app);renderGame();
+}
+function renderGame(){
+  var a=document.getElementById("ga");if(!a)return;
+  var fns={"1A":r1A,"1B":r1B,"2A":r2A,"2B":r2B,"3":r3};
+  fns[G.cur](a);
+}
+
+function renderComplete(a,sec,next){
+  unlockNext(sec);confetti(50);
+  var pts=G.breakdown[sec]||0;
+  var infos={
+    "1A":{e:"🌟",t:"Bölüm 1A Tamamlandı!",m:"Sözcük düzeyinde harika iş çıkardın!"},
+    "1B":{e:"🔍",t:"Bölüm 1B Tamamlandı!",m:"İsme / fiile gelen farkı çok iyi kavradın!"},
+    "2A":{e:"🎯",t:"Bölüm 2A Tamamlandı!",m:"Cümlelerdeki ek fiilleri süper buldun!"},
+    "2B":{e:"🎨",t:"Bölüm 2B Tamamlandı!",m:"Kip eklerini çok iyi tespit ettin!"}
+  };
+  var info=infos[sec]||{e:"🎊",t:"Tamamlandı!",m:"Harika!"};
+  a.innerHTML="";
+  var card=document.createElement("div");card.className="card";
+  var inner=document.createElement("div");inner.className="complete";
+  var ico=document.createElement("div");ico.className="cmpl-ico";ico.textContent=info.e;
+  var ttl=document.createElement("div");ttl.className="cmpl-ttl";ttl.textContent=info.t;
+  var msg=document.createElement("div");msg.style.cssText="color:var(--tx2);margin-bottom:12px";msg.textContent=info.m;
+  var ptsDiv=document.createElement("div");ptsDiv.style.cssText="font-size:1.6rem;font-weight:900;color:var(--a1);margin:10px 0";
+  ptsDiv.textContent="+"+pts+" puan ⭐";
+  var row=document.createElement("div");row.style.cssText="display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin-top:16px";
+  row.appendChild(mkBtn("btn btn-s","🔄 Tekrar",(function(s){return function(){restart(s);};})(sec)));
+  row.appendChild(mkBtn("btn btn-p","Sonraki Bölüm ➜",(function(n){return function(){goTo(n);};})(next)));
+  inner.appendChild(ico);inner.appendChild(ttl);inner.appendChild(msg);inner.appendChild(ptsDiv);inner.appendChild(row);
+  card.appendChild(inner);a.appendChild(card);
+}
+function restart(s){
+  var st={"1A":"s1A","1B":"s1B","2A":"s2A","2B":"s2B"}[s];
+  if(st)G[st]={qi:0,qs:[]};
+  if(s==="3"){cur3=null;found3=[];wrong3=0;}
+  goTo(s);
+}
+
+function mkCard(a){a.innerHTML="";var c=document.createElement("div");c.className="card";a.appendChild(c);return c;}
+function mkProg(card,title,desc,ptsLabel,qi,total){
+  var t=document.createElement("div");t.className="sec-title";t.textContent=title;
+  var d=document.createElement("div");d.className="sec-desc";d.innerHTML=desc+" Her doğru = <b style=\"color:var(--a1)\">"+ptsLabel+" puan</b>";
+  var pw=document.createElement("div");pw.className="prog-wrap";
+  var pf=document.createElement("div");pf.className="prog-fill";pf.style.width=(qi/total*100)+"%";
+  pw.appendChild(pf);
+  var pl=document.createElement("div");pl.className="prog-lbl";pl.textContent="Soru "+(qi+1)+" / "+total;
+  card.appendChild(t);card.appendChild(d);card.appendChild(pw);card.appendChild(pl);
+}
+function mkQbox(card,ptsLbl,qnum_text,content_fn){
+  var qb=document.createElement("div");qb.className="qbox";
+  var ptb=document.createElement("div");ptb.className="pt-badge";ptb.textContent="+"+ptsLbl+" puan";
+  var qn=document.createElement("div");qn.className="qnum";qn.textContent=qnum_text;
+  qb.appendChild(ptb);qb.appendChild(qn);
+  content_fn(qb);
+  card.appendChild(qb);
+  return qb;
+}
+
+function r1A(a){
+  var s=G.s1A;if(!s.qs.length)s.qs=pick(DB_1A,10);
+  if(s.qi>=10){renderComplete(a,"1A","1B");return;}
+  var q=s.qs[s.qi];
+  var card=mkCard(a);
+  mkProg(card,"⚡ Aşama 1A — Kip Eki Getirme",q.tur+": Verilen sözcüğe istenen eki getirerek tam hâlini yaz.",1,s.qi,10);
+  mkQbox(card,1,"SORU "+(s.qi+1)+" - "+q.tur.toUpperCase(),function(qb){
+    var qtxt=document.createElement("div");qtxt.className="qtxt";
+    var qhi=document.createElement("span");qhi.className="qhi";qhi.textContent="\u201c"+q.word+"\u201d";
+    var br=document.createElement("br");
+    var qtag=document.createElement("span");qtag.className="qtag";qtag.textContent=q.inst;
+    qtxt.appendChild(qhi);qtxt.appendChild(br);qtxt.appendChild(qtag);
+    qb.appendChild(qtxt);
+  });
+  var ansRow=document.createElement("div");ansRow.className="ans-row";
+  var inp=document.createElement("input");inp.className="ans-inp";inp.id="ai";
+  inp.placeholder="Tam hâlini yaz...";inp.autocomplete="off";inp.spellcheck=false;
+  var ckBtn=mkBtn("btn btn-p","✓ Kontrol",null);
+  ansRow.appendChild(inp);ansRow.appendChild(ckBtn);
+  var repRow=document.createElement("div");repRow.style.cssText="display:flex;justify-content:flex-end;margin-top:4px";
+  repRow.appendChild(mkRepBtn("1A - S"+(s.qi+1)+" - "+q.word));
+  var fb=document.createElement("div");fb.className="fb";
+  var nx=document.createElement("div");nx.className="nxt-row";
+  card.appendChild(ansRow);card.appendChild(repRow);card.appendChild(fb);card.appendChild(nx);
+  var ans=q.ans;
+  function doCheck(){
+    if(inp.disabled)return;
+    var uv=norm(inp.value);
+    var ok=ans.split("/").map(function(p){return norm(p.trim());}).some(function(p){return p===uv;});
+    inp.disabled=true;ckBtn.style.display="none";
+    var sp=document.createElement("span");
+    if(ok){
+      G.totalC++;addPts("1A",1);inp.className="ans-inp ok";
+      fb.className="fb ok show";sp.innerHTML="⭐ DOĞRU! Cevap: <strong>"+ans+"</strong>";
+      fb.appendChild(sp);megaFlash();burst(inp);beep(true);
+    }else{
+      G.totalW++;updateScore();inp.className="ans-inp no";
+      fb.className="fb no show";sp.innerHTML="❌ Yanlış. Doğrusu: <strong>"+ans+"</strong>";
+      fb.appendChild(sp);beep(false);
+    }
+    nx.appendChild(mkNextBtn(function(){G.s1A.qi++;r1A(document.getElementById("ga"));}));
+  }
+  ckBtn.onclick=doCheck;
+  inp.focus();inp.addEventListener("keydown",function(e){if(e.key==="Enter")doCheck();});
+}
+
+function mkChoiceSec(a,title,desc,ptsLbl,qi,total,qboxFn,repCtx,choiceCls,opts,onResult,onNextFn){
+  var card=mkCard(a);
+  mkProg(card,title,desc,ptsLbl,qi,total);
+  mkQbox(card,ptsLbl,"SORU "+(qi+1),qboxFn);
+  var repRow=document.createElement("div");repRow.style.cssText="display:flex;justify-content:flex-end;margin-bottom:8px";
+  repRow.appendChild(mkRepBtn(repCtx));
+  var chs=document.createElement("div");chs.className=choiceCls;
+  var fb=document.createElement("div");fb.className="fb";
+  var nx=document.createElement("div");nx.className="nxt-row";
+  card.appendChild(repRow);card.appendChild(chs);card.appendChild(fb);card.appendChild(nx);
+  opts.forEach(function(o){
+    chs.appendChild(mkChoiceBtn(o.t,o.ok,o.correct,o.exp,function(isOk,exp){
+      onResult(isOk,exp,fb);
+      nx.appendChild(mkNextBtn(onNextFn));
+    }));
+  });
+}
+
+function r1B(a){
+  var s=G.s1B;if(!s.qs.length)s.qs=pick(DB_1B,10);
+  if(s.qi>=10){renderComplete(a,"1B","2A");return;}
+  var q=s.qs[s.qi];
+  var opts=shuffle([
+    {t:q.dogru,ok:true,correct:q.dogru,exp:q.aciklama},
+    {t:q.yanlis,ok:false,correct:q.dogru,exp:q.aciklama}
+  ]);
+  mkChoiceSec(a,"🔍 Aşama 1B — İsme mi Fiile mi?",
+    "Ek fiilin isme mi yoksa fiile mi geldiğini seç.",2,s.qi,10,
+    function(qb){
+      var qtxt=document.createElement("div");qtxt.className="qtxt";
+      var hi=document.createElement("span");hi.className="qhi";hi.textContent="\u201c"+q.ifade+"\u201d";
+      var br=document.createElement("br");
+      var sub=document.createElement("span");sub.style.cssText="color:var(--tx2);font-size:.88rem";sub.textContent="ifadesindeki ek fiil nereye gelmiştir?";
+      qtxt.appendChild(hi);qtxt.appendChild(br);qtxt.appendChild(sub);qb.appendChild(qtxt);
+    },
+    "1B - S"+(s.qi+1)+" - "+q.ifade,"choices-2",opts,
+    function(ok,exp,fb){
+      if(ok){G.totalC++;addPts("1B",1);fb.className="fb ok show";fb.innerHTML="🌟 <b>DOĞRU!</b> "+exp;megaFlash();confetti(30);beep(true);}
+      else{G.totalW++;updateScore();fb.className="fb no show";fb.innerHTML="❌ <b>Yanlış!</b> "+exp;beep(false);}
+    },
+    function(){G.s1B.qi++;r1B(document.getElementById("ga"));}
+  );
+}
+
+// 2A esnek eşleştirme
+function check2A(userVal, ekFiil, aciklama){
+  var u=norm(userVal).trim();
+  if(!u)return false;
+  var ans=norm(ekFiil);
+  // Tam eşleşme (tire ile veya tiresiz)
+  if(u===ans||u===ans.replace(/^-/,""))return true;
+  var aLow=norm(aciklama);
+  // Hikaye / görülen geçmiş zaman
+  var isHikaye=aLow.includes("hikayes")||aLow.includes("hikaye")||aLow.includes("gorulen")||aLow.includes("görülen");
+  if(isHikaye){
+    var hikayeKeys=["hikaye","hikâye","gorulen","görülen","gorulmus","görülmüş","gorulengecmis","görülengecmiş","görülen geçmiş","gorülen geçmiş zaman","görülen geçmis zaman"];
+    if(hikayeKeys.some(function(k){return u===norm(k)||u.includes(norm(k));}))return true;
+  }
+  // Rivayet / duyulan geçmiş zaman
+  var isRivayet=aLow.includes("rivayet")||aLow.includes("duyulan");
+  if(isRivayet){
+    var rivayetKeys=["rivayet","rivayeti","duyulan","duyulmus","duyulmuş","duyulan geçmiş","duyulan gecmis","duyulan geçmiş zaman","duyulan gecmis zaman"];
+    if(rivayetKeys.some(function(k){return u===norm(k)||u.includes(norm(k));}))return true;
+  }
+  // Şart
+  var isSart=aLow.includes("şart")||aLow.includes("sart");
+  if(isSart){
+    var sartKeys=["şart","sart","şarti","sarti","ek fiilin şart","ek fiilin sart","kosul","koşul"];
+    if(sartKeys.some(function(k){return u===norm(k)||u.includes(norm(k));}))return true;
+  }
+  // Geniş zaman
+  var isGenis=aLow.includes("geniş")||aLow.includes("genis");
+  if(isGenis){
+    var genisKeys=["geniş","genis","geniş zaman","genis zaman","ek fiilin geniş","ek fiilin genis","geniszaman"];
+    if(genisKeys.some(function(k){return u===norm(k)||u.includes(norm(k));}))return true;
+  }
+  // Açıklamadaki parantez içi ek (örn. "(-du)")
+  var parenMatch=aciklama.match(/\((-?[a-züğşıöçA-ZÜĞŞİÖÇ]+)\)$/);
+  if(parenMatch){
+    var parenEk=norm(parenMatch[1]);
+    if(u===parenEk||u===parenEk.replace(/^-/,""))return true;
+  }
+  return false;
+}
+
+function r2A(a){
+  var s=G.s2A;if(!s.qs.length)s.qs=pick(DB_2A,10);
+  if(s.qi>=10){renderComplete(a,"2A","2B");return;}
+  var q=s.qs[s.qi];
+  var card=mkCard(a);
+  mkProg(card,"🎯 Aşama 2A — Ek Fiili Yaz","Cümledeki ek fiili (kip ekiyle birlikte) yaz.",4,s.qi,10);
+  mkQbox(card,4,"SORU "+(s.qi+1),function(qb){
+    var qtxt=document.createElement("div");qtxt.className="qtxt";qtxt.style.fontSize="1.06rem";
+    qtxt.textContent="\u201c"+q.sentence+"\u201d";
+    var hint=document.createElement("div");hint.style.cssText="margin-top:10px;font-size:.85rem;color:var(--tx2)";
+    hint.innerHTML="Bu cümledeki <b>ek fiil + kip eki</b> nedir?";
+    qb.appendChild(qtxt);qb.appendChild(hint);
+  });
+  var ansRow=document.createElement("div");ansRow.className="ans-row";
+  var inp=document.createElement("input");inp.className="ans-inp";inp.id="ai2a";
+  inp.placeholder="Ek fiili yaz... (örn: -yordu)";inp.autocomplete="off";inp.spellcheck=false;
+  var ckBtn=mkBtn("btn btn-p","✓ Kontrol",null);
+  ansRow.appendChild(inp);ansRow.appendChild(ckBtn);
+  var repRow=document.createElement("div");repRow.style.cssText="display:flex;justify-content:flex-end;margin-top:4px";
+  repRow.appendChild(mkRepBtn("2A - S"+(s.qi+1)+" - "+q.sentence));
+  var fb=document.createElement("div");fb.className="fb";
+  var nx=document.createElement("div");nx.className="nxt-row";
+  card.appendChild(ansRow);card.appendChild(repRow);card.appendChild(fb);card.appendChild(nx);
+  function doCheck(){
+    if(inp.disabled)return;
+    var ok=check2A(inp.value,q.ekFiil,q.aciklama);
+    inp.disabled=true;ckBtn.style.display="none";
+    var sp=document.createElement("span");
+    if(ok){
+      G.totalC++;addPts("2A",1);inp.className="ans-inp ok";
+      fb.className="fb ok show";
+      sp.innerHTML="🎯 <b>DOĞRU!</b> Cevap: <b>"+q.ekFiil+"</b> — "+q.aciklama;
+      fb.appendChild(sp);megaFlash();confetti(35);beep(true);
+    }else{
+      G.totalW++;updateScore();inp.className="ans-inp no";
+      fb.className="fb no show";
+      sp.innerHTML="❌ <b>Yanlış!</b> Doğrusu: <b>"+q.ekFiil+"</b> — "+q.aciklama;
+      fb.appendChild(sp);beep(false);
+    }
+    nx.appendChild(mkNextBtn(function(){G.s2A.qi++;r2A(document.getElementById("ga"));}));
+  }
+  ckBtn.onclick=doCheck;
+  inp.focus();inp.addEventListener("keydown",function(e){if(e.key==="Enter")doCheck();});
+}
+
+function r2B(a){
+  var s=G.s2B;if(!s.qs.length)s.qs=pick(DB_2B,10);
+  if(s.qi>=10){renderComplete(a,"2B","3");return;}
+  var q=s.qs[s.qi];
+  var opts=shuffle([
+    {t:q.correct,ok:true,correct:q.correct,exp:q.explanation},
+    {t:q.wrong,ok:false,correct:q.correct,exp:q.explanation}
+  ]);
+  mkChoiceSec(a,"🎨 Aşama 2B — Kip Ekini Seç",
+    "Vurgulanan ifadede hangi kip ekleri var?",4,s.qi,10,
+    function(qb){
+      var hl=q.highlighted
+        ?q.sentence.replace(q.highlighted,"<b style=\"color:var(--a1);text-decoration:underline dotted\">"+q.highlighted+"</b>")
+        :q.sentence;
+      var qtxt=document.createElement("div");qtxt.className="qtxt";qtxt.innerHTML="\u201c"+hl+"\u201d";
+      var hint=document.createElement("div");hint.style.cssText="margin-top:10px;font-size:.87rem;font-weight:700;color:var(--tx2)";
+      hint.textContent=q.highlighted
+        ?("\u201c"+q.highlighted+"\u201d ifadesinde hangi kip ekleri kullanılmış?")
+        :"Bu cümlede hangi kip ekleri kullanılmış?";
+      qb.appendChild(qtxt);qb.appendChild(hint);
+    },
+    "2B - S"+(s.qi+1)+" - "+(q.highlighted||q.sentence),"choices-2",opts,
+    function(ok,exp,fb){
+      if(ok){G.totalC++;addPts("2B",1);fb.className="fb ok show";fb.innerHTML="🌈 <b>SÜPER DOĞRU!</b> "+exp;megaFlash();confetti(40);beep(true);}
+      else{G.totalW++;updateScore();fb.className="fb no show";fb.innerHTML="❌ <b>Yanlış!</b> "+exp;beep(false);}
+    },
+    function(){G.s2B.qi++;r2B(document.getElementById("ga"));}
+  );
+}
+
+var timer3=null;
+var timeLeft3=120;
+var sec3done=false;
+
+function clearTimer3(){if(timer3){clearInterval(timer3);timer3=null;}}
+
+function endSection3(byTimer){
+  clearTimer3();
+  if(sec3done)return;
+  sec3done=true;
+  unlockNext("3");
+  var a=document.getElementById("ga");if(!a)return;
+  var card=mkCard(a);
+  var allFound=found3.length>= (cur3?cur3.words.length:1);
+  var ico=document.createElement("div");ico.style.cssText="font-size:3.2rem;text-align:center;margin-bottom:10px";
+  ico.textContent=allFound?"🎊":"⏰";
+  var ttl=document.createElement("div");ttl.style.cssText="font-family:'Baloo 2',cursive;font-size:1.5rem;font-weight:800;text-align:center;margin-bottom:8px;color:var(--a1)";
+  ttl.textContent=allFound?"Tüm ek fiilleri buldun!":(byTimer?"Süre Doldu!":"Bölüm Tamamlandı!");
+  var sub=document.createElement("div");sub.style.cssText="text-align:center;color:var(--tx2);font-size:.88rem;margin-bottom:16px";
+  sub.textContent="Bulunan: "+found3.length+" / "+(cur3?cur3.words.length:0)+" · Hata: "+wrong3+" · Puan: "+(G.breakdown["3"]||0);
+  var row=document.createElement("div");row.style.cssText="display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin-top:14px";
+  row.appendChild(mkBtn("btn btn-p","🏆 Oyunu Bitir",showFinal));
+  card.appendChild(ico);card.appendChild(ttl);card.appendChild(sub);card.appendChild(row);
+  if(allFound)confetti(60);
+}
+
+function r3(a){
+  // Tek metin per oturum: oturum başladıysa metni değiştirme
+  if(!cur3){
+    cur3=DB_3[Math.floor(Math.random()*DB_3.length)];
+    found3=[];wrong3=0;sec3done=false;timeLeft3=120;
+    clearTimer3();
+    // Zamanlayıcı başlat
+    timer3=setInterval(function(){
+      timeLeft3--;
+      var el=document.getElementById("timer3");
+      if(el){
+        el.textContent=timeLeft3+"s";
+        el.style.color=timeLeft3<=10?"#ef4444":timeLeft3<=30?"#f59e0b":"var(--a3)";
+      }
+      if(timeLeft3<=0){clearTimer3();endSection3(true);}
+    },1000);
+  }
+  if(sec3done){endSection3(false);return;}
+  var t=cur3,total=t.words.length,fc=found3.length;
+  var card=mkCard(a);
+  var ttl=document.createElement("div");ttl.className="sec-title";ttl.textContent="🌟 Aşama 3 — Metin Düzeyi";
+  var desc=document.createElement("div");desc.className="sec-desc";
+  desc.innerHTML="Ek fiil içeren kelimelere tıkla! Her doğru = <b style=\"color:var(--a1)\">5 puan</b> · Sadece bir metin, 120 saniye!";
+  // Üst satır: bulunan / hata / zamanlayıcı / hata bildir
+  var topRow=document.createElement("div");
+  topRow.style.cssText="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px";
+  var fb_badge=document.createElement("span");fb_badge.className="found-badge";fb_badge.id="found3badge";
+  fb_badge.textContent="✅ Bulunan: "+fc+" / "+total;
+  var wb=document.createElement("span");wb.style.cssText="font-size:.83rem;color:#fca5a5;font-weight:700";wb.id="wrong3badge";
+  wb.textContent="❌ Hatalı: "+wrong3;
+  var timerEl=document.createElement("span");timerEl.id="timer3";
+  timerEl.style.cssText="font-size:1rem;font-weight:900;color:var(--a3);background:var(--card2);border:1px solid var(--br);border-radius:50px;padding:3px 12px;letter-spacing:.03em";
+  timerEl.textContent=timeLeft3+"s";
+  var repBtn=mkRepBtn("3 - "+t.title);
+  topRow.appendChild(fb_badge);topRow.appendChild(wb);topRow.appendChild(timerEl);topRow.appendChild(repBtn);
+  var pw=document.createElement("div");pw.className="prog-wrap";
+  var pf=document.createElement("div");pf.className="prog-fill";pf.id="prog3fill";pf.style.width=(total?Math.round(fc/total*100):0)+"%";
+  pw.appendChild(pf);
+  var titLbl=document.createElement("div");
+  titLbl.style.cssText="font-size:.8rem;color:var(--tx2);text-align:right;margin:3px 0 14px;font-weight:700";
+  titLbl.textContent="\u201c"+t.title+"\u201d";
+  card.appendChild(ttl);card.appendChild(desc);card.appendChild(topRow);card.appendChild(pw);card.appendChild(titLbl);
+  var txtDiv=document.createElement("div");txtDiv.className="txtdisplay";
+  var tokens=t.text.split(/(\s+)/);
+  tokens.forEach(function(tok){
+    if(!tok)return;
+    if(/^\s+$/.test(tok)){txtDiv.appendChild(document.createTextNode(" "));return;}
+    var clean=tok.replace(/^[(\u201c\u00ab\[]+|[)\u201d\u00bb\].,!?;:]+$/g,"");
+    var widx=-1;
+    for(var i=0;i<t.words.length;i++){
+      if(norm(clean)===norm(t.words[i])||norm(tok)===norm(t.words[i])){widx=i;break;}
+    }
+    var sp=document.createElement("span");sp.textContent=tok;
+    if(widx>=0){
+      sp.className="wc"+(found3.indexOf(widx)>=0?" found":"");
+      sp.addEventListener("click",(function(el,wi){return function(){
+        if(found3.indexOf(wi)>=0||sec3done)return;
+        found3.push(wi);el.classList.add("found");
+        addPts("3",1);G.totalC++;updateScore();
+        // güncelle badge + progress
+        var fb=document.getElementById("found3badge");
+        if(fb)fb.textContent="✅ Bulunan: "+found3.length+" / "+cur3.words.length;
+        var pff=document.getElementById("prog3fill");
+        if(pff)pff.style.width=Math.round(found3.length/cur3.words.length*100)+"%";
+        megaFlash();burst(el);beep(true);
+        toast("⭐ Bulundu: "+el.textContent.trim()+" +5 puan");
+        if(found3.length>=cur3.words.length){
+          confetti(60);
+          setTimeout(function(){endSection3(false);},600);
+        }
+      };})(sp,widx));
+    }else{
+      sp.className="wc";
+      sp.addEventListener("click",function(){
+        if(sec3done)return;
+        G.totalW++;wrong3++;updateScore();beep(false);
+        var wb2=document.getElementById("wrong3badge");if(wb2)wb2.textContent="❌ Hatalı: "+wrong3;
+        var self=this;self.classList.add("wrong-flash");
+        setTimeout(function(){self.classList.remove("wrong-flash");},600);
+      });
+    }
+    txtDiv.appendChild(sp);
+  });
+  card.appendChild(txtDiv);
+  var hint=document.createElement("div");hint.style.cssText="margin-top:12px;font-size:.83rem;color:var(--tx2);text-align:center";
+  hint.textContent="💡 Ek fiil içeren kelimelere tıkla! Süre dolduğunda bölüm kapanır.";
+  card.appendChild(hint);
+}
+
+function showFinal(){
+  addToLB(playerName,G.totalPts);
+  var lb=getLB();
+  var rank=lb.findIndex(function(x){return x.name.toLowerCase()===playerName.toLowerCase();})+1;
+  var ga=document.getElementById("ga");ga.innerHTML="";
+  var card=document.createElement("div");card.className="card";
+  var inner=document.createElement("div");inner.style.cssText="text-align:center;padding:28px 16px 20px";
+  var ico=document.createElement("div");ico.style.cssText="font-size:4.5rem;margin-bottom:12px;animation:bounce 1s ease infinite alternate";ico.textContent="🏆";
+  var ttl=document.createElement("div");
+  ttl.style.cssText="font-size:1.9rem;font-weight:900;background:linear-gradient(135deg,#f59e0b,#ec4899,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px";
+  ttl.textContent="Oyun Bitti!";
+  var fscore=document.createElement("div");fscore.className="final-score";fscore.textContent=G.totalPts+" puan";
+  var rankDiv=document.createElement("div");rankDiv.style.cssText="font-size:.88rem;color:var(--a3);font-weight:700;margin-bottom:18px";
+  rankDiv.textContent="🏅 Lider tablosunda #"+rank+". sıradasın!";
+  var brkdwn=document.createElement("div");brkdwn.className="brkdwn";
+  [["1A","1","⚡ 1A"],["1B","2","🔍 1B"],["2A","4","🎯 2A"],["2B","4","🎨 2B"],["3","5","🌟 3"]].forEach(function(r){
+    var row=document.createElement("div");row.className="brow";
+    var s1=document.createElement("span");s1.textContent=r[2]+" (x"+r[1]+" puan)";
+    var s2=document.createElement("span");s2.textContent=(G.breakdown[r[0]]||0)+" puan";
+    row.appendChild(s1);row.appendChild(s2);brkdwn.appendChild(row);
+  });
+  var totRow=document.createElement("div");totRow.className="brow";totRow.style.cssText="border-top:2px solid var(--a1);margin-top:6px;padding-top:9px;font-size:.98rem";
+  var ts1=document.createElement("span");ts1.innerHTML="<b>TOPLAM</b>";
+  var ts2=document.createElement("span");ts2.innerHTML="<b>"+G.totalPts+" puan</b>";
+  totRow.appendChild(ts1);totRow.appendChild(ts2);brkdwn.appendChild(totRow);
+  var lbLabel=document.createElement("div");lbLabel.style.cssText="margin:14px 0 7px;font-size:1.05rem;font-weight:800;color:var(--a1)";lbLabel.textContent="🏆 Lider Tablosu";
+  var lbDiv=document.createElement("div");
+  var medals=["🥇","🥈","🥉"];
+  lb.slice(0,5).forEach(function(e,i){
+    var row=document.createElement("div");row.className="lb-entry";
+    var num=document.createElement("span");num.className="lb-num";num.textContent=medals[i]||("#"+(i+1));
+    var name=document.createElement("span");name.className=e.name===playerName?"lb-name lb-me":"lb-name";name.textContent=e.name;
+    if(e.name===playerName){var badge=document.createElement("span");badge.className="lb-me-badge";badge.textContent="Sen";name.appendChild(badge);}
+    var pts=document.createElement("span");pts.className="lb-pts";pts.textContent=e.score+" pt";
+    row.appendChild(num);row.appendChild(name);row.appendChild(pts);lbDiv.appendChild(row);
+  });
+  var fbRow=document.createElement("div");fbRow.style.cssText="display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin-top:18px";
+  fbRow.appendChild(mkBtn("btn btn-s","🏆 Tümünü Gör",showLB));
+  fbRow.appendChild(mkBtn("btn btn-p","🔄 Yeniden Oyna",function(){location.reload();}));
+  inner.appendChild(ico);inner.appendChild(ttl);inner.appendChild(fscore);inner.appendChild(rankDiv);
+  inner.appendChild(brkdwn);inner.appendChild(lbLabel);inner.appendChild(lbDiv);inner.appendChild(fbRow);
+  card.appendChild(inner);ga.appendChild(card);confetti(70);
+}
+
+function showHelp(){
+  var ov=mkOv();
+  var box=document.createElement("div");box.className="modal-box";
+  var ttl=document.createElement("div");ttl.className="modal-ttl";ttl.textContent="📖 Nasıl Oynanır?";
+  var body=document.createElement("div");body.className="modal-body";
+  body.innerHTML="<b>⚡ 1A (1 puan):</b> Sözcüğe istenen kip ekini getir, tam hâlini yaz.<br><br>"
+    +"<b>🔍 1B (2 puan):</b> Ek fiilin isme mi fiile mi geldiğini 2 şıktan seç.<br><br>"
+    +"<b>🎯 2A (4 puan):</b> Cümledeki ek fiili yaz. (Tire ile veya tiresiz, kısaltılmış yazım da kabul edilir.)<br><br>"
+    +"<b>🎨 2B (4 puan):</b> Vurgulanan ifadenin kip eklerini 2 şıktan seç.<br><br>"
+    +"<b>🌟 3. Aşama (5 puan):</b> Metinde ek fiil içeren kelimelere tıkla!<br><br>"
+    +"<em>Her bölümü tamamlayınca sonraki açılır. 🏆</em><br><br>"
+    +"<div style=\"text-align:center;margin-top:4px;font-size:.78rem;color:var(--tx2);opacity:.7\">Hazırlayan: Uğur Yıldırım · Türkçe Öğretmeni</div>";
+  box.appendChild(ttl);box.appendChild(body);
+  box.appendChild(mkBtn("btn btn-p","Anladım! ✓",function(){ov.remove();}));
+  ov.appendChild(box);document.body.appendChild(ov);
+}
+
+(function(){
+  var c=document.getElementById("stars");
+  for(var i=0;i<80;i++){
+    var s=document.createElement("div");s.className="star";
+    var sz=Math.random()*2.4+0.5;
+    s.style.width=sz+"px";s.style.height=sz+"px";
+    s.style.top=(Math.random()*100)+"%";s.style.left=(Math.random()*100)+"%";
+    s.style.setProperty("--d",(Math.random()*3+2)+"s");
+    s.style.animationDelay=(Math.random()*3)+"s";
+    c.appendChild(s);
+  }
+})();
+renderLogin();
+
+</script>
+</body>
+</html>
