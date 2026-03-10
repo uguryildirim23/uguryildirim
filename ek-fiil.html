@@ -170,13 +170,21 @@ function hasBadWord(n){return _BW.some(function(w){return n.toLowerCase().includ
 
 function getLB(){return [];}
 function saveLB(lb){}
-function addToLB(name,score){
-  if(!window._fbReady){document.addEventListener('fbReady',function(){addToLB(name,score);},{once:true});return;}
+function addToLB(name,score,avatar){
+  if(!window._fbReady){document.addEventListener('fbReady',function(){addToLB(name,score,avatar);},{once:true});return;}
   var key='ekfiil_lb/'+name.replace(/[.#$\[\]\/]/g,'_');
   window._fbGet(window._fbRef(window._fbDb,key)).then(function(snap){
     var cur=snap.val();
     if(!cur||score>cur.score){
-      window._fbSet(window._fbRef(window._fbDb,key),{name:name,score:score,time:Date.now()});
+      var now=new Date();
+      var tarih=now.toLocaleDateString('tr-TR',{day:'2-digit',month:'2-digit',year:'numeric'});
+      var saat=now.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
+      window._fbSet(window._fbRef(window._fbDb,key),{
+        name:name, score:score,
+        time:Date.now(),
+        tarih:tarih+' '+saat,
+        avatar:avatar||'🙂'
+      });
     }
   });
 }
@@ -401,8 +409,15 @@ function showLB(){
           var badge=document.createElement("span");badge.className="lb-me-badge";badge.textContent="Sen";
           name.appendChild(badge);
         }
+        var avatarEl=document.createElement("span");avatarEl.style.cssText="font-size:1.3rem;min-width:26px;text-align:center";
+        avatarEl.textContent=entry.avatar||'🙂';
         var pts=document.createElement("span");pts.className="lb-pts";pts.textContent=entry.score+" pt";
-        row.appendChild(num);row.appendChild(name);row.appendChild(pts);box.insertBefore(row,bClose);
+        var timeEl=document.createElement("span");timeEl.style.cssText="font-size:.7rem;color:var(--tx2);font-weight:400";
+        timeEl.textContent=entry.tarih||'';
+        var rightCol=document.createElement("div");rightCol.style.cssText="display:flex;flex-direction:column;align-items:flex-end;gap:1px";
+        rightCol.appendChild(pts);rightCol.appendChild(timeEl);
+        row.appendChild(num);row.appendChild(avatarEl);row.appendChild(name);row.appendChild(rightCol);
+        box.insertBefore(row,bClose);
       });
     }
   }
@@ -913,7 +928,7 @@ function r3(a){
   var card=mkCard(a);
   var ttl=document.createElement("div");ttl.className="sec-title";ttl.textContent="🌟 Aşama 3 — Metin Düzeyi";
   var desc=document.createElement("div");desc.className="sec-desc";
-  desc.innerHTML="Ek fiil içeren kelimelere tıkla! Her doğru = <b style=\"color:var(--a1)\">5 puan</b> · Sadece bir metin, 120 saniye!";
+  desc.innerHTML="Ek fiil içeren kelimelere tıkla! Her doğru = <b style=\"color:var(--a1)\">5 puan</b> · Her hatalı tıklama = <b style=\"color:#ef4444\">-1 puan</b> · 120 saniye!";
   // Üst satır: bulunan / hata / zamanlayıcı / hata bildir
   var topRow=document.createElement("div");
   topRow.style.cssText="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px";
@@ -966,8 +981,12 @@ function r3(a){
       sp.className="wc";
       sp.addEventListener("click",function(){
         if(sec3done)return;
-        G.totalW++;wrong3++;updateScore();beep(false);
-        var wb2=document.getElementById("wrong3badge");if(wb2)wb2.textContent="❌ Hatalı: "+wrong3;
+        G.totalW++;wrong3++;
+        // Hatalı tıklama: 1 puan düş
+        G.totalPts=Math.max(0,G.totalPts-1);
+        G.breakdown["3"]=Math.max(0,(G.breakdown["3"]||0)-1);
+        updateScore();beep(false);
+        var wb2=document.getElementById("wrong3badge");if(wb2)wb2.textContent="❌ Hatalı: "+wrong3+" (-"+wrong3+"pt)";
         var self=this;self.classList.add("wrong-flash");
         setTimeout(function(){self.classList.remove("wrong-flash");},600);
       });
@@ -980,14 +999,60 @@ function r3(a){
   card.appendChild(hint);
 }
 
+function showAvatarSecim(callback){
+  var AVATARLAR=[
+    '🦁','🐯','🐻','🦊','🐺','🦝','🐸','🐧','🦅','🦜',
+    '🐬','🦋','🐝','🦄','🐉','🌟','⚡','🔥','🌈','🎯',
+    '🎮','🚀','🎸','🏆','💎','🍕','🍦','🌸','🌙','☀️',
+    '🎩','🎭','🤖','👾','🦸','🧙','🥷','🧜','🧚','🦹',
+    '🎪','🎨','🎬','🎤','🎲','🃏','🎯','🏄','🧗','🤸'
+  ];
+  var ov=mkOv();
+  var box=document.createElement("div");
+  box.style.cssText="background:var(--card);border-radius:20px;padding:24px 20px;max-width:380px;width:92%;margin:auto;text-align:center;max-height:85vh;overflow-y:auto";
+  var ttl=document.createElement("div");ttl.style.cssText="font-size:1.4rem;font-weight:900;color:var(--a1);margin-bottom:6px";ttl.textContent="🌟 Tebrikler! Avatar Seç!";
+  var sub=document.createElement("div");sub.style.cssText="font-size:.88rem;color:var(--tx2);margin-bottom:16px";sub.textContent="120+ puan aldın! Lider tablosunda görünecek avatarını seç:";
+  var grid=document.createElement("div");grid.style.cssText="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px";
+  var secilen=null;
+  AVATARLAR.forEach(function(av){
+    var btn=document.createElement("button");
+    btn.style.cssText="font-size:1.8rem;padding:8px;border-radius:12px;border:2px solid transparent;background:var(--card2);cursor:pointer;transition:all .2s";
+    btn.textContent=av;
+    btn.onclick=function(){
+      grid.querySelectorAll("button").forEach(function(b){b.style.borderColor="transparent";b.style.transform="scale(1)";});
+      btn.style.borderColor="var(--a1)";btn.style.transform="scale(1.2)";
+      secilen=av;
+      tamamBtn.disabled=false;tamamBtn.style.opacity="1";
+    };
+    grid.appendChild(btn);
+  });
+  var tamamBtn=document.createElement("button");
+  tamamBtn.className="btn btn-p";tamamBtn.textContent="✅ Tamam";tamamBtn.disabled=true;tamamBtn.style.opacity=".5";
+  tamamBtn.onclick=function(){ov.remove();callback(secilen);};
+  box.appendChild(ttl);box.appendChild(sub);box.appendChild(grid);box.appendChild(tamamBtn);
+  ov.appendChild(box);document.body.appendChild(ov);
+}
+
 function showFinal(){
-  addToLB(playerName,G.totalPts);
+  if(G.totalPts>=120){
+    showAvatarSecim(function(avatar){
+      addToLB(playerName,G.totalPts,avatar);
+      renderFinalEkran(avatar);
+    });
+  } else {
+    addToLB(playerName,G.totalPts,null);
+    renderFinalEkran(null);
+  }
+}
+
+function renderFinalEkran(avatar){
   var lb=getLB();
   var rank=lb.findIndex(function(x){return x.name.toLowerCase()===playerName.toLowerCase();})+1;
   var ga=document.getElementById("ga");ga.innerHTML="";
   var card=document.createElement("div");card.className="card";
   var inner=document.createElement("div");inner.style.cssText="text-align:center;padding:28px 16px 20px";
-  var ico=document.createElement("div");ico.style.cssText="font-size:4.5rem;margin-bottom:12px;animation:bounce 1s ease infinite alternate";ico.textContent="🏆";
+  var ico=document.createElement("div");ico.style.cssText="font-size:4.5rem;margin-bottom:12px;animation:bounce 1s ease infinite alternate";
+  ico.textContent=avatar||"🏆";
   var ttl=document.createElement("div");
   ttl.style.cssText="font-size:1.9rem;font-weight:900;background:linear-gradient(135deg,#f59e0b,#ec4899,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px";
   ttl.textContent="Oyun Bitti!";
@@ -1008,20 +1073,30 @@ function showFinal(){
   var lbLabel=document.createElement("div");lbLabel.style.cssText="margin:14px 0 7px;font-size:1.05rem;font-weight:800;color:var(--a1)";lbLabel.textContent="🏆 Lider Tablosu";
   var lbDiv=document.createElement("div");
   var medals=["🥇","🥈","🥉"];
-  lb.slice(0,5).forEach(function(e,i){
-    var row=document.createElement("div");row.className="lb-entry";
-    var num=document.createElement("span");num.className="lb-num";num.textContent=medals[i]||("#"+(i+1));
-    var name=document.createElement("span");name.className=e.name===playerName?"lb-name lb-me":"lb-name";name.textContent=e.name;
-    if(e.name===playerName){var badge=document.createElement("span");badge.className="lb-me-badge";badge.textContent="Sen";name.appendChild(badge);}
-    var pts=document.createElement("span");pts.className="lb-pts";pts.textContent=e.score+" pt";
-    row.appendChild(num);row.appendChild(name);row.appendChild(pts);lbDiv.appendChild(row);
-  });
   var fbRow=document.createElement("div");fbRow.style.cssText="display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin-top:18px";
   fbRow.appendChild(mkBtn("btn btn-s","🏆 Tümünü Gör",showLB));
   fbRow.appendChild(mkBtn("btn btn-p","🔄 Yeniden Oyna",function(){location.reload();}));
   inner.appendChild(ico);inner.appendChild(ttl);inner.appendChild(fscore);inner.appendChild(rankDiv);
   inner.appendChild(brkdwn);inner.appendChild(lbLabel);inner.appendChild(lbDiv);inner.appendChild(fbRow);
-  card.appendChild(inner);ga.appendChild(card);confetti(70);
+  card.appendChild(inner);ga.appendChild(card);
+  // Firebase'den lider tablosunu çek
+  if(window._fbReady){
+    window._fbGet(window._fbRef(window._fbDb,'ekfiil_lb')).then(function(snap){
+      var data=snap.val()||{};
+      var sorted=Object.values(data).sort(function(a,b){return b.score-a.score;}).slice(0,5);
+      sorted.forEach(function(e,i){
+        var row=document.createElement("div");row.className="lb-entry";
+        var num=document.createElement("span");num.className="lb-num";num.textContent=medals[i]||("#"+(i+1));
+        var avEl=document.createElement("span");avEl.style.cssText="font-size:1.2rem;min-width:24px";avEl.textContent=e.avatar||'🙂';
+        var name=document.createElement("span");name.className=e.name===playerName?"lb-name lb-me":"lb-name";name.textContent=e.name;
+        if(e.name===playerName){var badge=document.createElement("span");badge.className="lb-me-badge";badge.textContent="Sen";name.appendChild(badge);}
+        var pts=document.createElement("span");pts.className="lb-pts";pts.textContent=e.score+" pt";
+        row.appendChild(num);row.appendChild(avEl);row.appendChild(name);row.appendChild(pts);
+        lbDiv.appendChild(row);
+      });
+    });
+  }
+  confetti(70);
 }
 
 function showHelp(){
