@@ -152,7 +152,7 @@ function hasBadWord(n){return _BW.some(function(w){return n.toLowerCase().includ
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
     const app = initializeApp({
-      apiKey:"AIzaSyAf55kPCdIHvw04ZllGcI1KX8gvfllFJBM",
+      apiKey:"AIzaSyCQm3IYVSmmie1vWKqSe6GdKMunLohC5Ts",
       authDomain:"uguryildirim-8b3a6.firebaseapp.com",
       databaseURL:"https://uguryildirim-8b3a6-default-rtdb.europe-west1.firebasedatabase.app",
       projectId:"uguryildirim-8b3a6",
@@ -479,12 +479,99 @@ function renderLogin(){
   inp.focus();
   inp.addEventListener("keydown",function(e){if(e.key==="Enter")startGame();});
 }
+// ---- ÖĞRENCİ LİSTESİ ----
+var OGRENCILER = [
+  "BURAK KIZILCIK","AZRA OĞUR","BADE YAĞMUR BAHÇECİ","ALİ CEMAL ÇELİK","MERYEM İKRA SEVİM",
+  "MEHMET KONAL","ELİF KAYA","EYLÜL KURT","RANA ECRİN ŞEKER","SİMAY GÖKDEMİR",
+  "SUDENAZ ÖZMEN","NEHİR HOŞBAŞ","MELİSA ŞİRAZ","YUSUF AYDIN AKBAŞ","ESMANUR ALPTEKİN",
+  "ZEHRA KARA","BATUHAN KİRAZ","ŞULE AĞDOĞAN","ELANUR SARIGÜL","İBRAHİM EGE BAŞAK",
+  "TAHA BERKAY YAĞCIOĞLU","ELİFNAZ BURKAY","YAĞMUR YASEMİN BOZKURT","MUHAMMED ALİ BAKIR",
+  "ECRİN TUANA MÜLHİM","GİZEM NUR KURTARAN","CEYLİN DEMİRKIRAN","HATİCE ERVA ŞAHİN",
+  "AYHAN SAVCI","MUHAMMET ALİ KIDEYŞ","ELA NUR ZEHİROĞLU","HÜSEYİN YILMAZKAYA",
+  "BERAT DOĞAN","MEHMET İHSAN GÜLLÜ","ÖZNUR CEYLİN GETÇOŞGUN","ZEYNEP PALTA",
+  "ESİN SUMU","ALPEREN BUZCU","FEYZA FİRDEVS KARABULUT","BETÜL NİSA İNCEARIK",
+  "BERKAY YİĞİT KIRCILI","ELİF GÜL VARHAN","ABDULLAH BATUR","ELİF SUDE ATEŞ",
+  "ELİF ZEHRA KOÇYİĞİT","ZÜMRA NUR GÜNDAŞ","MUHAMMED YILDIZ","İBRAHİM BOYDAK",
+  "ARDA AKİS","ELİF NAZ İŞGÖRÜR","HÜSEYİN DORUK KAYKULU","MEHMET DENİZ EKİCİ",
+  "MUHAMMED EMİN BAHÇECİ","SEMA TÜRK","HÜSEYİN KOŞAN","SEVİM TATAR","ZEHRA ÇİFÇİ",
+  "ZEREN BAYRALI","SEVİM GÜLSU DİLEK","İBRAHİM AKŞAHİN","FATİMA HİLAL DERSİNLİOĞLU",
+  "CEMRE NİSA İLBASAN","ELİF SU ÖZBEK","EYYUB YILMAZ","ESMANUR ŞAHİN"
+];
+
+function normalizeTR(s){
+  return s.toUpperCase()
+    .replace(/İ/g,"I").replace(/I/g,"I")
+    .replace(/Ğ/g,"G").replace(/Ü/g,"U")
+    .replace(/Ş/g,"S").replace(/Ö/g,"O")
+    .replace(/Ç/g,"C").replace(/ı/g,"I")
+    .replace(/ğ/g,"G").replace(/ü/g,"U")
+    .replace(/ş/g,"S").replace(/ö/g,"O")
+    .replace(/ç/g,"C").replace(/i/g,"I");
+}
+
+function levenshtein(a,b){
+  var m=a.length,n=b.length,dp=[];
+  for(var i=0;i<=m;i++){dp[i]=[i];for(var j=1;j<=n;j++)dp[i][j]=0;}
+  for(var j=0;j<=n;j++)dp[0][j]=j;
+  for(var i=1;i<=m;i++)for(var j=1;j<=n;j++){
+    dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+  }
+  return dp[m][n];
+}
+
+function isTurkce(name){
+  return /^türkçe\s*\d+$/i.test(name.trim()) || /^turkce\s*\d+$/i.test(name.trim());
+}
+
+function findClosestStudent(name){
+  var norm=normalizeTR(name.trim());
+  var best=null,bestDist=999;
+  OGRENCILER.forEach(function(s){
+    var sNorm=normalizeTR(s);
+    // Tam eşleşme
+    if(sNorm===norm)return best=s,bestDist=0;
+    // Sadece ad ile eşleşme (ilk kelime)
+    var firstName=sNorm.split(" ")[0];
+    var inputFirst=norm.split(" ")[0];
+    if(firstName===inputFirst&&norm.split(" ").length===1)
+      {if(1<bestDist){bestDist=1;best=s;}}
+    // Levenshtein mesafesi
+    var d=levenshtein(norm,sNorm);
+    if(d<bestDist){bestDist=d;best=s;}
+  });
+  return {match:best,dist:bestDist};
+}
+
 function startGame(){
   var inp=document.getElementById("nameInp"),err=document.getElementById("nameErr");
   var name=inp.value.trim();
   if(!name||name.length<2){err.textContent="En az 2 karakter gir!";inp.classList.add("err");return;}
   if(hasBadWord(name)){err.textContent="Bu ad kullanılamaz.";inp.classList.add("err");return;}
-  playerName=name;renderGameScreen();
+
+  // türkçe1..türkçe250 kontrolü
+  if(isTurkce(name)){playerName=name.trim();inp.classList.remove("err");err.textContent="";renderGameScreen();return;}
+
+  // Öğrenci listesi kontrolü
+  var result=findClosestStudent(name);
+  if(result.dist===0){
+    // Tam eşleşme
+    playerName=result.match;inp.classList.remove("err");err.textContent="";renderGameScreen();
+  } else if(result.dist<=2){
+    // Yakın eşleşme - uyar ama devam et
+    err.style.color="#fcd34d";
+    err.textContent="\""+result.match+"\" demek istediniz mi? Devam etmek için tekrar basın.";
+    inp.classList.remove("err");
+    inp.value=result.match;
+    inp.dataset.confirmed="1";
+    if(inp.dataset.confirmed==="1"&&inp.value===result.match){
+      playerName=result.match;err.textContent="";renderGameScreen();
+    }
+  } else {
+    // Listede yok
+    err.style.color="#fca5a5";
+    err.textContent="Bu isim listede bulunamadı. Adınızı tam yazın (örn: ELİF KAYA)";
+    inp.classList.add("err");
+  }
 }
 
 function renderGameScreen(){
