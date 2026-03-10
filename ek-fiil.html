@@ -487,13 +487,17 @@ function renderLogin(){
 var OGRENCILER = null; // Firebase'den gelecek
 
 function ogrencileriYukle(callback){
-  get(ref(db,'ogrenciler')).then(function(snapshot){
-    OGRENCILER = snapshot.val() || {};
-    callback();
-  }).catch(function(){
-    OGRENCILER = {};
-    callback();
-  });
+  function doYukle(){
+    window._fbGet(window._fbRef(window._fbDb,'ogrenciler')).then(function(snapshot){
+      OGRENCILER = snapshot.val() || {};
+      callback();
+    }).catch(function(){
+      OGRENCILER = {};
+      callback();
+    });
+  }
+  if(window._fbReady){ doYukle(); }
+  else { document.addEventListener('fbReady', doYukle, {once:true}); }
 }
 
 function normalizeTR(s){
