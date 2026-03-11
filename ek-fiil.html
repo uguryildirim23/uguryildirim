@@ -398,10 +398,9 @@ function showLB(){
       var e=document.createElement("div");e.style.cssText="text-align:center;color:var(--tx2);padding:24px 0";
       e.textContent="Henüz kayıt yok.";box.insertBefore(e,bClose);
     }else{
-      var medals=["🥇","🥈","🥉"];
       lb.forEach(function(entry,i){
         var row=document.createElement("div");row.className="lb-entry";
-        var num=document.createElement("span");num.className="lb-num";num.textContent=medals[i]||("#"+(i+1));
+        var num=document.createElement("span");num.className="lb-num";num.textContent=(i+1)+".";
         var name=document.createElement("span");
         name.className=entry.name===playerName?"lb-name lb-me":"lb-name";
         name.textContent=displayName(entry.name);
@@ -460,7 +459,6 @@ function renderLogin(){
   var lbPrev=document.createElement("div");lbPrev.className="lb-preview";
   var lbT=document.createElement("div");lbT.className="lb-preview-title";lbT.textContent="🏆 En İyi Oyuncular";
   lbPrev.appendChild(lbT);
-  var medals=["🥇","🥈","🥉"];
   var nd=document.createElement("div");nd.style.cssText="text-align:center;color:var(--tx2);font-size:.83rem;padding:8px 0";
   nd.textContent="Yükleniyor...";lbPrev.appendChild(nd);
 
@@ -472,7 +470,7 @@ function renderLogin(){
     }else{
       lb.forEach(function(entry,i){
         var row=document.createElement("div");row.className="lb-row";
-        var rn=document.createElement("span");rn.className="lbr";rn.textContent=medals[i]||i+1;
+        var rn=document.createElement("span");rn.className="lbr";rn.textContent=(i+1)+".";
         var rname=document.createElement("span");rname.className="lbn";rname.textContent=displayName(entry.name);
         var rp=document.createElement("span");rp.className="lbp";rp.textContent=entry.score+" pt";
         row.appendChild(rn);row.appendChild(rname);row.appendChild(rp);lbPrev.appendChild(row);
@@ -1115,7 +1113,6 @@ function renderFinalEkran(avatar){
   totRow.appendChild(ts1);totRow.appendChild(ts2);brkdwn.appendChild(totRow);
   var lbLabel=document.createElement("div");lbLabel.style.cssText="margin:14px 0 7px;font-size:1.05rem;font-weight:800;color:var(--a1)";lbLabel.textContent="🏆 Lider Tablosu";
   var lbDiv=document.createElement("div");
-  var medals=["🥇","🥈","🥉"];
   var fbRow=document.createElement("div");fbRow.style.cssText="display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin-top:18px";
   fbRow.appendChild(mkBtn("btn btn-s","🏆 Tümünü Gör",showLB));
   fbRow.appendChild(mkBtn("btn btn-p","🔄 Yeniden Oyna",function(){location.reload();}));
@@ -1129,7 +1126,7 @@ function renderFinalEkran(avatar){
       var sorted=Object.values(data).sort(function(a,b){return b.score-a.score;}).slice(0,5);
       sorted.forEach(function(e,i){
         var row=document.createElement("div");row.className="lb-entry";
-        var num=document.createElement("span");num.className="lb-num";num.textContent=medals[i]||("#"+(i+1));
+        var num=document.createElement("span");num.className="lb-num";num.textContent=(i+1)+".";
         var avEl=document.createElement("span");avEl.style.cssText="font-size:1.2rem;min-width:24px";avEl.textContent=e.avatar||'🙂';
         var name=document.createElement("span");name.className=e.name===playerName?"lb-name lb-me":"lb-name";name.textContent=displayName(e.name);
         if(e.name===playerName){var badge=document.createElement("span");badge.className="lb-me-badge";badge.textContent="Sen";name.appendChild(badge);}
