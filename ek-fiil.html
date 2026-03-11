@@ -986,6 +986,9 @@ function r3(a){
   titLbl.textContent="\u201c"+t.title+"\u201d";
   card.appendChild(ttl);card.appendChild(desc);card.appendChild(topRow);card.appendChild(pw);card.appendChild(titLbl);
   var txtDiv=document.createElement("div");txtDiv.className="txtdisplay";
+  txtDiv.style.cssText+="user-select:none;-webkit-user-select:none;-ms-user-select:none";
+  txtDiv.addEventListener("copy",function(e){e.preventDefault();});
+  txtDiv.addEventListener("contextmenu",function(e){e.preventDefault();});
   var tokens=t.text.split(/(\s+)/);
   tokens.forEach(function(tok){
     if(!tok)return;
