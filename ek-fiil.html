@@ -183,7 +183,7 @@ function addToLB(name,score,avatar){
         name:name, score:score,
         time:Date.now(),
         tarih:tarih+' '+saat,
-        avatar:avatar||'🙂'
+        avatar:avatar||null
       });
     }
   });
@@ -405,7 +405,7 @@ function showLB(){
       lb.forEach(function(entry,i){
         var row=document.createElement("div");row.className="lb-entry";
         // Sol: madalyon + sıra no birlikte
-        var rankMedal=i<3?["🥇","🥈","🥉"][i]:"🏅";
+        var rankMedal=i<3?["🥇","🥈","🥉"][i]:(i<8?"🏅":"");
         var numDiv=document.createElement("div");
         numDiv.style.cssText="display:flex;flex-direction:row;align-items:center;min-width:52px;gap:4px";
         var noEl=document.createElement("span");noEl.style.cssText="font-size:.8rem;font-weight:800;color:var(--tx2);min-width:18px;text-align:right";
@@ -486,7 +486,7 @@ function renderLogin(){
     }else{
       lb.forEach(function(entry,i){
         var row=document.createElement("div");row.className="lb-row";
-        var rankMedal3=i<3?["🥇","🥈","🥉"][i]:"🏅";
+        var rankMedal3=i<3?["🥇","🥈","🥉"][i]:(i<8?"🏅":"");
         var rnDiv=document.createElement("div");
         rnDiv.style.cssText="display:flex;flex-direction:row;align-items:center;min-width:48px;gap:4px";
         var rNo=document.createElement("span");rNo.style.cssText="font-size:.75rem;font-weight:800;color:var(--tx2);min-width:16px;text-align:right";
@@ -1152,7 +1152,7 @@ function renderFinalEkran(avatar){
       var sorted=Object.values(data).sort(function(a,b){return b.score-a.score;}).slice(0,5);
       sorted.forEach(function(e,i){
         var row=document.createElement("div");row.className="lb-entry";
-        var rankMedal2=i<3?["🥇","🥈","🥉"][i]:"🏅";
+        var rankMedal2=i<3?["🥇","🥈","🥉"][i]:(i<8?"🏅":"");
         var numDiv2=document.createElement("div");
         numDiv2.style.cssText="display:flex;flex-direction:row;align-items:center;min-width:52px;gap:4px";
         var noEl2=document.createElement("span");noEl2.style.cssText="font-size:.8rem;font-weight:800;color:var(--tx2);min-width:18px;text-align:right";
