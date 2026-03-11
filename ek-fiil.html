@@ -398,9 +398,17 @@ function showLB(){
       var e=document.createElement("div");e.style.cssText="text-align:center;color:var(--tx2);padding:24px 0";
       e.textContent="Henüz kayıt yok.";box.insertBefore(e,bClose);
     }else{
+      var MEDALS=["🥇","🥈","🥉","🥈","🥈","🥈","🥈","🥈"];
+      var MEDAL_SILVER=["🥈","🥈","🥈","🥈","🥈"];
+      // 4-8 arası için gümüş tonlu özel semboller
+      var RANK_ICONS=["🥇","🥈","🥉","🏅","🏅","🏅","🏅","🏅"];
       lb.forEach(function(entry,i){
         var row=document.createElement("div");row.className="lb-entry";
-        var num=document.createElement("span");num.className="lb-num";num.textContent=(i+1)+".";
+        // Sıra ikonu: 1-3 madalya, 4-8 beyaz madalyon
+        var rankIcon=i<3?["🥇","🥈","🥉"][i]:(i<8?"🏅":"#"+(i+1));
+        var num=document.createElement("span");num.className="lb-num";
+        num.style.cssText="width:34px;text-align:center;font-size:"+(i<3?"1.3":"1.1")+"rem";
+        num.textContent=rankIcon;
         var name=document.createElement("span");
         name.className=entry.name===playerName?"lb-name lb-me":"lb-name";
         name.textContent=displayName(entry.name);
@@ -408,8 +416,11 @@ function showLB(){
           var badge=document.createElement("span");badge.className="lb-me-badge";badge.textContent="Sen";
           name.appendChild(badge);
         }
-        var avatarEl=document.createElement("span");avatarEl.style.cssText="font-size:1.3rem;min-width:26px;text-align:center";
-        avatarEl.textContent=entry.avatar||'🙂';
+        // Avatar ismin hemen sağına
+        var avatarEl=document.createElement("span");
+        avatarEl.style.cssText="font-size:1.2rem;margin-left:4px;vertical-align:middle";
+        avatarEl.textContent=entry.avatar||'';
+        name.appendChild(avatarEl);
         var pts=document.createElement("span");pts.className="lb-pts";pts.textContent=entry.score+" pt";
         var timeEl=document.createElement("span");timeEl.style.cssText="font-size:.7rem;color:var(--tx2);font-weight:400";
         var tarihStr=entry.tarih||'';
@@ -420,7 +431,7 @@ function showLB(){
         timeEl.textContent=tarihStr;
         var rightCol=document.createElement("div");rightCol.style.cssText="display:flex;flex-direction:column;align-items:flex-end;gap:1px";
         rightCol.appendChild(pts);rightCol.appendChild(timeEl);
-        row.appendChild(num);row.appendChild(avatarEl);row.appendChild(name);row.appendChild(rightCol);
+        row.appendChild(num);row.appendChild(name);row.appendChild(rightCol);
         box.insertBefore(row,bClose);
       });
     }
@@ -470,8 +481,14 @@ function renderLogin(){
     }else{
       lb.forEach(function(entry,i){
         var row=document.createElement("div");row.className="lb-row";
-        var rn=document.createElement("span");rn.className="lbr";rn.textContent=(i+1)+".";
+        var rankIcon2=i<3?["🥇","🥈","🥉"][i]:"🏅";
+        var rn=document.createElement("span");rn.className="lbr";
+        rn.style.fontSize=i<3?"1.2rem":"1rem";
+        rn.textContent=rankIcon2;
         var rname=document.createElement("span");rname.className="lbn";rname.textContent=displayName(entry.name);
+        var ravEl=document.createElement("span");ravEl.style.cssText="font-size:1.1rem;margin-left:3px;vertical-align:middle";
+        ravEl.textContent=entry.avatar||'';
+        rname.appendChild(ravEl);
         var rp=document.createElement("span");rp.className="lbp";rp.textContent=entry.score+" pt";
         row.appendChild(rn);row.appendChild(rname);row.appendChild(rp);lbPrev.appendChild(row);
       });
@@ -1126,12 +1143,16 @@ function renderFinalEkran(avatar){
       var sorted=Object.values(data).sort(function(a,b){return b.score-a.score;}).slice(0,5);
       sorted.forEach(function(e,i){
         var row=document.createElement("div");row.className="lb-entry";
-        var num=document.createElement("span");num.className="lb-num";num.textContent=(i+1)+".";
-        var avEl=document.createElement("span");avEl.style.cssText="font-size:1.2rem;min-width:24px";avEl.textContent=e.avatar||'🙂';
+        var rankIcon=i<3?["🥇","🥈","🥉"][i]:"🏅";
+        var num=document.createElement("span");num.className="lb-num";
+        num.style.cssText="width:34px;text-align:center;font-size:"+(i<3?"1.3":"1.1")+"rem";
+        num.textContent=rankIcon;
         var name=document.createElement("span");name.className=e.name===playerName?"lb-name lb-me":"lb-name";name.textContent=displayName(e.name);
         if(e.name===playerName){var badge=document.createElement("span");badge.className="lb-me-badge";badge.textContent="Sen";name.appendChild(badge);}
+        var avEl=document.createElement("span");avEl.style.cssText="font-size:1.2rem;margin-left:4px;vertical-align:middle";avEl.textContent=e.avatar||'';
+        name.appendChild(avEl);
         var pts=document.createElement("span");pts.className="lb-pts";pts.textContent=e.score+" pt";
-        row.appendChild(num);row.appendChild(avEl);row.appendChild(name);row.appendChild(pts);
+        row.appendChild(num);row.appendChild(name);row.appendChild(pts);
         lbDiv.appendChild(row);
       });
     });
