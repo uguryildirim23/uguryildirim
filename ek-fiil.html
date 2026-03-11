@@ -404,7 +404,7 @@ function showLB(){
         var num=document.createElement("span");num.className="lb-num";num.textContent=medals[i]||("#"+(i+1));
         var name=document.createElement("span");
         name.className=entry.name===playerName?"lb-name lb-me":"lb-name";
-        name.textContent=entry.name;
+        name.textContent=displayName(entry.name);
         if(entry.name===playerName){
           var badge=document.createElement("span");badge.className="lb-me-badge";badge.textContent="Sen";
           name.appendChild(badge);
@@ -413,7 +413,12 @@ function showLB(){
         avatarEl.textContent=entry.avatar||'🙂';
         var pts=document.createElement("span");pts.className="lb-pts";pts.textContent=entry.score+" pt";
         var timeEl=document.createElement("span");timeEl.style.cssText="font-size:.7rem;color:var(--tx2);font-weight:400";
-        timeEl.textContent=entry.tarih||'';
+        var tarihStr=entry.tarih||'';
+        if(!tarihStr&&entry.time){
+          var d=new Date(entry.time);
+          tarihStr=d.toLocaleDateString('tr-TR',{day:'2-digit',month:'2-digit',year:'numeric'})+' '+d.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
+        }
+        timeEl.textContent=tarihStr;
         var rightCol=document.createElement("div");rightCol.style.cssText="display:flex;flex-direction:column;align-items:flex-end;gap:1px";
         rightCol.appendChild(pts);rightCol.appendChild(timeEl);
         row.appendChild(num);row.appendChild(avatarEl);row.appendChild(name);row.appendChild(rightCol);
@@ -447,9 +452,9 @@ function renderLogin(){
   var box=document.createElement("div");box.className="login-box";
   var logo=document.createElement("div");logo.className="game-logo";logo.textContent="✨ Türkçede Ek Fiiller ✨";
   var sub=document.createElement("div");sub.className="login-sub";sub.textContent="Ortaokul Türkçe Dersi";
-  var lbl=document.createElement("label");lbl.textContent="👤 Adın:";
+  var lbl=document.createElement("label");lbl.textContent="👤 Okul Numaranı Yaz:";
   var inp=document.createElement("input");inp.className="inp";inp.id="nameInp";
-  inp.placeholder="Örn: 689 Uğur Yıldırım";inp.maxLength=60;inp.autocomplete="off";
+  inp.placeholder="Örn: 689";inp.maxLength=10;inp.autocomplete="off";inp.inputMode="numeric";
   var err=document.createElement("div");err.className="err-msg";err.id="nameErr";
   var startBtn=mkBtn("login-btn","Oyuna Başla 🚀",startGame);
   var lbPrev=document.createElement("div");lbPrev.className="lb-preview";
@@ -468,7 +473,7 @@ function renderLogin(){
       lb.forEach(function(entry,i){
         var row=document.createElement("div");row.className="lb-row";
         var rn=document.createElement("span");rn.className="lbr";rn.textContent=medals[i]||i+1;
-        var rname=document.createElement("span");rname.className="lbn";rname.textContent=entry.name;
+        var rname=document.createElement("span");rname.className="lbn";rname.textContent=displayName(entry.name);
         var rp=document.createElement("span");rp.className="lbp";rp.textContent=entry.score+" pt";
         row.appendChild(rn);row.appendChild(rname);row.appendChild(rp);lbPrev.appendChild(row);
       });
@@ -541,10 +546,10 @@ function isTurkce(name){
 function startGame(){
   var inp=document.getElementById("nameInp"),err=document.getElementById("nameErr");
   var girdi=inp.value.trim();
-  if(!girdi){err.textContent="Lütfen bilgilerinizi girin.";inp.classList.add("err");return;}
+  if(!girdi){err.textContent="Lütfen okul numaranı yaz.";inp.classList.add("err");return;}
   if(hasBadWord(girdi)){err.textContent="Bu giriş kullanılamaz.";inp.classList.add("err");return;}
 
-  // türkçe1..türkçe250 kontrolü
+  // türkçe1..türkçe250 kontrolü (öğretmen girişi)
   if(isTurkce(girdi)){playerName=girdi;inp.classList.remove("err");err.textContent="";renderGameScreen();return;}
 
   // Liste henüz yüklenmediyse bekle
@@ -553,42 +558,62 @@ function startGame(){
     err.textContent="Liste yükleniyor, lütfen bekleyin...";return;
   }
 
-  // Format: NO AD SOYAD — ilk kelime numara olmalı
-  var parcalar=girdi.split(/\s+/);
-  if(parcalar.length<2){
+  // Sadece numara girilmeli
+  var no=girdi.replace(/\s+/g,"");
+  if(!/^\d+$/.test(no)){
     err.style.color="#fca5a5";
-    err.textContent="Önce numara, sonra adınızı yazın. Örnek: 689 Uğur Yıldırım";
+    err.textContent="Sadece okul numaranı yaz. Örnek: 689";
     inp.classList.add("err");return;
   }
-
-  var no=parcalar[0];
-  var girilenAd=parcalar.slice(1).join(" ");
 
   // Numara listede var mı?
   if(!OGRENCILER[no]){
     err.style.color="#fca5a5";
-    err.textContent="Bu öğrenci numarası bulunamadı. Örnek: 689 Uğur Yıldırım";
+    err.textContent="Bu numara bulunamadı. Numaranı kontrol et.";
     inp.classList.add("err");return;
   }
 
-  // Ad soyad eşleşiyor mu?
-  var kayitliAd=OGRENCILER[no];
-  var mesafe=levenshtein(normalizeTR(girilenAd),normalizeTR(kayitliAd));
+  // Tam kayıt: NO AD SOYAD (Firebase'de böyle saklanır)
+  var kayitliAdSoyad=OGRENCILER[no]; // "AHMET YILMAZ"
+  playerName=no+" "+kayitliAdSoyad;  // "689 AHMET YILMAZ" — tam kayıt
 
-  if(mesafe===0){
-    playerName=no+" "+kayitliAd;
-    inp.classList.remove("err");err.textContent="";renderGameScreen();
-  } else if(mesafe<=2){
-    playerName=no+" "+kayitliAd;
-    inp.classList.remove("err");
-    err.style.color="#34d399";
-    err.textContent=kayitliAd+" olarak kaydedildiniz.";
-    setTimeout(function(){renderGameScreen();},1200);
+  inp.classList.remove("err");
+  err.style.color="#34d399";
+  err.textContent="Merhaba, "+displayName(playerName)+"! 👋";
+  setTimeout(function(){renderGameScreen();},900);
+}
+
+// Lider tablosunda gösterim için: NO ve SOYAD gizle, sadece AD(lar) göster
+function trTitle(w){
+  // Türkçe büyük→küçük: İ→i, I→ı, diğerleri normal
+  var lower=w.split("").map(function(c){
+    if(c==="İ")return "i";
+    if(c==="I")return "ı";
+    if(c==="Ş")return "ş";
+    if(c==="Ğ")return "ğ";
+    if(c==="Ü")return "ü";
+    if(c==="Ö")return "ö";
+    if(c==="Ç")return "ç";
+    return c.toLowerCase();
+  }).join("");
+  // İlk harf büyük (Türkçe: i→İ, normal)
+  var first=lower.charAt(0);
+  if(first==="i")first="İ";
+  else first=first.toUpperCase();
+  return first+lower.slice(1);
+}
+function displayName(fullName){
+  // fullName: "689 AHMET MEHMET YILMAZ" → "Ahmet Mehmet"
+  var parts=fullName.trim().split(/\s+/);
+  var start=/^\d+$/.test(parts[0])?1:0;
+  var nameParts=parts.slice(start);
+  var adlar;
+  if(nameParts.length>=2){
+    adlar=nameParts.slice(0,-1); // son kelime soyad → gizle
   } else {
-    err.style.color="#fca5a5";
-    err.textContent="Numara ve isim eşleşmiyor. Örnek: 689 Uğur Yıldırım";
-    inp.classList.add("err");
+    adlar=nameParts; // tek kelime (türkçe1 vb.)
   }
+  return adlar.map(trTitle).join(" ");
 }
 
 function renderGameScreen(){
@@ -1103,7 +1128,7 @@ function renderFinalEkran(avatar){
         var row=document.createElement("div");row.className="lb-entry";
         var num=document.createElement("span");num.className="lb-num";num.textContent=medals[i]||("#"+(i+1));
         var avEl=document.createElement("span");avEl.style.cssText="font-size:1.2rem;min-width:24px";avEl.textContent=e.avatar||'🙂';
-        var name=document.createElement("span");name.className=e.name===playerName?"lb-name lb-me":"lb-name";name.textContent=e.name;
+        var name=document.createElement("span");name.className=e.name===playerName?"lb-name lb-me":"lb-name";name.textContent=displayName(e.name);
         if(e.name===playerName){var badge=document.createElement("span");badge.className="lb-me-badge";badge.textContent="Sen";name.appendChild(badge);}
         var pts=document.createElement("span");pts.className="lb-pts";pts.textContent=e.score+" pt";
         row.appendChild(num);row.appendChild(avEl);row.appendChild(name);row.appendChild(pts);
