@@ -4,656 +4,488 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Uğur Yıldırım | Türkçe Öğretmeni</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,400&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink: #1a1412;
-    --paper: #faf7f2;
-    --cream: #f2ece0;
-    --rust: #c4501a;
-    --rust-light: #e8693a;
-    --gold: #c9a84c;
-    --sage: #5a7a5e;
-    --muted: #8a7f72;
-    --border: #ddd5c5;
-    --card: #ffffff;
-    --radius: 16px;
-  }
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:#F5EBDA;
+  font-family:'Nunito',sans-serif;
+  color:#3A2A1A;
+  overflow-x:hidden;
+  min-height:100vh;
+  position:relative;
+}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+/* ═══ BOTANICAL BACKGROUND ═══
+   Watercolor-style pears, leaves scattered around the page
+   matching the uploaded image exactly */
 
-  html { scroll-behavior: smooth; }
+.botanical{
+  position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
+}
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    min-height: 100vh;
-  }
+/* Pear shapes - teardrop/pear form */
+.pear{
+  position:absolute;
+  width:var(--s);height:calc(var(--s)*1.3);
+  border-radius:50% 50% 45% 45%;
+  opacity:var(--o,0.18);
+  transform:rotate(var(--r,0deg));
+}
 
-  /* ---- TEXTURE OVERLAY ---- */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: .6;
-  }
+.pear::after{
+  content:'';position:absolute;
+  top:-8px;left:50%;transform:translateX(-50%);
+  width:3px;height:12px;border-radius:2px;
+  background:rgba(90,70,40,0.3);
+}
 
-  /* ---- NAV ---- */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: var(--paper);
-    border-bottom: 1px solid var(--border);
-    padding: 0 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-  }
-  .nav-brand {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--ink);
-    text-decoration: none;
-    letter-spacing: .3px;
-  }
-  .nav-brand span { color: var(--rust); }
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-  }
-  .nav-links a {
-    text-decoration: none;
-    font-size: .9rem;
-    font-weight: 500;
-    color: var(--muted);
-    transition: color .2s;
-    letter-spacing: .3px;
-  }
-  .nav-links a:hover { color: var(--rust); }
+.p1{--s:90px;--r:-15deg;--o:0.22;top:3%;left:2%;background:radial-gradient(ellipse at 40% 35%,#D4A840,#B89030);}
+.p2{--s:70px;--r:10deg;--o:0.18;top:8%;right:5%;background:radial-gradient(ellipse at 40% 35%,#C85838,#A84028);}
+.p3{--s:55px;--r:-25deg;--o:0.15;top:25%;right:3%;background:radial-gradient(ellipse at 40% 35%,#D4A840,#C89830);}
+.p4{--s:80px;--r:20deg;--o:0.2;top:40%;left:1%;background:radial-gradient(ellipse at 40% 35%,#C87848,#A86038);}
+.p5{--s:65px;--r:-10deg;--o:0.16;top:58%;right:2%;background:radial-gradient(ellipse at 40% 35%,#B8C888,#90A868);}
+.p6{--s:75px;--r:30deg;--o:0.19;top:72%;left:3%;background:radial-gradient(ellipse at 40% 35%,#D4B040,#C89830);}
+.p7{--s:50px;--r:-20deg;--o:0.14;top:88%;right:4%;background:radial-gradient(ellipse at 40% 35%,#C86848,#A85030);}
+.p8{--s:60px;--r:5deg;--o:0.16;top:15%;left:85%;background:radial-gradient(ellipse at 40% 35%,#C8B868,#A89848);}
 
-  /* ---- HERO ---- */
-  .hero {
-    position: relative;
-    z-index: 1;
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 100px 80px 60px;
-    gap: 60px;
-    overflow: hidden;
-  }
+/* Leaf shapes */
+.lf{
+  position:absolute;
+  width:var(--w);height:var(--h);
+  border-radius:4px 80% 4px 80%;
+  opacity:var(--o,0.2);
+  transform:rotate(var(--r,45deg));
+}
 
-  .hero::after {
-    content: '';
-    position: absolute;
-    right: -100px; top: -100px;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, var(--rust)08 0%, transparent 70%);
-    pointer-events: none;
-  }
+.lf::after{
+  content:'';position:absolute;
+  top:50%;left:0;right:0;height:1px;
+  background:rgba(60,80,30,0.3);
+  transform:rotate(var(--r,0deg));
+}
 
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--cream);
-    border: 1px solid var(--border);
-    border-radius: 30px;
-    padding: 6px 16px;
-    font-size: .8rem;
-    font-weight: 600;
-    color: var(--rust);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 24px;
-  }
-  .hero-eyebrow::before {
-    content: '';
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--rust);
-  }
+.l1{--w:70px;--h:35px;--r:35deg;--o:0.22;top:6%;left:12%;background:linear-gradient(135deg,#8AAA58,#6A8A40);}
+.l2{--w:55px;--h:28px;--r:-40deg;--o:0.18;top:12%;right:12%;background:linear-gradient(135deg,#7A9A50,#5A7A38);}
+.l3{--w:45px;--h:22px;--r:60deg;--o:0.15;top:30%;left:6%;background:linear-gradient(135deg,#90AA60,#708A48);}
+.l4{--w:60px;--h:30px;--r:-30deg;--o:0.2;top:48%;right:7%;background:linear-gradient(135deg,#8AAA58,#6A8A40);}
+.l5{--w:50px;--h:25px;--r:50deg;--o:0.17;top:65%;left:8%;background:linear-gradient(135deg,#7A9A50,#5A7A38);}
+.l6{--w:65px;--h:32px;--r:-55deg;--o:0.19;top:80%;right:10%;background:linear-gradient(135deg,#90AA60,#70904A);}
+.l7{--w:40px;--h:20px;--r:25deg;--o:0.14;top:92%;left:10%;background:linear-gradient(135deg,#8AAA58,#6A8A40);}
+.l8{--w:48px;--h:24px;--r:-15deg;--o:0.16;top:20%;right:15%;background:linear-gradient(135deg,#80A050,#608838);}
+.l9{--w:55px;--h:28px;--r:70deg;--o:0.15;top:52%;left:4%;background:linear-gradient(135deg,#8AAA58,#6A8A40);}
+.l10{--w:38px;--h:19px;--r:-65deg;--o:0.13;top:36%;right:2%;background:linear-gradient(135deg,#7A9A50,#5A7A38);}
 
-  h1.hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.8rem, 5vw, 4.2rem);
-    font-weight: 900;
-    line-height: 1.1;
-    color: var(--ink);
-    margin-bottom: 20px;
-  }
-  h1.hero-title em {
-    font-style: italic;
-    color: var(--rust);
-  }
+/* Half-pear (sliced) */
+.pear-slice{
+  position:absolute;
+  width:var(--s);height:calc(var(--s)*1.2);
+  border-radius:0 50% 45% 0;
+  opacity:var(--o,0.15);
+  transform:rotate(var(--r,0deg));
+  overflow:hidden;
+}
+.pear-slice::before{
+  content:'';position:absolute;
+  top:40%;left:30%;
+  width:20%;height:30%;border-radius:50%;
+  background:rgba(80,60,30,0.15);
+}
+.ps1{--s:80px;--r:15deg;--o:0.17;top:18%;left:0%;background:radial-gradient(ellipse at 60% 40%,#E8D898,#C8B870);}
+.ps2{--s:60px;--r:-25deg;--o:0.14;top:75%;right:1%;background:radial-gradient(ellipse at 60% 40%,#D8E0A8,#B0C080);}
 
-  .hero-desc {
-    font-size: 1.05rem;
-    color: var(--muted);
-    line-height: 1.75;
-    max-width: 440px;
-    margin-bottom: 36px;
-    font-weight: 400;
-  }
+/* ═══ MAIN CONTENT WRAPPER ═══ */
+.page-wrapper{
+  position:relative;z-index:1;
+  max-width:520px;
+  margin:0 auto;
+  padding:1rem;
+  min-height:100vh;
+}
 
-  .hero-cta-row {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
+/* ═══ SIDE VERTICAL TEXT ═══ 
+   Like "COLOR PALETTE" in the image */
+.side-text{
+  position:fixed;
+  left:1.2rem;top:50%;
+  transform:translateY(-50%) rotate(-90deg);
+  transform-origin:center center;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1rem,2.5vw,1.5rem);
+  font-weight:900;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:rgba(58,42,26,0.12);
+  white-space:nowrap;
+  z-index:2;
+  pointer-events:none;
+}
 
-  .btn-rust {
-    background: var(--rust);
-    color: white;
-    padding: 14px 32px;
-    border-radius: 50px;
-    font-size: .95rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all .2s;
-    box-shadow: 0 4px 20px var(--rust)40;
-    letter-spacing: .3px;
-  }
-  .btn-rust:hover { background: var(--rust-light); transform: translateY(-2px); box-shadow: 0 8px 30px var(--rust)50; }
+/* ═══ TOP LOGO ═══ */
+.top-logo{
+  text-align:center;
+  padding:1.5rem 0 0.5rem;
+  font-family:'Dancing Script',cursive;
+  font-size:1rem;
+  color:rgba(58,42,26,0.5);
+}
 
-  .btn-outline {
-    background: transparent;
-    color: var(--ink);
-    padding: 14px 32px;
-    border-radius: 50px;
-    font-size: .95rem;
-    font-weight: 600;
-    text-decoration: none;
-    border: 1.5px solid var(--border);
-    transition: all .2s;
-    letter-spacing: .3px;
-  }
-  .btn-outline:hover { border-color: var(--rust); color: var(--rust); }
+/* ═══ NAV PILLS ═══ */
+.nav-pills{
+  display:flex;justify-content:center;gap:0.5rem;
+  padding:0.8rem 0 1.5rem;
+  flex-wrap:wrap;
+}
+.nav-pill{
+  padding:0.45rem 1.1rem;
+  border-radius:10px;
+  font-size:0.78rem;font-weight:700;
+  text-decoration:none;
+  transition:all 0.3s;
+  border:none;cursor:pointer;
+}
+.pill-tomato{background:#B54A3A;color:#fff;}
+.pill-tomato:hover{background:#983828;}
+.pill-sage{background:#9AA898;color:#fff;}
+.pill-sage:hover{background:#828E78;}
+.pill-pear{background:#D4A840;color:#3A2A1A;}
+.pill-pear:hover{background:#C09030;}
 
-  /* Hero right — decorative card stack */
-  .hero-visual {
-    position: relative;
-    height: 420px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .deco-card {
-    position: absolute;
-    background: var(--card);
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    box-shadow: 0 8px 40px #00000012;
-    padding: 24px 28px;
-    width: 260px;
-  }
-  .deco-card:nth-child(1) {
-    transform: rotate(-6deg) translate(-30px, 20px);
-    background: var(--cream);
-  }
-  .deco-card:nth-child(2) {
-    transform: rotate(3deg) translate(40px, -20px);
-    z-index: 2;
-  }
-  .deco-card:nth-child(3) {
-    transform: rotate(-2deg) translate(10px, 50px);
-    z-index: 3;
-    background: var(--rust);
-    color: white;
-    border-color: transparent;
-  }
-  .deco-card-label {
-    font-size: .7rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    opacity: .6;
-    margin-bottom: 10px;
-  }
-  .deco-card-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    line-height: 1.4;
-  }
-  .deco-card-meta {
-    margin-top: 12px;
-    font-size: .8rem;
-    opacity: .6;
-    font-weight: 500;
-  }
+/* ═══ COLOR BLOCK CARDS ═══
+   The exact layout from the image:
+   Rounded rectangles, stacked vertically,
+   bold uppercase title, small meta underneath */
+.cards-stack{
+  display:flex;flex-direction:column;
+  gap:1rem;
+  padding:0 0.5rem;
+}
 
-  /* ---- STATS BAR ---- */
-  .stats-bar {
-    position: relative; z-index: 1;
-    background: var(--ink);
-    color: white;
-    padding: 32px 80px;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  .stat-item { text-align: center; }
-  .stat-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.2rem;
-    font-weight: 900;
-    color: var(--gold);
-    display: block;
-  }
-  .stat-label {
-    font-size: .8rem;
-    font-weight: 500;
-    opacity: .6;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
+.card{
+  border-radius:18px;
+  padding:1.6rem 1.8rem;
+  text-decoration:none;
+  color:inherit;
+  display:block;
+  transition:transform 0.3s,box-shadow 0.3s;
+  position:relative;
+}
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
 
-  /* ---- SECTIONS ---- */
-  section {
-    position: relative; z-index: 1;
-    padding: 80px 80px;
-  }
-  section:nth-child(even) { background: var(--cream); }
+.card-pear{background:#E8B84A;color:#3A2A1A;}
+.card-tomato{background:#B54A3A;color:#FAEEDE;}
+.card-honey{background:#F5D899;color:#3A2A1A;}
+.card-sage{background:#9AA898;color:#FAEEDE;}
 
-  .section-header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  .section-tag {
-    font-size: .75rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--rust);
-    margin-bottom: 8px;
-  }
-  h2.section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
-    font-weight: 900;
-    color: var(--ink);
-    line-height: 1.2;
-  }
-  .section-link {
-    font-size: .9rem;
-    font-weight: 600;
-    color: var(--rust);
-    text-decoration: none;
-    border-bottom: 1px solid var(--rust)40;
-    transition: border-color .2s;
-    white-space: nowrap;
-  }
-  .section-link:hover { border-color: var(--rust); }
+.card-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.5rem,5vw,2rem);
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:0.02em;
+  line-height:1.1;
+  margin-bottom:0.6rem;
+}
 
-  /* ---- GAME CARDS ---- */
-  .games-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-  }
-  .game-card {
-    background: var(--card);
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    overflow: hidden;
-    transition: transform .2s, box-shadow .2s;
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-  .game-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px #00000015; }
-  .game-card-top {
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-  }
-  .game-card-body { padding: 20px 22px; }
-  .game-card-tag {
-    font-size: .7rem;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-  .game-card-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.15rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: var(--ink);
-  }
-  .game-card-desc {
-    font-size: .85rem;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-  .game-card-footer {
-    padding: 14px 22px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .game-badge {
-    font-size: .75rem;
-    font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 20px;
-    background: var(--cream);
-    color: var(--muted);
-  }
-  .game-badge.active { background: #e8f5e9; color: var(--sage); }
-  .game-play-btn {
-    font-size: .85rem;
-    font-weight: 600;
-    color: var(--rust);
-    text-decoration: none;
-  }
+.card-row{
+  display:flex;justify-content:space-between;
+  align-items:flex-end;
+  gap:1rem;
+}
 
-  /* ---- MATERIALS ---- */
-  .materials-list { display: flex; flex-direction: column; gap: 12px; }
-  .material-row {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px 24px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    transition: box-shadow .2s;
-    text-decoration: none;
-    color: inherit;
-  }
-  .material-row:hover { box-shadow: 0 4px 20px #00000010; }
-  .material-icon {
-    width: 44px; height: 44px;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.3rem;
-    flex-shrink: 0;
-  }
-  .material-info { flex: 1; }
-  .material-title {
-    font-weight: 600;
-    font-size: .95rem;
-    margin-bottom: 3px;
-    color: var(--ink);
-  }
-  .material-meta { font-size: .8rem; color: var(--muted); }
-  .material-arrow { color: var(--muted); font-size: 1.1rem; }
+.card-info-label{
+  font-size:0.65rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.1em;
+  opacity:0.6;
+  margin-bottom:0.15rem;
+}
 
-  /* ---- ANNOUNCEMENTS ---- */
-  .announce-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
-  }
-  .announce-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px;
-    position: relative;
-    overflow: hidden;
-  }
-  .announce-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 4px;
-  }
-  .announce-card.urgent::before { background: var(--rust); }
-  .announce-card.info::before { background: var(--sage); }
-  .announce-card.normal::before { background: var(--gold); }
-  .announce-date {
-    font-size: .75rem;
-    font-weight: 600;
-    color: var(--muted);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  .announce-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 10px;
-    line-height: 1.4;
-  }
-  .announce-body {
-    font-size: .88rem;
-    color: var(--muted);
-    line-height: 1.65;
-  }
+.card-info-value{
+  font-family:'Nunito',sans-serif;
+  font-size:0.85rem;font-weight:800;
+  opacity:0.85;
+}
 
-  /* ---- FOOTER ---- */
-  footer {
-    position: relative; z-index: 1;
-    background: var(--ink);
-    color: white;
-    padding: 40px 80px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  .footer-brand {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-  }
-  .footer-brand span { color: var(--gold); }
-  .footer-note { font-size: .8rem; opacity: .4; }
+.card-badge{
+  position:absolute;top:1.2rem;right:1.5rem;
+  font-size:0.6rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.06em;
+  padding:0.2rem 0.6rem;border-radius:6px;
+  background:rgba(255,255,255,0.25);
+}
 
-  /* ---- ANIMATIONS ---- */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .fade-up {
-    opacity: 0;
-    animation: fadeUp .7s forwards;
-  }
-  .fade-up:nth-child(1) { animation-delay: .1s; }
-  .fade-up:nth-child(2) { animation-delay: .2s; }
-  .fade-up:nth-child(3) { animation-delay: .3s; }
-  .fade-up:nth-child(4) { animation-delay: .4s; }
+.card-disabled{opacity:0.55;pointer-events:none;}
 
-  /* ---- RESPONSIVE ---- */
-  @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; padding: 100px 30px 60px; }
-    .hero-visual { display: none; }
-    nav { padding: 0 20px; }
-    .nav-links { gap: 16px; }
-    section { padding: 60px 24px; }
-    .stats-bar { padding: 32px 24px; }
-    footer { padding: 32px 24px; flex-direction: column; text-align: center; }
-  }
+/* ═══ HERO TEXT ═══ */
+.hero-block{
+  text-align:center;
+  padding:2rem 1rem 1.5rem;
+}
+.hero-quote{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.1rem,3.5vw,1.5rem);
+  font-weight:400;font-style:italic;
+  color:rgba(58,42,26,0.55);
+  line-height:1.4;
+}
+.hero-quote em{font-style:normal;color:#B54A3A;}
+
+/* ═══ SECTION LABEL ═══ */
+.sec-label{
+  font-size:0.68rem;text-transform:uppercase;
+  letter-spacing:0.14em;font-weight:700;
+  color:rgba(58,42,26,0.4);
+  padding:2rem 0.5rem 0.6rem;
+  text-align:center;
+}
+
+/* ═══ ANNOUNCEMENT CARD ═══ */
+.ann-block{
+  border-radius:14px;
+  padding:1.2rem 1.5rem;
+  margin:0 0.5rem;
+  background:#F5D899;
+  display:flex;align-items:center;gap:0.8rem;
+  flex-wrap:wrap;
+}
+.ann-emoji{font-size:1.3rem;}
+.ann-body strong{font-size:0.88rem;display:block;}
+.ann-body span{font-size:0.75rem;color:#6B5540;}
+.ann-date{font-size:0.68rem;color:#9A8468;font-weight:600;margin-left:auto;white-space:nowrap;}
+
+/* ═══ MATERIAL MINI CARDS ═══ */
+.mat-stack{
+  display:flex;flex-direction:column;gap:0.7rem;
+  padding:0.8rem 0.5rem 2rem;
+}
+.mat-item{
+  border-radius:12px;
+  padding:1rem 1.3rem;
+  display:flex;align-items:center;gap:0.8rem;
+  text-decoration:none;color:#3A2A1A;
+  transition:transform 0.25s,box-shadow 0.25s;
+}
+.mat-item:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,0.07);}
+
+.mat-item:nth-child(1){background:rgba(232,184,74,0.4);}
+.mat-item:nth-child(2){background:rgba(181,74,58,0.18);}
+.mat-item:nth-child(3){background:rgba(154,168,142,0.28);}
+.mat-item:nth-child(4){background:rgba(245,216,153,0.5);}
+
+.mat-emoji{font-size:1.2rem;flex-shrink:0;}
+.mat-info h4{font-size:0.85rem;font-weight:700;}
+.mat-info span{font-size:0.68rem;color:#8A7560;}
+.mat-dl{
+  margin-left:auto;width:28px;height:28px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.8rem;color:#8A7560;flex-shrink:0;
+  transition:all 0.25s;background:rgba(255,255,255,0.4);
+}
+.mat-item:hover .mat-dl{background:#B54A3A;color:#fff;}
+
+/* ═══ FOOTER ═══ */
+footer{
+  text-align:center;padding:1.5rem;
+  font-size:0.7rem;color:rgba(58,42,26,0.35);
+}
+footer strong{
+  font-family:'Playfair Display',serif;
+  font-size:0.9rem;color:rgba(58,42,26,0.5);
+  display:block;margin-bottom:0.2rem;
+}
+
+/* ═══ REVEAL ═══ */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.55s ease,transform 0.55s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ═══ RESPONSIVE ═══ */
+@media(min-width:700px){
+  .page-wrapper{padding:2rem;}
+  .cards-stack{padding:0 1rem;}
+}
+@media(max-width:480px){
+  .side-text{display:none;}
+  .card{padding:1.3rem 1.4rem;}
+  .card-title{font-size:1.3rem;}
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-brand">Uğur <span>Yıldırım</span></a>
-  <ul class="nav-links">
-    <li><a href="#oyunlar">Oyunlar</a></li>
-    <li><a href="#materyaller">Materyaller</a></li>
-
-  </ul>
-</nav>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-left">
-
-    <h1 class="hero-title fade-up">Dil, <em>düşüncenin</em><br>evidir.</h1>
-    <p class="hero-desc fade-up">Türkçe etkinlikler, oyunlar ve materyaller. Dili keşfetmek için hazırlanmış bir köşe.</p>
-    <div class="hero-cta-row fade-up">
-      <a href="#oyunlar" class="btn-rust">Oyunlara Git →</a>
-      <a href="#materyaller" class="btn-outline">Materyaller</a>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <div class="deco-card">
-      <div class="deco-card-label">Etkinlik</div>
-      <div class="deco-card-title">Sözcük Arenası</div>
-      <div class="deco-card-meta">7. Sınıf · Takım oyunu</div>
-    </div>
-    <div class="deco-card">
-      <div class="deco-card-label">Materyal</div>
-      <div class="deco-card-title">Fiil Çekim Tablosu</div>
-      <div class="deco-card-meta">6–8. Sınıf · PDF</div>
-    </div>
-    <div class="deco-card">
-      <div class="deco-card-label">Yeni Duyuru</div>
-      <div class="deco-card-title">Bu hafta quiz var!</div>
-      <div class="deco-card-meta">8 Mart 2026</div>
-    </div>
-  </div>
+<!-- BOTANICAL DECORATIONS -->
+<div class="botanical">
+  <div class="pear p1"></div>
+  <div class="pear p2"></div>
+  <div class="pear p3"></div>
+  <div class="pear p4"></div>
+  <div class="pear p5"></div>
+  <div class="pear p6"></div>
+  <div class="pear p7"></div>
+  <div class="pear p8"></div>
+  <div class="lf l1"></div>
+  <div class="lf l2"></div>
+  <div class="lf l3"></div>
+  <div class="lf l4"></div>
+  <div class="lf l5"></div>
+  <div class="lf l6"></div>
+  <div class="lf l7"></div>
+  <div class="lf l8"></div>
+  <div class="lf l9"></div>
+  <div class="lf l10"></div>
+  <div class="pear-slice ps1"></div>
+  <div class="pear-slice ps2"></div>
 </div>
 
-<!-- STATS BAR -->
-<div class="stats-bar">
-  <div class="stat-item">
-    <span class="stat-num">4</span>
-    <span class="stat-label">Sınıf</span>
+<!-- SIDE VERTICAL TEXT -->
+<div class="side-text">Türkçe Öğretmeni</div>
+
+<!-- MAIN CONTENT -->
+<div class="page-wrapper">
+
+  <!-- TOP LOGO -->
+  <div class="top-logo">Uğur Yıldırım</div>
+
+  <!-- HERO QUOTE - subtle -->
+  <div class="hero-block reveal">
+    <p class="hero-quote">Dil, <em>düşüncenin</em> evidir.</p>
   </div>
-  <div class="stat-item">
-    <span class="stat-num">12+</span>
-    <span class="stat-label">Etkinlik</span>
+
+  <!-- NAV PILLS -->
+  <div class="nav-pills reveal">
+    <a href="#oyunlar" class="nav-pill pill-tomato">Oyunlar</a>
+    <a href="#materyaller" class="nav-pill pill-sage">Materyaller</a>
+    <a href="#yarisma" class="nav-pill pill-pear">Yarışmalar</a>
   </div>
-  <div class="stat-item">
-    <span class="stat-num">30+</span>
-    <span class="stat-label">Materyal</span>
+
+  <!-- SECTION: OYUNLAR -->
+  <div class="sec-label reveal" id="oyunlar">— Oyunlar & Etkinlikler —</div>
+
+  <div class="cards-stack">
+    <!-- PEAR CARD -->
+    <div class="card card-pear card-disabled reveal">
+      <span class="card-badge">Yakında</span>
+      <div class="card-title">Sözcük<br>Arenası</div>
+      <div class="card-row">
+        <div>
+          <div class="card-info-label">Sınıf</div>
+          <div class="card-info-value">7. Sınıf</div>
+        </div>
+        <div>
+          <div class="card-info-label">Tür</div>
+          <div class="card-info-value">Takım Oyunu</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOMATO CARD -->
+    <a href="https://uguryildirim23.github.io/ek-fiil.html" class="card card-tomato reveal" target="_blank">
+      <span class="card-badge">● Aktif</span>
+      <div class="card-title">Ek Fiil<br>Etkinliği</div>
+      <div class="card-row">
+        <div>
+          <div class="card-info-label">Sınıf</div>
+          <div class="card-info-value">6–8. Sınıf</div>
+        </div>
+        <div>
+          <div class="card-info-label">Tür</div>
+          <div class="card-info-value">Bireysel</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- HONEY CARD -->
+    <div class="card card-honey card-disabled reveal">
+      <span class="card-badge">Yakında</span>
+      <div class="card-title">Cümle<br>Ustası</div>
+      <div class="card-row">
+        <div>
+          <div class="card-info-label">Sınıf</div>
+          <div class="card-info-value">8. Sınıf</div>
+        </div>
+        <div>
+          <div class="card-info-label">Tür</div>
+          <div class="card-info-value">Takım Oyunu</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAGE CARD -->
+    <div class="card card-sage card-disabled reveal">
+      <span class="card-badge">Yakında</span>
+      <div class="card-title">Yazım<br>Kuralları</div>
+      <div class="card-row">
+        <div>
+          <div class="card-info-label">Sınıf</div>
+          <div class="card-info-value">5–8. Sınıf</div>
+        </div>
+        <div>
+          <div class="card-info-label">Tür</div>
+          <div class="card-info-value">Bireysel</div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="stat-item">
-    <span class="stat-num">∞</span>
-    <span class="stat-label">Merak</span>
+
+  <!-- YARIŞMALAR -->
+  <div class="sec-label reveal" id="yarisma">— Yarışmalar —</div>
+  <div class="ann-block reveal">
+    <span class="ann-emoji">🏆</span>
+    <div class="ann-body">
+      <strong>Yarışmalar çok yakında!</strong>
+      <span>Sınıflar arası heyecanlı Türkçe yarışmaları başlıyor.</span>
+    </div>
   </div>
+
+  <!-- MATERIALS -->
+  <div class="sec-label reveal" id="materyaller">— Ders Materyalleri —</div>
+  <div class="mat-stack">
+    <a href="#" class="mat-item reveal">
+      <span class="mat-emoji">📄</span>
+      <div class="mat-info"><h4>Fiil Çekim Tablosu</h4><span>6–8. Sınıf · PDF · 2 sayfa</span></div>
+      <span class="mat-dl">↓</span>
+    </a>
+    <a href="#" class="mat-item reveal">
+      <span class="mat-emoji">📋</span>
+      <div class="mat-info"><h4>Yazım Kuralları Özet</h4><span>7. Sınıf · PDF · 1 sayfa</span></div>
+      <span class="mat-dl">↓</span>
+    </a>
+    <a href="#" class="mat-item reveal">
+      <span class="mat-emoji">📖</span>
+      <div class="mat-info"><h4>Okuma Anlama Stratejileri</h4><span>5–8. Sınıf · PDF · 4 sayfa</span></div>
+      <span class="mat-dl">↓</span>
+    </a>
+    <a href="#" class="mat-item reveal">
+      <span class="mat-emoji">🗂️</span>
+      <div class="mat-info"><h4>Sözcük Türleri Çalışma Kâğıdı</h4><span>7. Sınıf · PDF · 3 sayfa</span></div>
+      <span class="mat-dl">↓</span>
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <strong>Uğur Yıldırım</strong>
+    Türkçe Öğretmeni · © 2026
+  </footer>
+
 </div>
 
-<!-- OYUNLAR -->
-<section id="oyunlar">
-  <div class="section-header">
-    <div>
-      <div class="section-tag">Etkinlikler</div>
-      <h2 class="section-title">Oyunlar & Etkinlikler</h2>
-    </div>
-    <a href="#" class="section-link">Tümünü gör →</a>
-  </div>
-  <div class="games-grid">
-    <a href="oyun.html" class="game-card">
-      <div class="game-card-top" style="background:#fdf3ec;">🏟️</div>
-      <div class="game-card-body">
-        <div class="game-card-tag">7. Sınıf · Takım</div>
-        <div class="game-card-title">Sözcük Arenası</div>
-        <div class="game-card-desc">Metni oku, soruları çöz, takımını zafere taşı! Süreli çoktan seçmeli sorular.</div>
-      </div>
-      <div class="game-card-footer">
-        <span class="game-badge active">● Aktif</span>
-        <span class="game-play-btn">Oyna →</span>
-      </div>
-    </a>
-    <a href="ek-fiil.html" class="game-card">
-      <div class="game-card-top" style="background:#f0f7f1;">✍️</div>
-      <div class="game-card-body">
-        <div class="game-card-tag">6–8. Sınıf · Bireysel</div>
-        <div class="game-card-title">Ek Fiil Etkinliği</div>
-        <div class="game-card-desc">Ek fiilleri tanı, cümlelerde bul ve doğru kullan. Eğlenceli sorularla pekiştir!</div>
-      </div>
-      <div class="game-card-footer">
-        <span class="game-badge active">● Aktif</span>
-        <span class="game-play-btn">Oyna →</span>
-      </div>
-    </a>
-    <div class="game-card">
-      <div class="game-card-top" style="background:#f5f0fa;">✍️</div>
-      <div class="game-card-body">
-        <div class="game-card-tag">8. Sınıf · Takım</div>
-        <div class="game-card-title">Cümle Ustası</div>
-        <div class="game-card-desc">Karışık kelimeleri doğru sıraya koy, anlamlı cümle kur. Yarışmalı format.</div>
-      </div>
-      <div class="game-card-footer">
-        <span class="game-badge">Yakında</span>
-        <span class="game-play-btn" style="opacity:.4">Oyna →</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MATERYALLER -->
-<section id="materyaller">
-  <div class="section-header">
-    <div>
-      <div class="section-tag">Kaynaklar</div>
-      <h2 class="section-title">Ders Materyalleri</h2>
-    </div>
-    <a href="#" class="section-link">Tümünü gör →</a>
-  </div>
-  <div class="materials-list">
-    <a href="#" class="material-row">
-      <div class="material-icon" style="background:#fdf3ec;">📄</div>
-      <div class="material-info">
-        <div class="material-title">Fiil Çekim Tablosu</div>
-        <div class="material-meta">6–8. Sınıf · PDF · 2 sayfa</div>
-      </div>
-      <span class="material-arrow">↓</span>
-    </a>
-    <a href="#" class="material-row">
-      <div class="material-icon" style="background:#f0f7f1;">📋</div>
-      <div class="material-info">
-        <div class="material-title">Yazım Kuralları Özet</div>
-        <div class="material-meta">7. Sınıf · PDF · 1 sayfa</div>
-      </div>
-      <span class="material-arrow">↓</span>
-    </a>
-    <a href="#" class="material-row">
-      <div class="material-icon" style="background:#f5f0fa;">📖</div>
-      <div class="material-info">
-        <div class="material-title">Okuma Anlama Stratejileri</div>
-        <div class="material-meta">5–8. Sınıf · PDF · 4 sayfa</div>
-      </div>
-      <span class="material-arrow">↓</span>
-    </a>
-    <a href="#" class="material-row">
-      <div class="material-icon" style="background:#fff8e1;">🗂️</div>
-      <div class="material-info">
-        <div class="material-title">Sözcük Türleri Çalışma Kâğıdı</div>
-        <div class="material-meta">7. Sınıf · PDF · 3 sayfa</div>
-      </div>
-      <span class="material-arrow">↓</span>
-    </a>
-  </div>
-</section>
-
-
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-brand">Uğur <span>Yıldırım</span> · Türkçe Öğretmeni</div>
-  <div class="footer-note">© 2026 · Tüm hakları saklıdır</div>
-</footer>
+<script>
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('visible'),i*50);
+      obs.unobserve(e.target);
+    }
+  });
+},{threshold:0.05});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
 
 </body>
 </html>
