@@ -445,14 +445,14 @@ function showLB(){
   if(window._fbReady){
     window._fbGet(window._fbRef(window._fbDb,'ekfiil_lb')).then(function(snap){
       var data=snap.val()||{};
-      var lb=Object.values(data).sort(function(a,b){return b.score-a.score;}).slice(0,20);
+      var lb=Object.values(data).sort(function(a,b){return b.score-a.score;});
       renderEntries(lb);
     }).catch(function(){loading.textContent="Bağlantı hatası.";});
   } else {
     document.addEventListener('fbReady',function(){
       window._fbGet(window._fbRef(window._fbDb,'ekfiil_lb')).then(function(snap){
         var data=snap.val()||{};
-        var lb=Object.values(data).sort(function(a,b){return b.score-a.score;}).slice(0,20);
+        var lb=Object.values(data).sort(function(a,b){return b.score-a.score;});
         renderEntries(lb);
       });
     },{once:true});
