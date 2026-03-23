@@ -341,7 +341,14 @@ function showRep(ctx){
   bSend.onclick=function(){
     var note=ta.value.trim();
     if(!note){ta.style.borderColor="var(--no)";return;}
-    reports.push({s:G.cur,ctx:ctx,note:note,t:new Date().toLocaleTimeString("tr-TR")});
+    var rep={s:G.cur,ctx:ctx,note:note,t:new Date().toLocaleTimeString("tr-TR"),
+      oyuncu:playerName,tarih:new Date().toLocaleDateString("tr-TR"),zaman:Date.now()};
+    reports.push(rep);
+    // Firebase'e kaydet
+    if(window._fbReady){
+      var repKey="hatalar/"+Date.now()+"_"+Math.random().toString(36).slice(2,7);
+      window._fbSet(window._fbRef(window._fbDb,repKey),rep);
+    }
     ov.remove();
     document.getElementById("repFab").style.display="flex";
     document.getElementById("repBadge").textContent=reports.length;
