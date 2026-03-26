@@ -239,10 +239,11 @@ body{font-family:'Quicksand',sans-serif;background:var(--bg);color:var(--tx);min
     <div class="challenge-sword" style="top:10px;left:15%;">⚔️</div>
     <div class="challenge-sword" style="top:15px;right:15%;animation-delay:.7s;">🗡️</div>
     <div class="challenge-ninja">🥷</div>
-    <div class="challenge-title">⚡ MÜCADELE MODU ⚡</div>
-    <div class="challenge-desc">Süre <strong>6 saniye</strong>ye düşer!<br>Her doğru cevap <strong>70 puan</strong> kazandırır!<br><br><span style="color:var(--a2);font-weight:700;">⚠️ Dikkat: Tüm sorularınız mücadele modunda açılacaktır!</span></div>
+    <div class="challenge-title">🥷 NİNJA MODU 🥷</div>
+    <div id="challengeTeamName" style="font-family:'Fredoka',sans-serif;font-size:1.1rem;font-weight:700;color:var(--a1);margin-bottom:8px;"></div>
+    <div class="challenge-desc">Süre <strong>6 saniye</strong>ye düşer!<br>Her doğru cevap <strong>70 puan</strong> kazandırır!<br><br><span style="color:var(--a2);font-weight:700;">⚠️ Dikkat: Tüm sorularınız ninja modunda açılacaktır!</span></div>
     <div class="challenge-pts">🔥 70 PUAN 🔥</div>
-    <div><button class="btn-challenge" onclick="acceptChallenge()">⚡ Mücadele!</button><button class="btn-normal" onclick="declineChallenge()">Normal Devam</button></div>
+    <div><button class="btn-challenge" onclick="acceptChallenge()">🥷 Ninja Modu!</button><button class="btn-normal" onclick="declineChallenge()">Normal Devam</button></div>
   </div>
 </div>
 
@@ -260,7 +261,7 @@ body{font-family:'Quicksand',sans-serif;background:var(--bg);color:var(--tx);min
   <div class="g-card"><h3>👥 Kaç Takım?</h3><div class="tc-row"><input class="tc-inp" id="tcInput" type="number" min="2" max="10" value="4" oninput="onTcChange()"><span style="color:var(--tl);font-size:.85rem;font-weight:600;">2–10 arası</span></div></div>
   <div class="g-card"><h3>🏷️ Takımlar <span style="font-size:.72rem;color:var(--tl);font-weight:500;">(avatar: emojiye tıkla)</span></h3><div class="team-names-grid" id="tnGrid"></div></div>
   <div class="setup-opts">
-    <div class="setup-opt"><h4>⏱️ Metin Süresi</h4><input type="number" id="rdTimeInp" min="40" max="160" value="80" step="5" oninput="onRdTimeChange()"><div class="q-time-hint" id="qTimeHint">Her soru: 20s</div></div>
+    <div class="setup-opt"><h4>⏱️ Metin Süresi</h4><input type="number" id="rdTimeInp" min="40" max="160" value="80" step="5" oninput="onRdTimeChange()"><div class="q-time-hint" id="qTimeHint">Her soru: 20s</div><div id="rdTimeWarn" style="color:var(--no);font-size:.72rem;font-weight:600;font-family:'Fredoka',sans-serif;margin-top:2px;display:none;"></div></div>
     <div class="setup-opt"><h4>⚡ Ek Puan</h4><div class="toggle-row"><div class="toggle-sw on" id="bonusToggle" onclick="toggleBonus()"></div><div class="toggle-lbl" id="bonusLbl">Açık</div></div><div style="font-size:.7rem;color:var(--tl);margin-top:4px;">Doğru cevaplarda kalan süre kadar bonus</div></div>
   </div>
   <div class="setup-info" id="setupInfo"></div>
@@ -328,7 +329,11 @@ function sendReport(){
 function onTcChange(){const v=parseInt(document.getElementById('tcInput').value);if(v>=2&&v<=10){tCount=v;renderTN();updateSI();}}
 function onRdTimeChange(){
   let v=parseInt(document.getElementById('rdTimeInp').value);
-  if(isNaN(v))return;v=Math.max(40,Math.min(160,v));
+  const warn=document.getElementById('rdTimeWarn');
+  if(isNaN(v)){warn.style.display='none';return;}
+  if(v<40){warn.textContent='⚠️ En az 40 saniye olmalı!';warn.style.display='block';return;}
+  if(v>160){warn.textContent='⚠️ En fazla 160 saniye olabilir!';warn.style.display='block';return;}
+  warn.style.display='none';
   RD_T=v;BYE_W=v;Q_T=Math.ceil(v/4);
   document.getElementById('qTimeHint').textContent=`Her soru: ${Q_T}s`;
   updateSI();
@@ -377,6 +382,8 @@ function startTeam(){
   }
   if(blocked||teams.length<tCount){teams=[];return;}
   // Apply settings
+  const rdVal=parseInt(document.getElementById('rdTimeInp').value);
+  if(isNaN(rdVal)||rdVal<40||rdVal>160){document.getElementById('rdTimeWarn').textContent='⚠️ Süre 40–160 arası olmalı!';document.getElementById('rdTimeWarn').style.display='block';teams=[];return;}
   onRdTimeChange();
   cRound=0;tRounds=BASE_R;rScores=[];tWins=new Array(tCount).fill(0);sessionUsedTexts.clear();qLog=[];allRoundLogs=[];activeTeamIndices=null;pastPairings.clear();pastByes.clear();isExtraRound=false;
   document.getElementById('scoreboardBar').classList.add('visible');updateSB();startRound();
@@ -432,9 +439,10 @@ function pairRd(w){
 // CHALLENGE MODE
 function askChallenge(teamIdx,cb){
   challengeCb=cb;challengeMode=false;currentQTime=Q_T;currentQPts=Q_PTS;
+  document.getElementById('challengeTeamName').textContent=TN(teamIdx);
   document.getElementById('challengeOv').classList.add('open');
 }
-function acceptChallenge(){challengeMode=true;currentQTime=CHALLENGE_QT;currentQPts=CHALLENGE_PTS;document.getElementById('challengeOv').classList.remove('open');showTrans('🥷','MÜCADELE MODU!',`⚡ 6 saniye · 70 puan ⚡`,challengeCb,3);}
+function acceptChallenge(){challengeMode=true;currentQTime=CHALLENGE_QT;currentQPts=CHALLENGE_PTS;document.getElementById('challengeOv').classList.remove('open');showTrans('🥷','NİNJA MODU!',`⚡ 6 saniye · 70 puan ⚡`,challengeCb,3);}
 function declineChallenge(){challengeMode=false;currentQTime=Q_T;currentQPts=Q_PTS;document.getElementById('challengeOv').classList.remove('open');showTrans('❓','SORULAR!',`Normal mod`,challengeCb,3);}
 
 function pairQ(w,qi){
