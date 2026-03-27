@@ -7,6 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>
 (function(){
+  // Immediately set fallback flag
+  window._bwReady=false;window._fbReady=false;
   var s=document.createElement('script');s.type='module';
   s.textContent=`
     import{initializeApp}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -15,7 +17,14 @@
     const db=getDatabase(app);
     window._fbDb=db;window._fbRef=ref;window._fbSet=set;window._fbGet=get;window._fbOnValue=onValue;
     window._fbReady=true;document.dispatchEvent(new Event('fbReady'));
-  `;document.head.appendChild(s);
+  `;
+  s.onerror=function(){
+    console.warn('Firebase module failed to load');
+    window._fbReady=false;window._bw=[];window._bwReady=true;
+  };
+  document.head.appendChild(s);
+  // Fallback: 2.5 saniye icinde yuklenemezse oyun yine de baslasin
+  setTimeout(function(){if(!window._bwReady){console.warn('Firebase timeout - proceeding without');window._bw=[];window._bwReady=true;}},2500);
 })();
 </script>
 <style>
@@ -137,8 +146,8 @@ body{font-family:'Quicksand',sans-serif;background:var(--bg);color:var(--tx);min
 @keyframes sword-slash{0%{transform:rotate(-45deg) translateX(0)}50%{transform:rotate(45deg) translateX(20px)}100%{transform:rotate(-45deg) translateX(0)}}
 
 /* CHALLENGE DARK QUESTION THEME */
-#question.challenge-active{background:linear-gradient(180deg,#1a1a2e,#16213e);min-height:100vh;}
-#question.challenge-active .q-card{background:rgba(255,255,255,.07);border-color:rgba(255,107,107,.3);color:#eee;}
+#question.challenge-active{background:linear-gradient(180deg,#1a1a2e,#16213e);min-height:100vh;max-width:100%;width:100%;}
+#question.challenge-active .q-card{background:rgba(255,255,255,.07);border-color:rgba(255,107,107,.3);color:#eee;max-width:100%;}
 #question.challenge-active .q-tx{color:#f0f0f0;}
 #question.challenge-active .q-lb{color:var(--a2);}
 #question.challenge-active .q-pill{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);color:#ccc;}
@@ -149,8 +158,9 @@ body{font-family:'Quicksand',sans-serif;background:var(--bg);color:var(--tx);min
 #question.challenge-active .timer-bar-wrap{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15);}
 #question.challenge-active .timer-bar-fill{background:linear-gradient(90deg,var(--a2),#c0392b);}
 #question.challenge-active .afb{background:rgba(0,0,0,.3);border-color:rgba(255,255,255,.15);color:#eee;}
-.challenge-ninja-float{position:fixed;font-size:2.5rem;z-index:45;pointer-events:none;opacity:.25;animation:ninja-drift 4s linear infinite;}
-@keyframes ninja-drift{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(-20px) rotate(10deg)}100%{transform:translateY(0) rotate(0)}}
+.challenge-ninja-float{position:absolute;z-index:45;pointer-events:none;opacity:.2;animation:ninja-drift 4s ease-in-out infinite;}
+.challenge-ninja-float svg{width:48px;height:48px;display:block;}
+@keyframes ninja-drift{0%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-25px) rotate(8deg)}100%{transform:translateY(0) rotate(-5deg)}}
 .challenge-big-pts{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Fredoka',sans-serif;font-size:4rem;font-weight:700;color:var(--a2);z-index:55;pointer-events:none;animation:pts-pop .8s ease-out forwards;text-shadow:0 4px 20px rgba(255,107,107,.5);}
 @keyframes pts-pop{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}60%{transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-70%) scale(.8)}}
 .challenge-title{font-family:'Fredoka',sans-serif;font-size:1.4rem;font-weight:700;color:var(--a2);margin:10px 0;}
@@ -162,16 +172,16 @@ body{font-family:'Quicksand',sans-serif;background:var(--bg);color:var(--tx);min
 .btn-normal:hover{border-color:var(--pr);color:var(--pr);}
 
 /* READING - wider */
-#reading{gap:14px;max-width:960px;width:100%;}
+#reading{gap:14px;max-width:100%;width:100%;padding-left:24px;padding-right:24px;}
 .reading-top{display:flex;align-items:center;justify-content:space-between;width:100%;flex-wrap:wrap;gap:10px;}
 .team-badge{display:flex;align-items:center;gap:10px;padding:8px 18px;border-radius:50px;font-family:'Fredoka',sans-serif;font-weight:700;font-size:1rem;color:white;box-shadow:var(--sh);}
-.text-box{background:var(--sf);border:2px solid var(--bd);border-radius:var(--r);padding:28px 32px;width:100%;line-height:2;font-size:1.15rem;font-weight:600;color:var(--tx);overflow-y:auto;box-shadow:var(--sh);}
+.text-box{background:var(--sf);border:2px solid var(--bd);border-radius:var(--r);padding:32px 40px;width:100%;line-height:2.1;font-size:1.35rem;font-weight:700;color:var(--tx);overflow-y:visible;box-shadow:var(--sh);}
 .text-box::-webkit-scrollbar{width:6px;}
 .text-box::-webkit-scrollbar-thumb{background:var(--pl);border-radius:10px;}
 .read-hint{color:var(--tl);font-size:.85rem;font-weight:600;text-align:center;background:var(--a1);padding:8px 20px;border-radius:50px;}
 
 /* QUESTION - wider */
-#question{gap:14px;max-width:960px;width:100%;}
+#question{gap:14px;max-width:100%;width:100%;padding-left:24px;padding-right:24px;position:relative;overflow:hidden;}
 .q-top{display:flex;align-items:center;justify-content:space-between;width:100%;flex-wrap:wrap;gap:10px;}
 .q-il{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .q-pill{background:var(--sf);border-radius:50px;padding:6px 14px;font-size:.8rem;font-weight:700;color:var(--tl);border:2px solid var(--bd);font-family:'Fredoka',sans-serif;}
@@ -226,7 +236,8 @@ body{font-family:'Quicksand',sans-serif;background:var(--bg);color:var(--tx);min
 .f1-conf{position:absolute;font-size:.9rem;animation:crise 2s ease-out infinite;}
 @keyframes crise{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-35px);opacity:0}}
 
-@media(max-width:600px){.opts{grid-template-columns:1fr}.text-box{padding:18px 20px;font-size:1rem}.setup-opts{flex-direction:column;}}
+@media(max-width:600px){.opts{grid-template-columns:1fr}.text-box{padding:20px 18px;font-size:1.1rem;font-weight:700;}.setup-opts{flex-direction:column;}}
+@media(min-width:601px){.text-box{font-size:1.4rem;font-weight:700;padding:36px 48px;line-height:2.2;}#reading{max-width:100%;padding-left:40px;padding-right:40px;}#question{max-width:100%;padding-left:40px;padding-right:40px;}}
 </style>
 </head>
 <body>
@@ -236,10 +247,10 @@ body{font-family:'Quicksand',sans-serif;background:var(--bg);color:var(--tx);min
 <div class="pause-overlay" id="pauseOv"><div class="pause-box"><div class="pause-title">⏸️ Oyun Duraklatıldı</div><div style="font-size:.9rem;color:var(--tl);margin-bottom:16px;font-weight:600;">Süre durduruldu.</div><button class="btn-p" onclick="resumeGame()" style="width:100%;">▶️ Devam Et</button><button class="btn-report" onclick="toggleReport()">🐛 Hata Bildir</button><div class="report-popup" id="reportPopup"><textarea class="report-input" id="reportText" placeholder="Hatayı açıklayın..."></textarea><div style="display:flex;gap:8px;margin-top:8px;"><button class="btn-p" onclick="sendReport()" style="padding:8px 20px;font-size:.85rem;">Gönder</button></div><div id="reportSent" style="display:none;color:var(--ok);font-family:Fredoka,sans-serif;font-size:.85rem;font-weight:600;margin-top:8px;"></div></div></div></div>
 <div class="challenge-overlay" id="challengeOv">
   <div class="challenge-box">
-    <div class="challenge-sword" style="top:10px;left:15%;">⚔️</div>
-    <div class="challenge-sword" style="top:15px;right:15%;animation-delay:.7s;">🗡️</div>
-    <div class="challenge-ninja">🥷</div>
-    <div class="challenge-title">🥷 NİNJA MODU 🥷</div>
+    <div class="challenge-sword" style="top:10px;left:15%;"><svg viewBox="0 0 64 64" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><polygon points="32,4 38,26 60,20 38,32 56,52 32,38 8,52 26,32 4,20 26,26" fill="#ff6b6b" opacity="0.9"/><circle cx="32" cy="32" r="4" fill="#fff"/></svg></div>
+    <div class="challenge-sword" style="top:15px;right:15%;animation-delay:.7s;"><svg viewBox="0 0 64 64" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><line x1="10" y1="54" x2="50" y2="14" stroke="#ccc" stroke-width="3" stroke-linecap="round"/><line x1="50" y1="14" x2="54" y2="10" stroke="#ff6b6b" stroke-width="4" stroke-linecap="round"/><line x1="28" y1="40" x2="36" y2="32" stroke="#888" stroke-width="6" stroke-linecap="round"/></svg></div>
+    <div class="challenge-ninja"><svg viewBox="0 0 64 64" width="56" height="56" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="24" r="18" fill="#2d2d2d"/><rect x="14" y="20" width="36" height="8" rx="4" fill="#1a1a1a"/><circle cx="24" cy="24" r="3.5" fill="#ff6b6b"/><circle cx="40" cy="24" r="3.5" fill="#ff6b6b"/><path d="M20 44 L32 36 L44 44 L40 56 L24 56Z" fill="#2d2d2d"/><line x1="8" y1="24" x2="0" y2="18" stroke="#aaa" stroke-width="2.5" stroke-linecap="round"/><line x1="56" y1="24" x2="64" y2="18" stroke="#aaa" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    <div class="challenge-title"><svg viewBox="0 0 24 24" width="20" height="20" style="vertical-align:middle;margin-right:4px;" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="9" r="7" fill="#2d2d2d"/><rect x="5" y="7" width="14" height="4" rx="2" fill="#1a1a1a"/><circle cx="9" cy="9" r="1.5" fill="#ff6b6b"/><circle cx="15" cy="9" r="1.5" fill="#ff6b6b"/></svg> NİNJA MODU <svg viewBox="0 0 24 24" width="20" height="20" style="vertical-align:middle;margin-left:4px;" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="9" r="7" fill="#2d2d2d"/><rect x="5" y="7" width="14" height="4" rx="2" fill="#1a1a1a"/><circle cx="9" cy="9" r="1.5" fill="#ff6b6b"/><circle cx="15" cy="9" r="1.5" fill="#ff6b6b"/></svg></div>
     <div id="challengeTeamName" style="font-family:'Fredoka',sans-serif;font-size:1.1rem;font-weight:700;color:var(--a1);margin-bottom:8px;"></div>
     <div class="challenge-desc">Süre <strong>6 saniye</strong>ye düşer!<br>Her doğru cevap <strong>70 puan</strong> kazandırır!<br><br><span style="color:var(--a2);font-weight:700;">⚠️ Dikkat: Tüm sorularınız ninja modunda açılacaktır!</span></div>
     <div class="challenge-pts">🔥 70 PUAN 🔥</div>
@@ -364,13 +375,13 @@ function updateSI(){
 function yasaklariYukle(){
   function doYukle(){window._fbGet(window._fbRef(window._fbDb,'yasak_kelimeler')).then(function(snap){if(snap.exists()){const d=snap.val();window._bw=Array.isArray(d)?d:Object.values(d);window._bwReady=true;}else{window._bw=[];window._bwReady=true;}}).catch(function(){window._bw=[];window._bwReady=true;});}
   if(window._fbReady)doYukle();else document.addEventListener('fbReady',doYukle,{once:true});
-  setTimeout(function(){if(!window._bwReady){window._bw=[];window._bwReady=true;}},4000);
+  setTimeout(function(){if(!window._bwReady){window._bw=[];window._bwReady=true;}},2500);
 }
 yasaklariYukle();
 function hasBW(str){const bw=window._bw||[];if(!bw.length)return false;const s=str.toLowerCase().replace(/\s/g,'');return bw.some(w=>{const wl=(w||'').toLowerCase().replace(/\s/g,'');return wl.length>0&&s.includes(wl);});}
 
 function startTeam(){
-  if(!window._bwReady){alert('⏳ Yasaklı kelime listesi yükleniyor...');return;}
+  if(!window._bwReady){window._bw=[];window._bwReady=true;}
   tCount=Math.min(10,Math.max(2,parseInt(document.getElementById('tcInput').value)||4));
   document.querySelectorAll('.bw-warn').forEach(e=>e.remove());
   document.querySelectorAll('.team-row').forEach(r=>r.style.border='2px solid var(--bd)');
@@ -442,7 +453,7 @@ function askChallenge(teamIdx,cb){
   document.getElementById('challengeTeamName').textContent=TN(teamIdx);
   document.getElementById('challengeOv').classList.add('open');
 }
-function acceptChallenge(){challengeMode=true;currentQTime=CHALLENGE_QT;currentQPts=CHALLENGE_PTS;document.getElementById('challengeOv').classList.remove('open');showTrans('🥷','NİNJA MODU!',`⚡ 6 saniye · 70 puan ⚡`,challengeCb,3);}
+function acceptChallenge(){challengeMode=true;currentQTime=CHALLENGE_QT;currentQPts=CHALLENGE_PTS;document.getElementById('challengeOv').classList.remove('open');showTrans('⚔️','NİNJA MODU!',`⚡ 6 saniye · 70 puan ⚡`,challengeCb,3);}
 function declineChallenge(){challengeMode=false;currentQTime=Q_T;currentQPts=Q_PTS;document.getElementById('challengeOv').classList.remove('open');showTrans('❓','SORULAR!',`Normal mod`,challengeCb,3);}
 
 function pairQ(w,qi){
@@ -462,7 +473,14 @@ function pairQ(w,qi){
   showScr('question');
   startCD(currentQTime,'qTT','qTB',Math.min(5,currentQTime),()=>{if(!ans){ans=true;const bs=document.querySelectorAll('.ob');bs.forEach(b=>b.classList.add('lk'));bs[qd.a].classList.add('rv');showFB('⏰ Süre doldu!','var(--tl)');qLog.push({tm:TN(ti),q:qd.q,ok:false,bonus:0,pts:0,challenge:challengeMode});}setTimeout(()=>advPQ(w,qi),800);});
 }
-function addFloatingNinjas(){const pos=[{top:'15%',left:'5%'},{top:'60%',right:'5%'},{bottom:'20%',left:'8%'}];pos.forEach((p,i)=>{const n=document.createElement('div');n.className='challenge-ninja-float';n.textContent='🥷';Object.assign(n.style,p);n.style.animationDelay=(i*1.3)+'s';document.getElementById('question').appendChild(n);});}
+function addFloatingNinjas(){
+const ninjaSVG=`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="24" r="18" fill="#2d2d2d"/><rect x="14" y="20" width="36" height="8" rx="4" fill="#1a1a1a"/><circle cx="24" cy="24" r="3" fill="#ff6b6b"/><circle cx="40" cy="24" r="3" fill="#ff6b6b"/><path d="M20 44 L32 36 L44 44 L40 56 L24 56Z" fill="#2d2d2d"/><line x1="8" y1="24" x2="0" y2="18" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="56" y1="24" x2="64" y2="18" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg>`;
+const shurikenSVG=`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><polygon points="32,4 38,26 60,20 38,32 56,52 32,38 8,52 26,32 4,20 26,26" fill="#ff6b6b" opacity="0.8"/><circle cx="32" cy="32" r="5" fill="#1a1a2e"/></svg>`;
+const swordSVG=`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><line x1="10" y1="54" x2="50" y2="14" stroke="#ccc" stroke-width="3" stroke-linecap="round"/><line x1="50" y1="14" x2="54" y2="10" stroke="#ff6b6b" stroke-width="4" stroke-linecap="round"/><line x1="28" y1="40" x2="36" y2="32" stroke="#888" stroke-width="6" stroke-linecap="round"/></svg>`;
+const svgs=[ninjaSVG,shurikenSVG,swordSVG,ninjaSVG,shurikenSVG,swordSVG];
+const pos=[{top:'8%',left:'2%'},{top:'45%',right:'2%'},{bottom:'20%',left:'4%'},{top:'25%',right:'6%'},{bottom:'8%',right:'15%'},{top:'65%',left:'8%'}];
+pos.forEach((p,i)=>{const n=document.createElement('div');n.className='challenge-ninja-float';n.innerHTML=svgs[i%svgs.length];Object.assign(n.style,p);n.style.animationDelay=(i*0.8)+'s';n.style.animationDuration=(3+i*0.5)+'s';document.getElementById('question').appendChild(n);});
+}
 function showBigPts(pts){const e=document.createElement('div');e.className='challenge-big-pts';e.textContent=`+${pts}`;document.body.appendChild(e);setTimeout(()=>e.remove(),1000);}
 function tAns(s,w,qi){
   if(ans)return;ans=true;const p=pairs[cPair],ti=w==='A'?p[0]:p[1],txi=w==='A'?pTx[cPair][0]:pTx[cPair][1],c=ALL_TEXTS[txi].q[qi].a;
